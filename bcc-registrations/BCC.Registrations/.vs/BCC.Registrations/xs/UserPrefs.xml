@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{CE5029AE-74D4-44FB-A0F6-1DF82798AFE8}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BCC.Registrations.Contracts/Entities/Registration.cs">
+    <Files>
+      <File FileName="BCC.Registrations.Contracts/Entities/Registration.cs" Line="4" Column="36" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="BCC.Registrations" expanded="True">
+            <Node name="BCC.EntityApi" expanded="True" />
+            <Node name="BCC.Registrations" expanded="True" />
+            <Node name="BCC.Registrations.Contracts" expanded="True">
+              <Node name="Entities" expanded="True">
+                <Node name="Registration.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.BCC.Registrations FirstBuild="True" PreferredExecutionTarget="/Applications/Microsoft Edge.app" />
+  <MonoDevelop.Ide.ItemProperties.BCC.Registrations.Contracts FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
