@@ -1,0 +1,43 @@
+﻿<Properties StartupConfiguration="{A900106F-4EFA-403F-9B45-AF9DA8F59EDB}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BCC.Activities.Contracts/Entities/Activity.cs">
+    <Files>
+      <File FileName="BCC.Activities.Contracts/Commands/VerbNoun.cs" Line="1" Column="1" />
+      <File FileName="BCC.Activities.Contracts/Entities/Noun.cs" Line="1" Column="1" />
+      <File FileName="BCC.Activities.Contracts/Events/NounVerb.cs" Line="1" Column="1" />
+      <File FileName="BCC.Activities.Contracts/Entities/Activity.cs" Line="14" Column="30" />
+      <File FileName="BCC.Activities.Contracts/Entities/Location.cs" Line="15" Column="26" />
+      <File FileName="../../BCC.EntityApi/BaseContext.cs" Line="1" Column="1" />
+      <File FileName="../../BCC.EntityApi/BaseEntity.cs" Line="33" Column="26" />
+      <File FileName="../../BCC.EntityApi/Bcc.EntityApi.xml" Line="1" Column="1" />
+      <File FileName="../../BCC.EntityApi/EntityPolicyConfigurationExtensions.cs" Line="1" Column="1" />
+      <File FileName="BCC.Activities.Contracts/BCC.Activities.Contracts.csproj" Line="1" Column="1" />
+      <File FileName="BCC.Activities/BCC.Activities.csproj" Line="1" Column="1" />
+      <File FileName="../../BCC.EntityApi/README.md" Line="12" Column="27" />
+      <File FileName="../../BCC.EntityApi/LICENSE" Line="1" Column="1" />
+      <File FileName="../../BCC.EntityApi/EntityController.cs" Line="61" Column="19" />
+      <File FileName="../../BCC.EntityApi/EntityPolicy.cs" Line="1" Column="1" />
+      <File FileName="BCC.Activities.Contracts/Types/GeoPoint.cs" Line="35" Column="10" />
+      <File FileName="BCC.Activities.Contracts/Types/TimeSlot.cs" Line="10" Column="1" />
+      <File FileName="BCC.Activities.Contracts/Types/ActivityStatus.cs" Line="4" Column="31" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="BCC.Activities" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>../../../bcc-consents/Bcc.EntityApi/Bcc.EntityApi.csproj</String>
+    <String>../../Bcc.EntityApi/Bcc.EntityApi.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.BCC.Activities FirstBuild="True" PreferredExecutionTarget="/Applications/Microsoft Edge.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.BCC.Activities.Contracts FirstBuild="True" />
+  <MultiItemStartupConfigurations />
+</Properties>

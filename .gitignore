@@ -1,2 +1,52 @@
+# User-specific files
 *.suo
-.vs/
+*.user
+*.sln.docstates
+**/.vscode
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Roslyn cache directories
+*.ide/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+#NUNIT
+*.VisualState.xml
+TestResult.xml
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+
+# OSX
+.DS_Store
+
+
+.env
+*.cache
+*.dump
+/.vs
+/*/ui/*/dist
+/*/node_cache
+/*/node_modules
+/*packages/*
+*.log.*
+*.log
+*.orig
+*.min.js
+*.min.css
