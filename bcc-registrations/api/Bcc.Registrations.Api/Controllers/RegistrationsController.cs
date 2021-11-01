@@ -1,5 +1,6 @@
 ﻿using Bcc.Registrations.Requests;
 using Bcc.Registrations.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ namespace Bcc.Registrations.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegistrationsController : ControllerBase, IRegistrationService
     {
         private readonly IRegistrationService _registrations;

@@ -1,5 +1,6 @@
 using Bcc.Registrations.Api.Providers;
 using Bcc.Registrations.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,18 @@ namespace Bcc.Registrations.Api
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IUserContext, HttpUserContext>();
 
+            // Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["OAuth:Authority"];
+                options.Audience = Configuration["OAuth:Audience"];
+            });
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -54,6 +67,7 @@ namespace Bcc.Registrations.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

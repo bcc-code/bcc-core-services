@@ -1,5 +1,6 @@
 ﻿using Bcc.Registrations.Requests;
 using Bcc.Registrations.Services;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 
