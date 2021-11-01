@@ -28,9 +28,9 @@ namespace BCC.EntityApi
             }
         }
 
-        public void Save(EntityState State)
+        public object Changes()
         {
-            Touch(State);
+            throw new NotImplementedException();
         }
     }
 }

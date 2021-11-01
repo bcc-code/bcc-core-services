@@ -11,10 +11,12 @@ namespace BCC.EntityApi
     [ApiController]
     public class EntityController<TEntity> : ControllerBase where TEntity : BaseEntity
     {
-        protected readonly DbContext _context;
-
-        protected readonly EntityPolicy<TEntity> _policy;
         protected DbSet<TEntity> _dbSet { get; set; }
+
+        protected readonly DbContext _context;
+        protected readonly EntityPolicy<TEntity> _policy;
+        
+
         public EntityController(DbContext context, EntityPolicy<TEntity> policy)
         {
             _context = context;
@@ -42,7 +44,7 @@ namespace BCC.EntityApi
         /// </summary>
         // GET: api/Entity/5092
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<TEntity>> Get(long id)
+        public virtual async Task<ActionResult<TEntity>> Get(Guid id)
         {
             TEntity entity = await _dbSet.Where(e => e.Id == id).FirstOrDefaultAsync();
 
@@ -95,7 +97,7 @@ namespace BCC.EntityApi
         /// </summary>
         // DELETE: api/Entity/5092
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult> Delete(long id)
+        public virtual async Task<ActionResult> Delete(Guid id)
         {
             var entity = await _dbSet.Where(e => e.Id == id).FirstOrDefaultAsync();
             if (! await _policy.CanDelete(entity))

@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <None Remove="Entities\" />
+    <None Remove="Types\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="Types\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BCC.EntityApi\BCC.EntityApi.csproj">

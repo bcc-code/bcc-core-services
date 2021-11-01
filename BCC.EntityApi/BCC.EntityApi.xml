@@ -9,7 +9,7 @@
             Fetch all Entities.
             </summary>
         </member>
-        <member name="M:BCC.EntityApi.EntityController`1.Get(System.Int64)">
+        <member name="M:BCC.EntityApi.EntityController`1.Get(System.Guid)">
             <summary>
             Fetch a specific Entity.
             </summary>
@@ -24,7 +24,7 @@
             Update an Entity.
             </summary>
         </member>
-        <member name="M:BCC.EntityApi.EntityController`1.Delete(System.Int64)">
+        <member name="M:BCC.EntityApi.EntityController`1.Delete(System.Guid)">
             <summary>
             Delete a specific Entity.
             </summary>
