@@ -40,11 +40,10 @@ jobs:
       - name: Read bcc-sender/api/bcc-sender-api/appsettings.json
         run: "cat bcc-sender/api/bcc-sender-api/appsettings.json"
 
-      - name: Docker build debug
-        run: docker build --progress=plain -f bcc-sender/api/bcc-sender-api/Dockerfile
-
       - name: Build the Docker image
-        run: docker build -f bcc-sender/api/bcc-sender-api/Dockerfile -t eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod . --build-arg ASPNETCORE_ENVIRONMENT=Development
+        run: |
+          cd bcc-sender/api/bcc-sender-api
+          docker build . -t eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --build-arg ASPNETCORE_ENVIRONMENT=Development
 
       - name: Configure Docker to use Google Cloud Platform
         run: gcloud auth configure-docker --quiet
