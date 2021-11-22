@@ -40,6 +40,9 @@ jobs:
       - name: Read bcc-sender/api/bcc-sender-api/appsettings.json
         run: "cat bcc-sender/api/bcc-sender-api/appsettings.json"
 
+      - name: Docker build debug
+        run: docker build --progress=plain bcc-sender/api/bcc-sender-api/Dockerfile
+
       - name: Build the Docker image
         run: docker build -f bcc-sender/api/bcc-sender-api/Dockerfile -t eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod . --build-arg ASPNETCORE_ENVIRONMENT=Development
 

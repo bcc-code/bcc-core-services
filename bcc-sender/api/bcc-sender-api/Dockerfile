@@ -10,6 +10,8 @@ RUN apt-get install -y tzdata
 FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build
 WORKDIR /src
 
+RUN ls
+RUN pwd
 COPY ["api/bcc-sender-api/", "./api/bcc-sender-api/"]
 RUN dotnet restore "api/bcc-sender-api/bcc-sender-api.csproj"
 
