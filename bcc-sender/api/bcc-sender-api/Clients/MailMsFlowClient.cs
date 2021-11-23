@@ -14,7 +14,7 @@ namespace Core.Api.Services
     public class MailMsFlowClient : IMailMsFlowClient
     {
         private readonly IConfiguration _config;
-        private string _msFlowEmailUrl = "";
+        private readonly string _msFlowEmailUrl = "";
 
         public MailMsFlowClient(IConfiguration config)
         {
@@ -22,12 +22,10 @@ namespace Core.Api.Services
             _msFlowEmailUrl = _config.GetValue<string>("MsFlowEmailUrl");
         }
 
-        public async Task<bool> Send(string subject, string body, bool isHtml, MailAddress from, MailAddressCollection to, MailAddressCollection replyTo, MailAddressCollection bcc = null)
+        public async Task<bool> Send(string subject, string body, bool isHtml, MailAddress from,
+            MailAddressCollection to, MailAddressCollection replyTo, MailAddressCollection bcc = null)
         {
-            if (isHtml)
-            {
-                body = ConvertToHtml(body);
-            }
+            if (isHtml) body = ConvertToHtml(body);
 
 
             var message = new MsFlowEmailData
@@ -35,12 +33,9 @@ namespace Core.Api.Services
                 Body = body,
                 From = from.Address,
                 Subject = subject,
-                To = to.Select(s => s.Address).ToList(),
+                To = to.Select(s => s.Address).ToList()
             };
-            if (replyTo != null)
-            {
-                message.ReplyTo = replyTo.Select(s => s.Address).ToList();
-            }
+            if (replyTo != null) message.ReplyTo = replyTo.Select(s => s.Address).ToList();
 
             return await SendToMsFlow(message);
         }
@@ -75,7 +70,6 @@ namespace Core.Api.Services
     {
         public Task<bool> Send(string subject, string body, bool isHtml, MailAddress from, MailAddressCollection to,
             MailAddressCollection replyTo, MailAddressCollection bcc = null);
-
     }
 
     public class MsFlowEmailData

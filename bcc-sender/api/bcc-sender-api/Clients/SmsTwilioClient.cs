@@ -8,10 +8,11 @@ namespace bcc_sender_api.Clients
 {
     public class SmsTwilioClient : ISmsTwilioClient
     {
-        private readonly IConfiguration _config;
         private readonly string _accountSid;
-        private readonly string _messagingServiceSid;
         private readonly string _authToken;
+        private readonly IConfiguration _config;
+        private readonly string _messagingServiceSid;
+
         public SmsTwilioClient(IConfiguration config)
         {
             _config = config;
@@ -22,17 +23,16 @@ namespace bcc_sender_api.Clients
 
         public async Task<MessageResource> SendSms(string number, string body)
         {
-            TwilioClient.Init(_accountSid, _authToken); 
-            
-            var messageOptions = new CreateMessageOptions( 
+            TwilioClient.Init(_accountSid, _authToken);
+
+            var messageOptions = new CreateMessageOptions(
                 new PhoneNumber(number))
             {
                 MessagingServiceSid = _messagingServiceSid,
                 Body = body
             };
-            return  await MessageResource.CreateAsync(messageOptions); 
+            return await MessageResource.CreateAsync(messageOptions);
         }
-       
     }
 
     public interface ISmsTwilioClient

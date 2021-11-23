@@ -14,6 +14,7 @@ env:
   TWILIO_ACCOUNT_SID: ${{ secrets.PROD_TWILIO_ACCOUNT_SID }}
   TWILIO_MESSAGING_SERVICE_SID: ${{ secrets.PROD_TWILIO_MESSAGING_SERVICE_SID }}
   TWILIO_AUTH_TOKEN: ${{ secrets.PROD_TWILIO_AUTH_TOKEN }}
+  MS_FLOW_URL: ${{secrets.MS_FLOW_URL}}
 
 jobs:
   build:
@@ -36,6 +37,7 @@ jobs:
           Twilio.AccountSid: ${{ env.TWILIO_ACCOUNT_SID }}
           Twilio.MessagingServiceSid: ${{ env.TWILIO_MESSAGING_SERVICE_SID }}
           Twilio.AuthToken: ${{ env.TWILIO_AUTH_TOKEN }}
+          MsFlowEmailUrl: ${{ env.MS_FLOW_URL }}
 
       - name: Read bcc-sender/api/bcc-sender-api/appsettings.json
         run: "cat bcc-sender/api/bcc-sender-api/appsettings.json"
