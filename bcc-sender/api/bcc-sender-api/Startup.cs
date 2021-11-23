@@ -1,4 +1,5 @@
 using bcc_sender_api.Clients;
+using Core.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@ namespace bcc_sender_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ISmsTwilioClient, SmsTwilioClient>();
+            services.AddScoped<IMailMsFlowClient, MailMsFlowClient>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -6,13 +6,22 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace Core.Api.Services
 {
-    public class SenderService
+    public class MailMsFlowClient : IMailMsFlowClient
     {
-        private const string MsFlowEmailUrl = "";
+        private readonly IConfiguration _config;
+        private string _msFlowEmailUrl = "";
+
+        public MailMsFlowClient(IConfiguration config)
+        {
+            _config = config;
+            _msFlowEmailUrl = _config.GetValue<string>("MsFlowEmailUrl");
+        }
+
         public async Task<bool> Send(string subject, string body, bool isHtml, MailAddress from, MailAddressCollection to, MailAddressCollection replyTo, MailAddressCollection bcc = null)
         {
             if (isHtml)
@@ -50,7 +59,7 @@ namespace Core.Api.Services
             var client = new HttpClient();
             try
             {
-                var response = await client.PostAsync(MsFlowEmailUrl, data);
+                var response = await client.PostAsync(_msFlowEmailUrl, data);
                 return response?.StatusCode == HttpStatusCode.Accepted;
             }
             catch (Exception ex)
@@ -60,6 +69,13 @@ namespace Core.Api.Services
                 return false;
             }
         }
+    }
+
+    public interface IMailMsFlowClient
+    {
+        public Task<bool> Send(string subject, string body, bool isHtml, MailAddress from, MailAddressCollection to,
+            MailAddressCollection replyTo, MailAddressCollection bcc = null);
+
     }
 
     public class MsFlowEmailData
