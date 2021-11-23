@@ -64,7 +64,7 @@ jobs:
           service_account_key: ${{ env.GCP_SA_KEY }}
           export_default_credentials: true
       - name: Cloud run deploy
-        run: gcloud run deploy bcc-sender-prod --image eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --region=europe-west1 --project=${{env.GCP_PROJECT}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5001 --set-env-vars "ASPNETCORE_ENVIRONMENT=Development" --allow-unauthenticated
+        run: gcloud run deploy bcc-sender-prod --image eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --region=europe-west1 --project=${{env.GCP_PROJECT}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5000 --set-env-vars "ASPNETCORE_ENVIRONMENT=Development" --allow-unauthenticated
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic bcc-sender-prod --to-latest --platform=managed --region=europe-west1
