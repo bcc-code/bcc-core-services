@@ -11,8 +11,8 @@ on:
 env:
   GCP_PROJECT: budget-app-329411
   GCP_SA_KEY: ${{ secrets.PROD_GCP_SA_BUDGET_KEY }}
-  TWILIO_ACCOUNT_SID: ${{ secrets.PROD_TWILIO_ACCOUNT_SID }}
-  TWILIO_MESSAGING_SERVICE_SID: ${{ secrets.PROD_TWILIO_MESSAGING_SERVICE_SID }}
+  TWILIO_ACCOUNT_SID: ACb3c35ea73dfee66bc8ff3a98e3bddd2e
+  TWILIO_MESSAGING_SERVICE_SID: MG249ae8db9cf48bc32a0c3218b892c86d
   TWILIO_AUTH_TOKEN: ${{ secrets.PROD_TWILIO_AUTH_TOKEN }}
   MS_FLOW_URL: ${{ secrets.MS_FLOW_URL }}
   API_KEY: ${{ secrets.API_KEY }}
@@ -46,7 +46,7 @@ jobs:
       - name: Build the Docker image
         run: |
           cd bcc-sender/api/bcc-sender-api
-          docker build . -t eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --build-arg ASPNETCORE_ENVIRONMENT=Development
+          docker build . -t eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --build-arg ASPNETCORE_ENVIRONMENT=Production
 
       - name: Configure Docker to use Google Cloud Platform
         run: gcloud auth configure-docker --quiet
@@ -67,9 +67,7 @@ jobs:
           service_account_key: ${{ env.GCP_SA_KEY }}
           export_default_credentials: true
       - name: Cloud run deploy
-        run: gcloud run deploy bcc-sender-prod --image eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --region=europe-west1 --project=${{env.GCP_PROJECT}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5000 --set-env-vars "ASPNETCORE_ENVIRONMENT=Development" --allow-unauthenticated
+        run: gcloud run deploy bcc-sender-prod --image eu.gcr.io/${{env.GCP_PROJECT}}/bcc-sender-prod --region=europe-west1 --project=${{env.GCP_PROJECT}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5000 --set-env-vars "ASPNETCORE_ENVIRONMENT=Production" --allow-unauthenticated
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic bcc-sender-prod --to-latest --platform=managed --region=europe-west1
-# local fallback deploy:
-# gcloud builds submit --tag gcr.io/budget-app-dev-329411/bcc-sender-dev && gcloud run deploy bcc-sender-dev --image gcr.io/budget-app-dev-329411/bcc-sender-dev --region=europe-west1 --project=budget-app-dev-329411 --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5001 --set-env-vars "ASPNETCORE_ENVIRONMENT=Development" --allow-unauthenticated
