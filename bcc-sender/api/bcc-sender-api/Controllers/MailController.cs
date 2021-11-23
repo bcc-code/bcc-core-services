@@ -29,11 +29,7 @@ namespace bcc_sender_api.Controllers
         {
             try
             {
-                _logger.Log(LogLevel.Information, "Sending email: {mailToSend}", mailToSend.Content);
-
-                var jsonString = JsonConvert.SerializeObject(mailToSend);
-
-                _logger.Log(LogLevel.Information, "Parsed object: {jsonString}", jsonString);
+                _logger.Log(LogLevel.Information, "Sending email to: {mailTo} started", mailToSend.ToEmailAddress);
 
                 var replyToCollection = new MailAddressCollection();
                 foreach (var address in mailToSend.ReplyToEmailsAddresses) replyToCollection.Add(address);
@@ -52,7 +48,7 @@ namespace bcc_sender_api.Controllers
                     bcc: bccCollection
                 );
 
-                _logger.Log(LogLevel.Information, "Email message was sent");
+                _logger.Log(LogLevel.Information, "Sending email to: {mailTo} ends with SUCCESS", mailToSend.ToEmailAddress);
                 return Ok(result);
             }
             catch (Exception e)
