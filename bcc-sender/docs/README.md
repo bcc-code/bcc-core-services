@@ -1,12 +1,13 @@
-BCC-SENDER
+## BCC-SENDER
 
 For now sender is hosted on cloud run:
-
 https://bcc-sender-prod-km2ruurtvq-ew.a.run.app/swagger
 
-Add x-access-token with apiKey as header
+### Auth
 
-POST /Mail - sending email with MS Flow
+Add "x-access-token" with apiKey as header
+
+### [POST] /Mail - sending email with MS Flow
 
 body:
 
@@ -22,7 +23,7 @@ body:
 }
 ```
 
-POST /Sms - sending SMS with Twilio
+### [POST] /Sms - sending SMS with Twilio
 
 body:
 
