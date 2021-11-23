@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using bcc_sender_api.Clients;
 using bcc_sender_api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
