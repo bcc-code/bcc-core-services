@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace bcc_sender_api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class SmsController : ControllerBase
     {
@@ -22,8 +23,8 @@ namespace bcc_sender_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Send([FromBody] SmsToSend smsToSend)
         {
-            _logger.Log(LogLevel.Information, "Sms message was sent");
             var result = await _smsClient.SendSms(smsToSend.Number, smsToSend.Content);
+            _logger.Log(LogLevel.Information, "Sms message was sent");
             return Ok(result);
         }
     }

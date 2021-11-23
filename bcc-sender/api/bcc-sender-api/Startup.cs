@@ -1,5 +1,8 @@
+using bcc_sender_api.Authentication;
 using bcc_sender_api.Clients;
 using Core.Api.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +26,13 @@ namespace bcc_sender_api
         {
             services.AddScoped<ISmsTwilioClient, SmsTwilioClient>();
             services.AddScoped<IMailMsFlowClient, MailMsFlowClient>();
+            services.AddAuthorization(auth =>
+            {
+                auth.DefaultPolicy = new AuthorizationPolicyBuilder(ApiKeyAuthenticationScheme.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build();
+            });
+            services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationScheme.AuthenticationScheme, o => { });;
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
