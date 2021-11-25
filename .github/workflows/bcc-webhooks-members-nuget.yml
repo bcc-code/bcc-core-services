@@ -35,4 +35,6 @@ jobs:
         with:
           PROJECT_FILE_PATH: WebHooks/src/Bcc.WebHooks.Receivers.Members/Bcc.WebHooks.Receivers.Members.csproj
           NUGET_KEY: ${{env.NUGET_API_KEY}}
+          PACKAGE_NAME: BccCode.WebHooks.Receivers.Members
+          
           

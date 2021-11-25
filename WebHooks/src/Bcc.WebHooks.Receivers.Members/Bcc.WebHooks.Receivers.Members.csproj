@@ -2,16 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageVersion>1.0.2</PackageVersion>  
   </PropertyGroup>
   
   <PropertyGroup>
     <Description>ASP.NET Core Members WebHooks infrastructure. Contains the MembersWebHookAttribute class and AddMembersWebHooks method.</Description>
     <Company>BCC</Company>
-    <Product>BccMembers.WebHooks.Receivers.Members</Product>
+    <Product>Bcc.WebHooks.Receivers.Members</Product>
     <Authors>Piotr Czyz</Authors>
     <PackageTags>aspnetcore;webhook;receiver;members</PackageTags>
-    <Version>1.0.1</Version>
+    <PackageVersion>1.0.2</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
