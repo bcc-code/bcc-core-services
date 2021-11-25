@@ -36,7 +36,7 @@ jobs:
         run: dotnet pack --configuration Release WebHooks/src/Bcc.WebHooks.Receivers.Members --version-suffix ${{env.RUN_NUMBER}}
         
       - name: Push
-        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Receivers.Members.1.0.0-${{env.RUN_NUMBER}}.nupkg" --source "github"
+        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Receivers.Members.1.0.5-${{env.RUN_NUMBER}}.nupkg" --source "github"
 
   tag:
     runs-on: ubuntu-latest
