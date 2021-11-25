@@ -29,12 +29,20 @@ jobs:
       - name: Build
         run: dotnet build --no-restore WebHooks/src/Bcc.WebHooks.Receivers.Members
 
-      - name: publish on version change
-        id: publish_nuget
-        uses: rohith/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: WebHooks/src/Bcc.WebHooks.Receivers.Members/Bcc.WebHooks.Receivers.Members.csproj
-          NUGET_KEY: ${{env.NUGET_API_KEY}}
-          PACKAGE_NAME: BccCode.WebHooks.Receivers.Members
+      - name: Pack
+        run: dotnet pack --configuration Release
+        
+      - name: Push
+        run: dotnet nuget push "bin/Release/Bcc.WebHooks.Receivers.Members.1.0.1.nupkg" --source "github"
+
+#
+#
+#      - name: publish on version change
+#        id: publish_nuget
+#        uses: rohith/publish-nuget@v2
+#        with:
+#          PROJECT_FILE_PATH: WebHooks/src/Bcc.WebHooks.Receivers.Members/Bcc.WebHooks.Receivers.Members.csproj
+#          NUGET_KEY: ${{env.NUGET_API_KEY}}
+#          PACKAGE_NAME: BccCode.WebHooks.Receivers.Members
           
           
