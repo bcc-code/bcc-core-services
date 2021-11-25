@@ -1,0 +1,37 @@
+name: WebHooks Members Nuget
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "WebHooks/src/**"
+      - ".github/bcc-webhooks-members-nuget.yml"
+
+env:
+  NUGET_API_KEY: oy2ihayrlypzq4mmo7naaoes6a7dxckeraktfdrejllotq
+
+jobs:
+  publish:
+    name: build, pack & publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+          
+      - name: Restore dependencies
+        run: dotnet restore WebHooks/src/Bcc.WebHooks.Receivers.Members
+        
+      - name: Build
+        run: dotnet build --no-restore WebHooks/src/Bcc.WebHooks.Receivers.Members
+
+      - name: publish on version change
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: WebHooks/src/Bcc.WebHooks.Receivers.Members/Bcc.WebHooks.Receivers.Members.csproj
+          NUGET_KEY: ${{env.NUGET_API_KEY}}
