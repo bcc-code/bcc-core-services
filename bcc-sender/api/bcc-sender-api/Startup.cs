@@ -31,7 +31,7 @@ namespace bcc_sender_api
                 auth.DefaultPolicy = new AuthorizationPolicyBuilder(ApiKeyAuthenticationScheme.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build();
             });
-            services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationScheme.AuthenticationScheme, o => { });;
+            services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationScheme.AuthenticationScheme, o => { }); ;
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -46,9 +46,11 @@ namespace bcc_sender_api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "bcc_sender_api v1"));
+
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "bcc_sender_api v1"));
 
             app.UseHttpsRedirection();
 

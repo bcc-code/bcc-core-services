@@ -1,11 +1,23 @@
 ## BCC-SENDER
 
-For now sender is hosted on cloud run:
+For now sender is hosted on cloud run.
+
+
+- Api url:
+
+https://bcc-sender-prod-km2ruurtvq-ew.a.run.app
+
+
+- Swagger url:
+
 https://bcc-sender-prod-km2ruurtvq-ew.a.run.app/swagger
 
 ### Auth
 
-Add "x-access-token" with apiKey as header
+Add "x-access-token" with apiKey as header. To get apiKey contact with owner of this repo.
+
+### Info
+fromEmailAddress property is not used for now.
 
 ### [POST] /Mail - sending email with MS Flow
 
@@ -33,3 +45,47 @@ body:
   "content": "string"
 }
 ```
+
+### Sample C# implementation
+
+```C#
+  var client = _factory.CreateClient();
+  var message = new HttpRequestMessage
+  {
+      Method = HttpMethod.Post,
+      RequestUri = new Uri("https://bcc-sender-prod-km2ruurtvq-ew.a.run.app/Mail")
+  };
+  message.Headers.Add("x-access-token", apiKey);
+
+  var json = new MsFlowEmailData
+  {
+      ToEmailAddress = "test@bcc.no",
+      Subject = "Test subject",
+      Content = "Test",
+      IsHtml = false,
+      FromEmailAddress = "test@bcc.no",
+      BccEmailsAddresses = new string[]
+      {
+        "test@bcc.no"
+      },
+      ReplyToEmailsAddresses = new[]
+      {
+        "test@bcc.no"
+      }
+  };
+
+  message.Content = JsonContent.Create(json);
+  HttpResponseMessage response = await client.SendAsync(message, new CancellationToken());;
+
+```
+
+## BCC-SENDER CONTRIBUTION
+
+Feel free to add PR to this repo.
+
+Things to do in future for now [25.11.2021]
+
+- [ ] Create C# Client for sender as nuget package
+- [ ] Add Auth0 machine to machine auth
+- [ ] Add SendGrid mailClient implementation
+- [ ] Add attachments feature
