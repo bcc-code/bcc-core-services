@@ -12,8 +12,8 @@ env:
   RUN_NUMBER: ${{github.run_number}}
 
 jobs:
-  publish:
-    name: build, pack & publish
+  publish_core:
+    name: BCC WebHooks Receivers Core
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,10 +22,36 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-          
-      - name: Add NuGet source 
+
+      - name: Add NuGet source
         run: dotnet nuget add source --username bcc-code --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/bcc-code/index.json"
-          
+
+      - name: Restore dependencies
+      run: dotnet restore WebHooks/src/Bcc.WebHooks.Receivers.Members
+
+      - name: Build
+        run: dotnet build --no-restore WebHooks/src/Bcc.WebHooks.Receivers
+
+      - name: Pack
+        run: dotnet pack --configuration Release WebHooks/src/Bcc.WebHooks.Receivers --version-suffix ${{env.RUN_NUMBER}}
+
+      - name: Push
+        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers/bin/Release/Bcc.WebHooks.Receivers.1.0.5-${{env.RUN_NUMBER}}.nupkg" --source "github"
+      
+  publish:
+    name: BCC WebHooks Receivers Members
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Add NuGet source
+        run: dotnet nuget add source --username bcc-code --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/bcc-code/index.json"
+
       - name: Restore dependencies
         run: dotnet restore WebHooks/src/Bcc.WebHooks.Receivers.Members
         

@@ -5,6 +5,11 @@
   <PropertyGroup>
     <Description>ASP.NET Core WebHooks abstractions and infrastructure components for receivers. Contains constraints, filters, metadata, and the application models to apply them.</Description>
     <PackageTags>aspnetcore;webhook;receiver</PackageTags>
+    <Company>BCC</Company>
+    <Product>Bcc.WebHooks.Receivers</Product>
+    <Authors>Piotr Czyz</Authors>
+    <VersionPrefix>1.0.5</VersionPrefix>
+    <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
