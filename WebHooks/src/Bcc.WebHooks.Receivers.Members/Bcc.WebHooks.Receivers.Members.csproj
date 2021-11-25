@@ -8,7 +8,7 @@
   <PropertyGroup>
     <Description>ASP.NET Core Members WebHooks infrastructure. Contains the MembersWebHookAttribute class and AddMembersWebHooks method.</Description>
     <Company>BCC</Company>
-    <Product>Bcc.WebHooks.Receivers.Members</Product>
+    <Product>BccMembers.WebHooks.Receivers.Members</Product>
     <Authors>Piotr Czyz</Authors>
     <PackageTags>aspnetcore;webhook;receiver;members</PackageTags>
     <Version>1.0.1</Version>
