@@ -9,7 +9,7 @@ on:
       - ".github/bcc-webhooks-members-nuget.yml"
 
 env:
-  NUGET_API_KEY: ${{secrets.NUGET_API_KEY}}
+  NUGET_API_KEY: oy2ihayrlypzq4mmo7naaoes6a7dxckeraktfdrejllotq
 
 jobs:
   publish:
