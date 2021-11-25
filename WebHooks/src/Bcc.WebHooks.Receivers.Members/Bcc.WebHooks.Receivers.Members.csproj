@@ -10,7 +10,8 @@
     <Product>Bcc.WebHooks.Receivers.Members</Product>
     <Authors>Piotr Czyz</Authors>
     <PackageTags>aspnetcore;webhook;receiver;members</PackageTags>
-    <PackageVersion>1.0.2</PackageVersion>
+    <Version>1.0.1</Version>
+    <PackageVersion>1.0.1</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
