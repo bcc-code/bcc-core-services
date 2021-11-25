@@ -37,16 +37,19 @@ jobs:
         run: dotnet pack --configuration Release WebHooks/src/Bcc.WebHooks.Receivers.Members
         
       - name: Push
-        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Receivers.Members.1.0.1.nupkg" --source "github"
+        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Receivers.Members.1.0.2.nupkg" --source "github"
 
-#
-#
-#      - name: publish on version change
-#        id: publish_nuget
-#        uses: rohith/publish-nuget@v2
-#        with:
-#          PROJECT_FILE_PATH: WebHooks/src/Bcc.WebHooks.Receivers.Members/Bcc.WebHooks.Receivers.Members.csproj
-#          NUGET_KEY: ${{env.NUGET_API_KEY}}
-#          PACKAGE_NAME: BccCode.WebHooks.Receivers.Members
-          
-          
+  tag:
+    runs-on: ubuntu-latest
+    needs: publish
+    continue-on-error: false
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          RELEASE_BRANCHES: master
+         
