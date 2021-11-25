@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{4EB5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MembersCoreReceiver", "samples\MembersCoreReceiver\MembersCoreReceiver.csproj", "{A2329A4E-CA61-474F-98E1-92360E028416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bcc.WebHooks.Test", "src\Bcc.WebHooks.Test\Bcc.WebHooks.Test.csproj", "{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,18 +60,6 @@ Global
 		{A2329A4E-CA61-474F-98E1-92360E028416}.Release|x64.Build.0 = Release|Any CPU
 		{A2329A4E-CA61-474F-98E1-92360E028416}.Release|x86.ActiveCfg = Release|Any CPU
 		{A2329A4E-CA61-474F-98E1-92360E028416}.Release|x86.Build.0 = Release|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Debug|x64.Build.0 = Debug|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Debug|x86.Build.0 = Debug|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Release|x64.ActiveCfg = Release|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Release|x64.Build.0 = Release|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Release|x86.ActiveCfg = Release|Any CPU
-		{ABAF3AD2-7B12-43B8-80B9-5422DE46C792}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A2329A4E-CA61-474F-98E1-92360E028416} = {4EB58051-A330-4F49-AE02-99243AF5104C}

@@ -19,7 +19,6 @@
     <Compile Include="..\shared\Utilities\TrimmingTokenizer.cs">
       <Link>Utilities\TrimmingTokenizer.cs</Link>
     </Compile>
-    <PackageReference Include="Microsoft.AspNetCore.WebHooks.Receivers" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
