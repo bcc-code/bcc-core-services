@@ -12,6 +12,7 @@
     <PackageTags>aspnetcore;webhook;receiver;members</PackageTags>
     <Version>1.0.1</Version>
     <PackageVersion>1.0.1</PackageVersion>
+    <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
