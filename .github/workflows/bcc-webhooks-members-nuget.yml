@@ -1,4 +1,4 @@
-name: DEV WebHooks Members
+name: WebHooks Members Nuget
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - "WebHooks/src/**"
-      - ".github/workflows/dev-bcc-webhooks-members.yml"
+      - ".github/bcc-webhooks-members-nuget.yml"
 
 env:
   NUGET_API_KEY: ${{secrets.NUGET_API_KEY}}
