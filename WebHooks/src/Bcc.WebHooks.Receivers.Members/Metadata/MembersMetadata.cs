@@ -1,5 +1,5 @@
 using Bcc.WebHooks.Receivers.Members.Filters;
-using Microsoft.AspNetCore.WebHooks.Metadata;
+using Bcc.WebHooks.Receivers.Metadata;
 
 namespace Bcc.WebHooks.Receivers.Members.Metadata
 {

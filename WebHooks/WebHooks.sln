@@ -5,7 +5,7 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bcc.WebHooks.Receivers.Members", "src\Bcc.WebHooks.Receivers.Members\Bcc.WebHooks.Receivers.Members.csproj", "{AA9CDFDF-9DC8-4BC2-91F8-2D20B430EE0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNetCore.WebHooks.Receivers", "src\Microsoft.AspNetCore.WebHooks.Receivers\Microsoft.AspNetCore.WebHooks.Receivers.csproj", "{12D53350-F719-43B5-A29F-1929D890B815}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bcc.WebHooks.Receivers", "src\Bcc.WebHooks.Receivers\Bcc.WebHooks.Receivers.csproj", "{12D53350-F719-43B5-A29F-1929D890B815}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{4EB58051-A330-4F49-AE02-99243AF5104C}"
 EndProject

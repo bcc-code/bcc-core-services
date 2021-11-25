@@ -10,8 +10,7 @@
     <Product>Bcc.WebHooks.Receivers.Members</Product>
     <Authors>Piotr Czyz</Authors>
     <PackageTags>aspnetcore;webhook;receiver;members</PackageTags>
-    <Version>1.0.2</Version>
-    <PackageVersion>1.0.4</PackageVersion>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
   </PropertyGroup>
 
@@ -24,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.AspNetCore.WebHooks.Receivers\Microsoft.AspNetCore.WebHooks.Receivers.csproj" />
+    <ProjectReference Include="..\Bcc.WebHooks.Receivers\Bcc.WebHooks.Receivers.csproj" />
   </ItemGroup>
 </Project>
  

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Bcc.WebHooks.Receivers.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bcc.WebHooks.Receivers.Members.Extensions

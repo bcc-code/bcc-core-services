@@ -1,7 +1,7 @@
 using System;
 using Bcc.WebHooks.Receivers.Members.Filters;
 using Bcc.WebHooks.Receivers.Members.Metadata;
-using Microsoft.AspNetCore.WebHooks.Metadata;
+using Bcc.WebHooks.Receivers.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
