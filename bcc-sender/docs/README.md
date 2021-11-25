@@ -66,11 +66,11 @@ body:
       FromEmailAddress = "test@bcc.no",
       BccEmailsAddresses = new string[]
       {
-        test@bcc.no
+        "test@bcc.no"
       },
       ReplyToEmailsAddresses = new[]
       {
-          "test@bcc.no"
+        "test@bcc.no"
       }
   };
 
