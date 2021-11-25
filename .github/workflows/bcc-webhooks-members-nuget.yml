@@ -25,7 +25,6 @@ jobs:
           
       - name: Add NuGet source 
         run: dotnet nuget add source --username bcc-code --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/bcc-code/index.json"
-
           
       - name: Restore dependencies
         run: dotnet restore WebHooks/src/Bcc.WebHooks.Receivers.Members
@@ -38,6 +37,18 @@ jobs:
         
       - name: Push
         run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Receivers.Members.1.0.2.nupkg" --source "github"
+
+      - name: Restore dependencies
+        run: dotnet restore WebHooks/src/Bcc.WebHooks.Test
+
+      - name: Build
+        run: dotnet build --no-restore WebHooks/src/Bcc.WebHooks.Test
+
+      - name: Pack
+        run: dotnet pack --configuration Release WebHooks/src/Bcc.WebHooks.Test
+
+      - name: Push
+        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Test.1.0.0.nupkg" --source "github"
 
   tag:
     runs-on: ubuntu-latest
