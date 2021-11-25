@@ -1,0 +1,54 @@
+name: WebHooks Members Nuget
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "WebHooks/src/**"
+      - ".github/bcc-webhooks-members-nuget.yml"
+
+env:
+  RUN_NUMBER: ${{github.run_number}}
+
+jobs:
+  publish:
+    name: build, pack & publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+          
+      - name: Add NuGet source 
+        run: dotnet nuget add source --username bcc-code --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/bcc-code/index.json"
+          
+      - name: Restore dependencies
+        run: dotnet restore WebHooks/src/Bcc.WebHooks.Receivers.Members
+        
+      - name: Build
+        run: dotnet build --no-restore WebHooks/src/Bcc.WebHooks.Receivers.Members
+
+      - name: Pack
+        run: dotnet pack --configuration Release WebHooks/src/Bcc.WebHooks.Receivers.Members --version-suffix ${{env.RUN_NUMBER}}
+        
+      - name: Push
+        run: dotnet nuget push "WebHooks/src/Bcc.WebHooks.Receivers.Members/bin/Release/Bcc.WebHooks.Receivers.Members.1.0.5-${{env.RUN_NUMBER}}.nupkg" --source "github"
+
+  tag:
+    runs-on: ubuntu-latest
+    needs: publish
+    continue-on-error: false
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          RELEASE_BRANCHES: master
+         
