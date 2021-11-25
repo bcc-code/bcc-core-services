@@ -30,7 +30,7 @@ jobs:
         run: dotnet build --no-restore WebHooks/src/Bcc.WebHooks.Receivers.Members
 
       - name: Pack
-        run: dotnet pack --configuration Release
+        run: dotnet pack --configuration Release WebHooks/src/Bcc.WebHooks.Receivers.Members
         
       - name: Push
         run: dotnet nuget push "bin/Release/Bcc.WebHooks.Receivers.Members.1.0.1.nupkg" --source "github"
