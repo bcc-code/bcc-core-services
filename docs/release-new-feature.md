@@ -1,4 +1,4 @@
-## Following checklist need to be completed for all new features
+## Following checklist need to be completed for all new features/modules
 
 ### CI/CD
 - every new module should start with CI/CD for all available
