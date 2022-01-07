@@ -45,3 +45,5 @@ Links:
 # Release processes
 
 Important thing to mention - all commits pushed to the master will result in a release to production. Changes pushed to the master need to be done ONLY via pull requests.
+
+See [Releasing a new feature](release-new-feature.md)
