@@ -1,1 +1,6 @@
-theme: jekyll-theme-cayman
+remote_theme: bcc-code/bcc-docs-theme
+title: Core Services
+plugins:
+- jekyll-remote-theme
+gems:
+- jekyll-seo-tag
