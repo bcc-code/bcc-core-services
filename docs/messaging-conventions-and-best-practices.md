@@ -13,3 +13,10 @@ https://github.com/piotrczyz/mass-transit-examples
 Ref.
 In case of we use RabbitMQ: 
 https://masstransit-project.com/usage/transports/rabbitmq.html#guidance
+
+# Handling failed messages from the Error queue
+In order to reply failed messages we can run ServiceBusExplorer from Windows or by using preview version of the explorer on Azure Portal.
+1. Click receive a message on an error queue
+1. Copy body and select text/plain as a Content Type on a destination queue
+4. add `content-type: application/vnd.masstransit+json` as a custom property
+5. Send
