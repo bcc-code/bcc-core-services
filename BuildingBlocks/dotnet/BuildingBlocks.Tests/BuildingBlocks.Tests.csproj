@@ -4,6 +4,8 @@
       <Title>BuildingBlocks.Tests</Title>
       <Authors>Piotr Czyż</Authors>
       <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
+      <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+      <Description>A package providing a boiler-plate implementation for running integtration tests in .NET projects.</Description>
     </PropertyGroup>
 
     <ItemGroup>
