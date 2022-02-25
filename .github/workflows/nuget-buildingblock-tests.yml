@@ -26,26 +26,31 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
            dotnet-version: 6.0.*
-  
-      - name: publish on version change
-        id: publish_nuget
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: BuildingBlocks/dotnet/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
-          PACKAGE_NAME: Bcc.BuildingBlocks.Tests
-          VERSION_STATIC: ${{ env.VERSION }}
-          
-          # Flag to toggle git tagging, enabled by default
-          # TAG_COMMIT: true
-          
-          # Format of the git tag, [*] gets replaced with actual version
-          # TAG_FORMAT: v*
-          
-          NUGET_KEY: ${{env.API_KEY}}
-          
-          # NuGet server uri hosting the packages, defaults to https://api.nuget.org
-          # NUGET_SOURCE: https://api.nuget.org
-          
-          # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
-          # INCLUDE_SYMBOLS: false
 
+      - name: Package
+        run: dotnet pack -p:PackageVersion=${{ env.VERSION }} -c Release -o . BuildingBlocks/dotnet/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
+      - name: Publish
+        run: dotnet nuget push *.nupkg -k ${{env.API_KEY}} -s https://api.nuget.org/v3/index.json
+#
+#      - name: publish on version change
+#        id: publish_nuget
+#        uses: brandedoutcast/publish-nuget@v2.5.5
+#        with:
+#          PROJECT_FILE_PATH: BuildingBlocks/dotnet/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
+#          PACKAGE_NAME: Bcc.BuildingBlocks.Tests
+#          VERSION_STATIC: ${{ env.VERSION }}
+#          
+#          # Flag to toggle git tagging, enabled by default
+#          # TAG_COMMIT: true
+#          
+#          # Format of the git tag, [*] gets replaced with actual version
+#          # TAG_FORMAT: v*
+#          
+#          NUGET_KEY: ${{env.API_KEY}}
+#          
+#          # NuGet server uri hosting the packages, defaults to https://api.nuget.org
+#          # NUGET_SOURCE: https://api.nuget.org
+#          
+#          # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
+#          # INCLUDE_SYMBOLS: false
+#
