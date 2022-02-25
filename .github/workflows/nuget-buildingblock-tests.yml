@@ -31,7 +31,7 @@ jobs:
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: BuildingBlocks/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
+          PROJECT_FILE_PATH: BuildingBlocks/dotnet/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
           PACKAGE_NAME: BuildingBlocks.Tests
           VERSION_STATIC: ${{ env.VERSION }}
           
