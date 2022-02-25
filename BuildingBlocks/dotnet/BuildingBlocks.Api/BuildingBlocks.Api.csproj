@@ -4,6 +4,7 @@
       <Authors>Piotr Czyz</Authors>
       <Description>A package used as a boiler-plate project for APIs.</Description>
       <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
+      <PackageId>Bcc.BuildingBlocks.Api</PackageId>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Microsoft.ApplicationInsights" Version="2.20.0" />
