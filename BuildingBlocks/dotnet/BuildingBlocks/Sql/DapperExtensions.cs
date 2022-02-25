@@ -1,6 +1,6 @@
 using Dapper;
 
-namespace BuildingBlocks.Dapper
+namespace BuildingBlocks.Sql
 {
 
     public static class DapperExtensions

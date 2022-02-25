@@ -1,7 +1,7 @@
 using System.Data;
 using Dapper;
 
-namespace BuildingBlocks.Dapper
+namespace BuildingBlocks.Sql
 {
 
     public class MemberIdConverter : SqlMapper.TypeHandler<MemberId>

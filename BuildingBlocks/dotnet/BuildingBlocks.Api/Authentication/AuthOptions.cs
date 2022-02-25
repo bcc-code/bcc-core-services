@@ -1,7 +1,8 @@
-namespace BuildingBlocks.Api.Authentication;
-
-public class AuthOptions
+namespace BuildingBlocks.Api.Authentication
 {
-    public string Audience { get; } = null!;
-    public string Authority { get; } = null!;
+    public class AuthOptions
+    {
+        public string Audience { get; } = null!;
+        public string Authority { get; } = null!;
+    }
 }

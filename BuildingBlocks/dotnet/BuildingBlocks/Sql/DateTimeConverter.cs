@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.SqlTypes;
 using Dapper;
 
-namespace BuildingBlocks.Dapper
+namespace BuildingBlocks.Sql
 {
     public class DateTimeConverter : SqlMapper.TypeHandler<DateTime>
     {

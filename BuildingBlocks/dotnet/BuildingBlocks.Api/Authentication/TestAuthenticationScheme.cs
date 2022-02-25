@@ -1,4 +1,4 @@
-namespace MyShare.Core.Api.Authentication
+namespace BuildingBlocks.Api.Authentication
 {
     public static class TestAuthenticationScheme
     {
