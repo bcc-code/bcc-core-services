@@ -1,4 +1,4 @@
-name: NuGet Building Blocks Tests
+name: NuGet Building Blocks Api
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
   pull_request:
     branches: [ master ]
     paths:
-      - "BuildingBlocks/dotnet/BuildingBlocks.Tests/**"
-      - ".github/workflows/nuget-buildingblock-tests.yml"
+      - "BuildingBlocks/dotnet/BuildingBlocks.Api/**"
+      - ".github/workflows/nuget-buildingblock-api.yml"
 
   workflow_dispatch:
 
@@ -31,8 +31,8 @@ jobs:
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: BuildingBlocks/dotnet/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
-          PACKAGE_NAME: Bcc.BuildingBlocks.Tests
+          PROJECT_FILE_PATH: BuildingBlocks/dotnet/BuildingBlocks.Api/BuildingBlocks.Api.csproj
+          PACKAGE_NAME: Bcc.BuildingBlocks.Api
           VERSION_STATIC: ${{ env.VERSION }}
           
           # Flag to toggle git tagging, enabled by default

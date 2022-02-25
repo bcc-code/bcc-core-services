@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <PropertyGroup>
+      <Title>Bcc.BuildingBlocks.Common</Title>
+      <Authors>Piotr Czyż</Authors>
+      <Description>A package with common resources for composing another BuildingBlocks projects.</Description>
+      <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.0.123" />
       <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
