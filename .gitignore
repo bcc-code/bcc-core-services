@@ -51,4 +51,4 @@ dlldata.c
 *.orig
 *.min.js
 *.min.css
-bcc-sender/api/.idea/.idea.bcc-sender-api
+**/.idea
