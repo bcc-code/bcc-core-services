@@ -3,6 +3,9 @@ name: NuGet Building Blocks Common
 on:
   push:
     branches: [ master ]
+    paths:
+      - "BuildingBlocks/dotnet/BuildingBlocks/**"
+      - ".github/workflows/nuget-buildingblock-common.yml"
     
   pull_request:
     branches: [ master ]

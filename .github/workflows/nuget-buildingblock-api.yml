@@ -3,6 +3,9 @@ name: NuGet Building Blocks Api
 on:
   push:
     branches: [ master ]
+    paths:
+      - "BuildingBlocks/dotnet/BuildingBlocks.Api/**"
+      - ".github/workflows/nuget-buildingblock-api.yml"
     
   pull_request:
     branches: [ master ]

@@ -3,6 +3,9 @@ name: NuGet Building Blocks Tests
 on:
   push:
     branches: [ master ]
+    paths:
+      - "BuildingBlocks/dotnet/BuildingBlocks.Tests/**"
+      - ".github/workflows/nuget-buildingblock-tests.yml"
     
   pull_request:
     branches: [ master ]
