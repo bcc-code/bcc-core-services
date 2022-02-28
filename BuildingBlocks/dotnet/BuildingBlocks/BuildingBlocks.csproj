@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <Title>Bcc.BuildingBlocks.Common</Title>
+      <Title>BccCode.BuildingBlocks.Common</Title>
       <Authors>Piotr Czyż</Authors>
       <Description>A package with common resources for composing another BuildingBlocks projects.</Description>
       <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
-      <PackageId>Bcc.BuildingBlocks.Common</PackageId>
+      <PackageId>BccCode.BuildingBlocks.Common</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
