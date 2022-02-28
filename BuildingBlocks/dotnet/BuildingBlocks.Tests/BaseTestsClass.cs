@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BuildingBlocks.Tests
 {
     [TestFixture]
-    public abstract class BaseTestsClass<TStartup> where TStartup: class
+    public abstract class BaseTestsClass<TStartup> where TStartup : class
     {
         protected CustomWebApplicationFactory<TStartup> Factory = null!;
         protected HttpClient Client = null!;

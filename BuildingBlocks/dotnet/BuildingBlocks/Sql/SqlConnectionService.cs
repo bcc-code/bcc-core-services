@@ -10,7 +10,7 @@ namespace BuildingBlocks.Sql
     public class SqlConnectionService : ISqlConnectionService
     {
         private readonly string _connectionString;
-        private SqlConnection _sqlConnection = null!;
+        private SqlConnection _sqlConnection;
 
         public SqlConnectionService(string connectionString)
         {
@@ -19,7 +19,7 @@ namespace BuildingBlocks.Sql
         
         public async Task<SqlConnection> GetAsync()
         {
-            if (_sqlConnection is not {State: ConnectionState.Closed})
+            if (_sqlConnection != null && _sqlConnection.State != ConnectionState.Closed)
             {
                 return _sqlConnection;
             }

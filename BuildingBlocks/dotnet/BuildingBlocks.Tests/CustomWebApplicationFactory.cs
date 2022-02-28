@@ -16,8 +16,8 @@ using Respawn;
 
 namespace BuildingBlocks.Tests
 {
-    public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup : class
+    public class CustomWebApplicationFactory<TEntryPoint>
+        : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
     {
         protected DateTime UtcNow = DateTime.UtcNow;
         
@@ -30,12 +30,12 @@ namespace BuildingBlocks.Tests
         public Personas Personas { get; set; } = new Personas();
         public SqlConnection SqlConnection { get; set; } = null!;
         private ISqlConnectionService SqlConnectionService { get; set; } = null!;
-        public ILogger<CustomWebApplicationFactory<TStartup>> Logger { get; set; } = null!;
+        public ILogger<CustomWebApplicationFactory<TEntryPoint>> Logger { get; set; } = null!;
 
         public IConfiguration Configuration { get; set; }
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            builder.UseContentRoot(".");
             builder.UseEnvironment(Environments.Development);
 
             builder.ConfigureTestServices(services =>
@@ -54,7 +54,7 @@ namespace BuildingBlocks.Tests
             builder.ConfigureServices(services =>
             {
                 var sp = services.BuildServiceProvider();
-                Logger = sp.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                Logger = sp.GetRequiredService<ILogger<CustomWebApplicationFactory<TEntryPoint>>>();
 
                 Configuration = sp.GetRequiredService<IConfiguration>();
                 var connectionString = Configuration.GetConnectionString("IntegrationTestsContext");
@@ -86,9 +86,11 @@ namespace BuildingBlocks.Tests
         {
             if (disposing)
             {
-                
                 var connectionString = Configuration.GetConnectionString("IntegrationTestsContext");
-                await _checkpoint.Reset(connectionString);
+                if (string.IsNullOrEmpty(connectionString) == false)
+                {
+                    await _checkpoint.Reset(connectionString);
+                }
             }
 
             base.Dispose(disposing);
