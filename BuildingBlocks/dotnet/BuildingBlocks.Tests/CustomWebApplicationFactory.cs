@@ -28,7 +28,7 @@ namespace BuildingBlocks.Tests
         private static HashSet<int> _memberIdsInDatabase = new();
         private List<Guid> Tenants { get; set; } = new List<Guid>();
         public Personas Personas { get; set; } = new Personas();
-        public SqlConnection SqlConnection { get; set; } = null!;
+        public SqlConnection? SqlConnection { get; set; } = null!;
         private ISqlConnectionService SqlConnectionService { get; set; } = null!;
         public ILogger<CustomWebApplicationFactory<TEntryPoint>> Logger { get; set; } = null!;
 

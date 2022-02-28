@@ -1,7 +1,7 @@
 using BuildingBlocks.Api.Authentication;
 using Microsoft.ApplicationInsights;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -73,5 +73,12 @@ namespace BuildingBlocks.Api.OpenApi
             services.AddApplicationInsightsTelemetry(options => options.ConnectionString = connectionString);
             services.AddSingleton<TelemetryClient>();
         }
+
+        public static void UseBccSwagger(this IApplicationBuilder app, OpenApiOptions options)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.ApiTitle} {options.ApiVersion}"); });
+        }
     }
+    
 }

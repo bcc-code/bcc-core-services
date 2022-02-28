@@ -5,19 +5,19 @@ namespace BuildingBlocks.Sql
 {
     public interface ISqlConnectionService
     {
-        Task<SqlConnection> GetAsync();
+        Task<SqlConnection?> GetAsync();
     }
     public class SqlConnectionService : ISqlConnectionService
     {
         private readonly string _connectionString;
-        private SqlConnection _sqlConnection;
+        private SqlConnection? _sqlConnection;
 
         public SqlConnectionService(string connectionString)
         {
             _connectionString = string.IsNullOrEmpty(connectionString) == false ? connectionString : throw new ArgumentNullException(connectionString);
         }
         
-        public async Task<SqlConnection> GetAsync()
+        public async Task<SqlConnection?> GetAsync()
         {
             if (_sqlConnection != null && _sqlConnection.State != ConnectionState.Closed)
             {
