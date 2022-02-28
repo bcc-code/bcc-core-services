@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <Title>Bcc.BuildingBlocks.Tests</Title>
+      <Title>BccCode.BuildingBlocks.Tests</Title>
       <Authors>Piotr Czyż</Authors>
       <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
       <Description>A package providing a boiler-plate implementation for running integration tests in .NET projects.</Description>
-      <PackageId>Bcc.BuildingBlocks.Tests</PackageId>
+      <PackageId>BccCode.BuildingBlocks.Tests</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
