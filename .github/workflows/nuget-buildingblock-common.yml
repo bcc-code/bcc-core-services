@@ -35,9 +35,9 @@ jobs:
         run: dotnet pack -p:PackageVersion=${{ env.VERSION }} -c Release -o . ${{ env.CSPROJ_PATH }}
 
       - name: Publish
-        run: dotnet nuget push *.nupkg -k ${{env.API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push *.nupkg -k ${{env.API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
 
-  
+
 #      - name: publish on version change
 #        id: publish_nuget
 #        uses: brandedoutcast/publish-nuget@v2.5.5
