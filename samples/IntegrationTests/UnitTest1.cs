@@ -1,3 +1,5 @@
+using System.Net;
+using System.Threading.Tasks;
 using BuildingBlocks.Tests;
 using NUnit.Framework;
 using WebApi;
@@ -8,9 +10,11 @@ namespace IntegrationTests
     {
 
         [Test]
-        public void Test1()
+        public async Task Test1()
         {
-            Assert.Pass();
+            var response = await Client.GetAsync("/WeatherForecast");
+            
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
     }

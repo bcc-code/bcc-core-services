@@ -30,41 +30,29 @@ namespace BuildingBlocks.Api.OpenApi
                 c.SwaggerDoc(options.ApiVersion,
                     new OpenApiInfo {Title = options.ApiTitle, Version = options.ApiVersion});
 
-                switch (options.AuthenticationType)
-                {
-                    case WebAuthenticationType.Test:
-                    {
-                        break;
-                    }
-
-                    default:
-                    {
-                        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                        {
-                            Description =
-                                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                            Name = "Authorization",
-                            In = ParameterLocation.Header,
-                            Type = SecuritySchemeType.ApiKey
-                        });
-
-                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                        {
-                            {
-                                new OpenApiSecurityScheme
-                                {
-                                    Reference = new OpenApiReference
-                                    {
-                                        Type = ReferenceType.SecurityScheme,
-                                        Id = "Bearer"
-                                    }
-                                },
-                                new string[] { }
-                            }
-                        });
-                        break;
-                    }
-                }
+                // c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                // {
+                //     Description =
+                //         "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                //     Name = "Authorization",
+                //     In = ParameterLocation.Header,
+                //     Type = SecuritySchemeType.ApiKey
+                // });
+                //
+                // c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                // {
+                //     {
+                //         new OpenApiSecurityScheme
+                //         {
+                //             Reference = new OpenApiReference
+                //             {
+                //                 Type = ReferenceType.SecurityScheme,
+                //                 Id = "Bearer"
+                //             }
+                //         },
+                //         new string[] { }
+                //     }
+                // });
             });
         }
 
