@@ -7,7 +7,7 @@ namespace BuildingBlocks.Sql
     {
         Task<SqlConnection?> GetAsync();
     }
-    public class SqlConnectionService : ISqlConnectionService
+    public class SqlConnectionService : ISqlConnectionService, IDisposable, IAsyncDisposable
     {
         private readonly string _connectionString;
         private SqlConnection? _sqlConnection;
@@ -37,10 +37,18 @@ namespace BuildingBlocks.Sql
 
             return _sqlConnection;
         }
-        //
-        // public void Dispose()
-        // {
-        //     _sqlConnection?.Dispose();
-        // }
+        
+        public void Dispose()
+        {
+            _sqlConnection?.Dispose();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_sqlConnection != null)
+            {
+                await _sqlConnection.DisposeAsync();
+            }
+        }
     }
 }
