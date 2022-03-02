@@ -1,5 +1,6 @@
 using BuildingBlocks.Api.Authentication;
 using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,18 +10,36 @@ namespace BuildingBlocks.Api.OpenApi
 {
     public static class BccCoreApiExtensions
     {
-        public static void AddBccAuthentication(this IServiceCollection services, AuthOptions authOptions)
+        public static void AddBccAuthentication(
+            this IServiceCollection services, 
+            AuthOptions authOptions, 
+            OpenApiOptions openApiOptions
+        )
         {
-            services.AddAuthentication(o =>
-                {
-                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(o =>
-                {
-                    o.Authority = $"https://{authOptions.Authority}";
-                    o.Audience = authOptions.Audience;
-                });
+            if (openApiOptions.AuthenticationType is WebAuthenticationType.Test or WebAuthenticationType.LoadTest)
+            {
+                services.AddAuthentication(o =>
+                    {
+                        o.DefaultAuthenticateScheme = TestAuthenticationScheme.AuthenticationScheme;
+                        o.DefaultChallengeScheme = TestAuthenticationScheme.AuthenticationScheme;
+                    })
+                    .AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(
+                        TestAuthenticationScheme.AuthenticationScheme, o => { });
+            }
+
+            else
+            {
+                services.AddAuthentication(o =>
+                    {
+                        o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                    .AddJwtBearer(o =>
+                    {
+                        o.Authority = $"https://{authOptions.Authority}";
+                        o.Audience = authOptions.Audience;
+                    });
+            }
         }
 
         public static void AddBccSwagger(this IServiceCollection services, OpenApiOptions options)
@@ -30,29 +49,42 @@ namespace BuildingBlocks.Api.OpenApi
                 c.SwaggerDoc(options.ApiVersion,
                     new OpenApiInfo {Title = options.ApiTitle, Version = options.ApiVersion});
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                switch (options.AuthenticationType)
                 {
-                    Description =
-                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                    case WebAuthenticationType.Test:
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] { }
+                        c.OperationFilter<TestHeaderFilter>();
+                        break;
                     }
-                });
+                    
+                    default:
+                    {
+                        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                        {
+                            Description =
+                                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                            Name = "Authorization",
+                            In = ParameterLocation.Header,
+                            Type = SecuritySchemeType.ApiKey
+                        });
+
+                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        {
+                            {
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                    {
+                                        Type = ReferenceType.SecurityScheme,
+                                        Id = "Bearer"
+                                    }
+                                },
+                                new string[] { }
+                            }
+                        });
+                        break;
+                    }
+                }
             });
         }
 
