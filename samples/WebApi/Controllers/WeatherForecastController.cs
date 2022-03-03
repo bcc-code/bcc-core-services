@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuildingBlocks.Api.OpenApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,8 +19,18 @@ namespace WebApi.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, OpenApiOptions apiOptions)
         {
+            if (apiOptions == null)
+            {
+                throw new ArgumentNullException(nameof(apiOptions));
+            }
+
+            if (string.IsNullOrEmpty(apiOptions.Title) || string.IsNullOrEmpty(apiOptions.Version) ||
+                string.IsNullOrEmpty(apiOptions.AuthenticationType))
+            {
+                throw new ArgumentNullException();
+            }
             _logger = logger;
         }
 

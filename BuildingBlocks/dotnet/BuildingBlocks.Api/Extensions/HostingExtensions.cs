@@ -1,4 +1,6 @@
 using System.Reflection;
+using BuildingBlocks.Api.Authentication;
+using BuildingBlocks.Api.OpenApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 

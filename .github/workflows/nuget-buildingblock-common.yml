@@ -17,7 +17,6 @@ on:
 
 env:
   API_KEY: ${{ secrets.NUGET_API_KEY }}
-  VERSION: 5.0.0.${{ github.run_number}}
   CSPROJ_PATH: BuildingBlocks/dotnet/BuildingBlocks/BuildingBlocks.csproj
 
 jobs:
@@ -30,6 +29,14 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
            dotnet-version: 6.0.*
+
+      - name: Set package version
+        run: |
+        if [[ $BRANCH == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+           echo "VERSION=5.0.0.${{ github.run_number}}" >> "$GITHUB_ENV"
+        else
+           echo "VERSION=5.0.0.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
+        fi
       
       - name: Package
         run: dotnet pack -p:PackageVersion=${{ env.VERSION }} -c Release -o . ${{ env.CSPROJ_PATH }}

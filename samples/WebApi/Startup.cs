@@ -14,16 +14,7 @@ namespace WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            OpenApiOptions = new OpenApiOptions
-            {
-                ApiTitle = "WebApi v1",
-                ApiVersion = "/swagger/v1/swagger.json",
-                AuthenticationType = WebAuthenticationType.Auth0
-            };
         }
-
-        public OpenApiOptions OpenApiOptions { get; set; }
 
         public IConfiguration Configuration { get; }
 
@@ -34,13 +25,13 @@ namespace WebApi
             
             services.InitializeDapper(connectionString);
             services.AddControllers();
-            services.AddBccSwagger(OpenApiOptions);
+            services.AddBccSwagger(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseBccSwagger(OpenApiOptions);
+            app.UseBccSwagger(Configuration);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
