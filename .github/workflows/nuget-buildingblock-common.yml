@@ -32,11 +32,11 @@ jobs:
 
       - name: Set package version
         run: |
-        if [[ $BRANCH == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
-           echo "VERSION=5.0.0.${{ github.run_number}}" >> "$GITHUB_ENV"
-        else
-           echo "VERSION=5.0.0.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
-        fi
+          if [[ $BRANCH == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+             echo "VERSION=5.0.0.${{ github.run_number}}" >> "$GITHUB_ENV"
+          else
+             echo "VERSION=5.0.0.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
+          fi
       
       - name: Package
         run: dotnet pack -p:PackageVersion=${{ env.VERSION }} -c Release -o . ${{ env.CSPROJ_PATH }}
