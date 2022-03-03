@@ -27,8 +27,8 @@ namespace BuildingBlocks.Api.OpenApi
                 throw new ArgumentNullException(nameof(authOptions.Authority));
             }
             services.AddSingleton(s => authOptions);
-            
-            var openApiOptions = configuration.GetSection("Api").Get<OpenApiOptions>();
+
+            var openApiOptions = ValidateOpenApiOptions(configuration);
             
             if (openApiOptions.AuthenticationType is WebAuthenticationType.Test or WebAuthenticationType.LoadTest)
             {
@@ -58,23 +58,7 @@ namespace BuildingBlocks.Api.OpenApi
 
         public static void AddBccSwagger(this IServiceCollection services, IConfiguration configuration)
         {
-            var options = configuration.GetSection("Api").Get<OpenApiOptions>();
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(OpenApiOptions));
-            }
-            if (string.IsNullOrEmpty(options.Title))
-            {
-                throw new ArgumentNullException(nameof(options.Title));
-            }
-            if (string.IsNullOrEmpty(options.Version))
-            {
-                throw new ArgumentNullException(nameof(options.Version));
-            }
-            if (string.IsNullOrEmpty(options.AuthenticationType))
-            {
-                throw new ArgumentNullException(nameof(options.AuthenticationType));
-            }
+            var options = ValidateOpenApiOptions(configuration);
             services.AddSingleton(s => options);
             
             services.AddSwaggerGen(c =>
@@ -129,10 +113,33 @@ namespace BuildingBlocks.Api.OpenApi
 
         public static void UseBccSwagger(this IApplicationBuilder app, IConfiguration configuration)
         {
-            var options = configuration.GetSection("Api").Get<OpenApiOptions>();
+            var options = ValidateOpenApiOptions(configuration);
             
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.Title} {options.Version}"); });
+        }
+
+        private static OpenApiOptions ValidateOpenApiOptions(IConfiguration configuration)
+        {
+            var options = configuration.GetSection("Api").Get<OpenApiOptions>();
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(OpenApiOptions));
+            }
+            if (string.IsNullOrEmpty(options.Title))
+            {
+                throw new ArgumentNullException(nameof(options.Title));
+            }
+            if (string.IsNullOrEmpty(options.Version))
+            {
+                throw new ArgumentNullException(nameof(options.Version));
+            }
+            if (string.IsNullOrEmpty(options.AuthenticationType))
+            {
+                throw new ArgumentNullException(nameof(options.AuthenticationType));
+            }
+
+            return options;
         }
     }
 }
