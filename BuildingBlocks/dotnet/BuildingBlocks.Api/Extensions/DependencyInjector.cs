@@ -38,7 +38,8 @@ namespace BuildingBlocks.Api.Extensions
             services.AddBccTelemetry(configuration.GetConnectionString("ApplicationInsights"));
             
             services.AddBccAuthentication(configuration);
-
+            
+            services.RegisterCors(configuration);
         }
 
         private static void RegisterCors(this IServiceCollection services, IConfiguration configuration)
