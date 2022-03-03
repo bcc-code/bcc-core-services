@@ -24,7 +24,7 @@ namespace BuildingBlocks.Api.Logging
 
         public string InstrumentationKey()
         {
-            return _configuration["applicationInsights:instrumentationKey"];
+            return _configuration.GetConnectionString("ApplicationInsights");
         }
 
         public string SystemVersion()
