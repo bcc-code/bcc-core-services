@@ -1,3 +1,5 @@
+Maintainer of NuGet packages: BCC Fundraising Team
+
 # Semantic versioning
 The BuildingBlocks roughly adheres to Semantic Versioning (SemVer), adopting the use of MAJOR.MINOR.PATCH versioning (with some adaptions), using the various parts of the version number to describe the degree and type of change.
 
