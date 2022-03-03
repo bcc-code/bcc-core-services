@@ -32,9 +32,9 @@ jobs:
            
       - name: Set package version
         run: |
-          echo $BRANCH
+          echo $GITHUB_REF
           echo $GITHUB_EVENT_NAME
-          if [[ $BRANCH == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+          if [[ $GITHUB_REF == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
               echo "VERSION=5.0.0.${{ github.run_number}}" >> "$GITHUB_ENV"
           else
               echo "VERSION=5.0.0.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
