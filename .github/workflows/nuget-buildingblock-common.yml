@@ -1,4 +1,4 @@
-name: NuGet Building Blocks Common
+name: NuGet BuildingBlocks Common
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Set package version
         run: |
-          if [[ $BRANCH == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/master' && $GITHUB_EVENT_NAME == 'push' ]]; then
              echo "VERSION=5.0.0.${{ github.run_number}}" >> "$GITHUB_ENV"
           else
              echo "VERSION=5.0.0.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
