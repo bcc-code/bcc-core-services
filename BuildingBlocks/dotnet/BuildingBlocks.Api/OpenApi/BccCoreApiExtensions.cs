@@ -3,6 +3,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -10,12 +11,25 @@ namespace BuildingBlocks.Api.OpenApi
 {
     public static class BccCoreApiExtensions
     {
-        public static void AddBccAuthentication(
-            this IServiceCollection services, 
-            AuthOptions authOptions, 
-            OpenApiOptions openApiOptions
-        )
+        public static void AddBccAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            var authOptions = configuration.GetSection("Auth").Get<AuthOptions>();
+            if (authOptions == null)
+            {
+                throw new ArgumentNullException(nameof(AuthOptions));
+            }
+            if (string.IsNullOrEmpty(authOptions.Audience))
+            {
+                throw new ArgumentNullException(nameof(authOptions.Audience));
+            }   
+            if (string.IsNullOrEmpty(authOptions.Authority))
+            {
+                throw new ArgumentNullException(nameof(authOptions.Authority));
+            }
+            services.AddSingleton(s => authOptions);
+
+            var openApiOptions = ValidateOpenApiOptions(configuration);
+            
             if (openApiOptions.AuthenticationType is WebAuthenticationType.Test or WebAuthenticationType.LoadTest)
             {
                 services.AddAuthentication(o =>
@@ -42,12 +56,15 @@ namespace BuildingBlocks.Api.OpenApi
             }
         }
 
-        public static void AddBccSwagger(this IServiceCollection services, OpenApiOptions options)
+        public static void AddBccSwagger(this IServiceCollection services, IConfiguration configuration)
         {
+            var options = ValidateOpenApiOptions(configuration);
+            services.AddSingleton(s => options);
+            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(options.ApiVersion,
-                    new OpenApiInfo {Title = options.ApiTitle, Version = options.ApiVersion});
+                c.SwaggerDoc(options.Version,
+                    new OpenApiInfo {Title = options.Title, Version = options.Version});
 
                 switch (options.AuthenticationType)
                 {
@@ -94,11 +111,35 @@ namespace BuildingBlocks.Api.OpenApi
             services.AddSingleton<TelemetryClient>();
         }
 
-        public static void UseBccSwagger(this IApplicationBuilder app, OpenApiOptions options)
+        public static void UseBccSwagger(this IApplicationBuilder app, IConfiguration configuration)
         {
+            var options = ValidateOpenApiOptions(configuration);
+            
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.ApiTitle} {options.ApiVersion}"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.Title} {options.Version}"); });
+        }
+
+        private static OpenApiOptions ValidateOpenApiOptions(IConfiguration configuration)
+        {
+            var options = configuration.GetSection("Api").Get<OpenApiOptions>();
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(OpenApiOptions));
+            }
+            if (string.IsNullOrEmpty(options.Title))
+            {
+                throw new ArgumentNullException(nameof(options.Title));
+            }
+            if (string.IsNullOrEmpty(options.Version))
+            {
+                throw new ArgumentNullException(nameof(options.Version));
+            }
+            if (string.IsNullOrEmpty(options.AuthenticationType))
+            {
+                throw new ArgumentNullException(nameof(options.AuthenticationType));
+            }
+
+            return options;
         }
     }
-    
 }
