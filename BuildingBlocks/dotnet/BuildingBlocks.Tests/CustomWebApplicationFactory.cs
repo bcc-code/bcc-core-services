@@ -38,13 +38,6 @@ namespace BuildingBlocks.Tests
             builder.UseContentRoot(".");
             builder.UseEnvironment(Environments.Development);
 
-            builder.ConfigureTestServices(services =>
-            {
-                services.AddAuthentication(TestAuthenticationScheme.AuthenticationScheme)
-                    .AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(
-                        TestAuthenticationScheme.AuthenticationScheme, options => { });
-            });
-
             builder.ConfigureLogging(o =>
             {
                 o.AddDebug();
