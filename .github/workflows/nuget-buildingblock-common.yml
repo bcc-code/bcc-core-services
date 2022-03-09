@@ -18,7 +18,7 @@ on:
 env:
   API_KEY: ${{ secrets.NUGET_API_KEY }}
   CSPROJ_PATH: BuildingBlocks/dotnet/BuildingBlocks/BuildingBlocks.csproj
-
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,15 +29,23 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
            dotnet-version: 6.0.*
-
+           
+      inputs:
+        varFilePath:
+          required: false
+          default: ./.github/version.env
+          
       - name: Set package version
         run: |
           if [[ $GITHUB_REF == 'refs/heads/master' && $GITHUB_EVENT_NAME == 'push' ]]; then
-             echo "VERSION=5.0.0.${{ github.run_number}}" >> "$GITHUB_ENV"
+             echo "VERSION=${{ env.VERSION_MAIN }}.${{ github.run_number}}" >> "$GITHUB_ENV"
           else
-             echo "VERSION=5.0.0.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
+             echo "VERSION=${{ env.VERSION_MAIN }}.${{ github.run_number}}-beta" >> "$GITHUB_ENV"
           fi
-      
+
+      - name: Run Tests
+        run: dotnet test ${{ env.CSPROJ_PATH }}
+
       - name: Package
         run: dotnet pack -p:PackageVersion=${{ env.VERSION }} -c Release -o . ${{ env.CSPROJ_PATH }}
 
