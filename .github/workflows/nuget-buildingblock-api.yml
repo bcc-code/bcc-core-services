@@ -30,10 +30,10 @@ jobs:
         with:
            dotnet-version: 6.0.*
             
-      inputs:
-        varFilePath:
-          required: false
-          default: ./.github/version.env
+      - name: Set Environment Variables
+        uses: ./.github/actions/setvars
+        with:
+          varFilePath: ./.github/variables/version.env
           
       - name: Set package version
         run: |

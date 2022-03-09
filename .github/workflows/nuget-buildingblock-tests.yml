@@ -18,7 +18,7 @@ on:
 env:
   API_KEY: ${{ secrets.NUGET_API_KEY }}
   CSPROJ_PATH: BuildingBlocks/dotnet/BuildingBlocks.Tests/BuildingBlocks.Tests.csproj
-
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,11 +30,11 @@ jobs:
         with:
            dotnet-version: 6.0.*
            
-      inputs:
-        varFilePath:
-        required: false
-        default: ./.github/version.env
-        
+      - name: Set Environment Variables
+        uses: ./.github/actions/setvars
+        with:
+          varFilePath: ./.github/variables/version.env
+          
       - name: Set package version
         run: |
           if [[ $GITHUB_REF == 'refs/heads/master' && $GITHUB_EVENT_NAME == 'push' ]]; then
