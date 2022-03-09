@@ -58,6 +58,7 @@ namespace BuildingBlocks.Api.Extensions
                         builder
                             .WithOrigins(origins.Split(','))
                             .AllowAnyHeader()
+                            .AllowCredentials()
                             .AllowAnyMethod();
                     });
             });
