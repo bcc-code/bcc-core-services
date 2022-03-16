@@ -1,4 +1,5 @@
 using Bcc.Tenants.Contracts;
+using Bcc.Tenants.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bcc.Tenants.Controllers;
@@ -7,21 +8,18 @@ namespace Bcc.Tenants.Controllers;
 [Route("[controller]")]
 public class TenantsController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<TenantsController> _logger;
+    private readonly ITenantsQueries _tenantsQueries;
 
-    public TenantsController(ILogger<TenantsController> logger)
+    public TenantsController(ILogger<TenantsController> logger, ITenantsQueries tenantsQueries)
     {
         _logger = logger;
+        _tenantsQueries = tenantsQueries;
     }
 
     [HttpGet]
-    public IEnumerable<Tenant> Get()
+    public async Task<IList<Tenant>> Get()
     {
-        return new List<Tenant>();
+        return await _tenantsQueries.GetAllTenants();
     }
 }
