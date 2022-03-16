@@ -1,10 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Title>Bcc.Tenants.Contracts</Title>
+        <Authors>Piotr Czyż</Authors>
         <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <Description>A package consiting of contracts for Bcc.Tenants</Description>
+        <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
+        <PackageId>Bcc.Tenants.Contracts</PackageId>
     </PropertyGroup>
+
 
     <ItemGroup>
       <PackageReference Include="BccCode.BuildingBlocks.Common" Version="5.0.1.52" />
