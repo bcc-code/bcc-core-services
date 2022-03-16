@@ -1,5 +1,8 @@
+using Bcc.Tenants.MongoDB;
+
 namespace Bcc.Tenants.Contracts;
 
+[CollectionName("tenants")]
 public class Tenant
 {
     public Guid Id { get; set; }
