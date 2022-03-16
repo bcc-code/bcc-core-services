@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Title>Bcc.Tenants.Contracts</Title>
+        <Title>BccPlatform.Tenants.Contracts</Title>
         <Authors>Piotr Czyż</Authors>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
@@ -9,7 +9,7 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <Description>A package consiting of contracts for Bcc.Tenants</Description>
         <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
-        <PackageId>Bcc.Tenants.Contracts</PackageId>
+        <PackageId>BccPlatform.Tenants.Contracts</PackageId>
     </PropertyGroup>
 
 
