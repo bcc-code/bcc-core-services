@@ -11,4 +11,5 @@ public class TestUser : IUser
 
     public List<int> FamilyIds { get; } = new List<int>();
     public int? SpouseId { get; }
+    public string OrganizationIdsWithAccess { get; }
 }
