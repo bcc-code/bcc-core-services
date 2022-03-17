@@ -1,7 +1,7 @@
 name: DEV Tenants API
 
 on:
-  pull-requet:
+  pull-request:
     branches:
       [ master ]
     paths:
