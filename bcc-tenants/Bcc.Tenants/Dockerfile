@@ -8,8 +8,7 @@ WORKDIR /src
 COPY ["bcc-tenants/Bcc.Tenants/Bcc.Tenants.csproj", "Bcc.Tenants/"]
 RUN dotnet restore "Bcc.Tenants/Bcc.Tenants.csproj"
 
-RUN ls -l
-COPY bcc-tenants/. ./
+COPY . .
 WORKDIR "/src/Bcc.Tenants"
 RUN dotnet build "Bcc.Tenants.csproj" -c Release -o /app/build
 
