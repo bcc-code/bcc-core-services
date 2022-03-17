@@ -3,7 +3,7 @@ name: DEV Tenants API
 on:
   pull-requet:
     branches:
-      [ main ]
+      [ master ]
     paths:
       - bcc-tenants/**
       - .github/workflows/tenant-api-dev.yml  
