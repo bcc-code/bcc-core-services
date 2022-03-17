@@ -1,12 +1,12 @@
 name: DEV Tenants API
 
 on:
-  push:
+  pull-requet:
     branches:
       [ main ]
     paths:
       - bcc-tenants/**
-      - .github/workflows/tenant-api-dev.yml
+      - .github/workflows/tenant-api-dev.yml  
   workflow_dispatch:
 
 env:
