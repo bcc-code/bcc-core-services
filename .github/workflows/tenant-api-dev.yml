@@ -79,7 +79,7 @@ jobs:
                 --enable-dapr \
                 --dapr-app-port ${{env.DAPR_PORT}} \
                 --dapr-app-id ${{env.APP_NAME}} \
-#                --dapr-components ${{env.COMPONENTS_PATH}} \
+                --dapr-components ${{env.COMPONENTS_PATH}} \
                 --debug
             else
               az containerapp create -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} \
@@ -93,6 +93,6 @@ jobs:
                 --enable-dapr \
                 --dapr-app-port ${{env.DAPR_PORT}} \
                 --dapr-app-id ${{env.APP_NAME}} \
-#                --dapr-components ${{env.COMPONENTS_PATH}} \
+                --dapr-components ${{env.COMPONENTS_PATH}} \
                 --debug
             fi
