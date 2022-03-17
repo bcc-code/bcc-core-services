@@ -1,4 +1,4 @@
-using Bcc.Tenants.MongoDB;
+using BuildingBlocks.MongoDB;
 
 namespace Bcc.Tenants.Contracts;
 
