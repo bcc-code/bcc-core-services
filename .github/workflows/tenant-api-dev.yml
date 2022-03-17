@@ -18,7 +18,8 @@ env:
   COMPONENTS_PATH: dapr-components/statestore.yaml
   REGISTRY_USERNAME: ${{ secrets.DEV_REGISTRY_USERNAME }}
   REGISTRY_PASSWORD: ${{ secrets.DEV_REGISTRY_PASSWORD }}
-  AZURE_CREDENTIALS: ${{ secrets.DEV_AZURE_CREDENTIALS }}    
+  AZURE_CREDENTIALS: ${{ secrets.DEV_AZURE_CREDENTIALS }}
+  CONTAINER_REGISTRY: bccplatformdev.azurecr.io
 
 jobs:
   build:
@@ -34,7 +35,7 @@ jobs:
       - name: Log in to container registry
         uses: docker/login-action@v1
         with:
-          registry: daprimages.azurecr.io
+          registry: ${{ env.CONTAINER_REGISTRY }}
           username: ${{ env.REGISTRY_USERNAME }}
           password: ${{ env.REGISTRY_PASSWORD }}
 
@@ -45,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: daprimages.azurecr.io/${{env.APP_NAME}}:${{ github.sha }}
+          tags: ${{ env.CONTAINER_REGISTRY }}/${{env.APP_NAME}}:${{ github.sha }}
           context: ${{env.APP_PATH}}
           file: ${{env.APP_PATH}}/Dockerfile
 
@@ -73,8 +74,8 @@ jobs:
             if [[ ${#existing_app} -gt 0 ]]
             then
               az containerapp update -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} \
-                -i daprimages.azurecr.io/${{env.APP_NAME}}:${{ github.sha }} \
-                --registry-login-server daprimages.azurecr.io \
+                -i ${{ env.CONTAINER_REGISTRY }}/${{env.APP_NAME}}:${{ github.sha }} \
+                --registry-login-server ${{ env.CONTAINER_REGISTRY }} \
                 --registry-username  ${{ env.REGISTRY_USERNAME }} \
                 --registry-password ${{ env.REGISTRY_PASSWORD }} \
                 --min-replicas 1 \
@@ -87,8 +88,8 @@ jobs:
             else
               az containerapp create -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} \
                 --environment ${{env.APP_ENV_NAME}} \
-                -i daprimages.azurecr.io/${{env.APP_NAME}}:${{ github.sha }} \
-                --registry-login-server daprimages.azurecr.io \
+                -i ${{ env.CONTAINER_REGISTRY }}/${{env.APP_NAME}}:${{ github.sha }} \
+                --registry-login-server ${{ env.CONTAINER_REGISTRY }} \
                 --registry-username  ${{ env.REGISTRY_USERNAME }} \
                 --registry-password ${{ env.REGISTRY_PASSWORD }} \
                 --min-replicas 1 \
