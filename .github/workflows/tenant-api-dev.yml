@@ -16,6 +16,9 @@ env:
   RESOURCE_GROUP: BCC-Platform-Dev
   DAPR_PORT: 3500
   COMPONENTS_PATH: dapr-components/statestore.yaml
+  REGISTRY_USERNAME: ${{ secrets.DEV_REGISTRY_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.DEV_REGISTRY_PASSWORD }}
+  AZURE_CREDENTIALS: ${{ secrets.DEV_AZURE_CREDENTIALS }}    
 
 jobs:
   build:
@@ -32,8 +35,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: daprimages.azurecr.io
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ env.REGISTRY_PASSWORD }}
 
       - name: show folder structure
         run: ls
@@ -57,7 +60,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ env.AZURE_CREDENTIALS }}
 
       - name: Create or update app in azure
         uses: azure/CLI@v1
@@ -72,8 +75,8 @@ jobs:
               az containerapp update -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} \
                 -i daprimages.azurecr.io/${{env.APP_NAME}}:${{ github.sha }} \
                 --registry-login-server daprimages.azurecr.io \
-                --registry-username  ${{ secrets.REGISTRY_USERNAME }} \
-                --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
+                --registry-username  ${{ env.REGISTRY_USERNAME }} \
+                --registry-password ${{ env.REGISTRY_PASSWORD }} \
                 --min-replicas 1 \
                 --max-replicas 1 \
                 --enable-dapr \
@@ -86,8 +89,8 @@ jobs:
                 --environment ${{env.APP_ENV_NAME}} \
                 -i daprimages.azurecr.io/${{env.APP_NAME}}:${{ github.sha }} \
                 --registry-login-server daprimages.azurecr.io \
-                --registry-username  ${{ secrets.REGISTRY_USERNAME }} \
-                --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
+                --registry-username  ${{ env.REGISTRY_USERNAME }} \
+                --registry-password ${{ env.REGISTRY_PASSWORD }} \
                 --min-replicas 1 \
                 --max-replicas 1 \
                 --enable-dapr \
