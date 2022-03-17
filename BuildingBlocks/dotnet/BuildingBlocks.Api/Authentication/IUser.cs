@@ -9,6 +9,6 @@ namespace BuildingBlocks.Api.Authentication
         string GetClaimsIdentity(string claim);
         List<int> FamilyIds { get; }
         int? SpouseId { get; }
-        public string OrganizationIdsWithAccess { get; }
+        string OrganizationIdsWithAccess { get; }
     }
 }
