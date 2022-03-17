@@ -16,7 +16,7 @@ env:
   APP_ENV_NAME: bcc-platform-env-dev
   RESOURCE_GROUP: BCC-Platform-Dev
   DAPR_PORT: 3500
-  COMPONENTS_PATH: dapr-components/statestore.yaml
+  COMPONENTS_PATH: ../dapr-components/statestore.yaml
   REGISTRY_USERNAME: ${{ secrets.DEV_REGISTRY_USERNAME }}
   REGISTRY_PASSWORD: ${{ secrets.DEV_REGISTRY_PASSWORD }}
   AZURE_CREDENTIALS: ${{ secrets.DEV_AZURE_CREDENTIALS }}
