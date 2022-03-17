@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
 WORKDIR /src
-COPY ["Bcc.Tenants/Bcc.Tenants.csproj", "Bcc.Tenants"]
+COPY ["Bcc.Tenants/Bcc.Tenants.csproj", "Bcc.Tenants/"]
 
 RUN dotnet restore "Bcc.Tenants/Bcc.Tenants.csproj"
 
