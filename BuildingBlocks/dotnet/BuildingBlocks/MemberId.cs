@@ -2,6 +2,9 @@ namespace BuildingBlocks
 {
     public class MemberId : ValueObject<MemberId>
     {
+        public MemberId ()
+        {
+        }
         private MemberId(int value)
         {
             if (value == default)
