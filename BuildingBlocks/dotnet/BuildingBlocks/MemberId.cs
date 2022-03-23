@@ -2,9 +2,9 @@ namespace BuildingBlocks
 {
     public class MemberId : ValueObject<MemberId>
     {
-        public MemberId ()
+        public MemberId (int memberid)
         {
-            
+            MemberId = memberid;
         }
         private MemberId(int value)
         {
