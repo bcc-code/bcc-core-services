@@ -4,6 +4,7 @@ namespace BuildingBlocks
     {
         public MemberId ()
         {
+            
         }
         private MemberId(int value)
         {
