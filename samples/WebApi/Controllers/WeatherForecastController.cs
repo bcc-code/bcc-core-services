@@ -35,6 +35,7 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -46,6 +47,13 @@ namespace WebApi.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [Authorize]
+        [HttpGet("/Auth")]
+        public ActionResult Auth()
+        {
+            return Ok();
         }
     }
 }

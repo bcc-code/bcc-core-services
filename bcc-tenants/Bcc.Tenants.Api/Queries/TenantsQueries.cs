@@ -2,7 +2,7 @@ using Bcc.Tenants.Contracts;
 using BuildingBlocks.MongoDB;
 using MongoDB.Driver;
 
-namespace Bcc.Tenants.Queries;
+namespace Bcc.Tenants.Api.Queries;
 
 public interface ITenantsQueries
 {
@@ -19,6 +19,7 @@ public class TenantsQueries : ITenantsQueries
         Collection = mongoService.GetCollection<Tenant>();
     }
 
+    [Obsolete]
     public async Task<List<Tenant>> GetAllTenants()
     {
         var tenants = await Collection.FindAsync(tenant => true);

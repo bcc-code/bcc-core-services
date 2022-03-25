@@ -25,8 +25,6 @@ namespace WebApi
             services.AddTransient<IUser, TestUser>();
             
             services.ConfigureBlocks(Configuration, Environment);
-            
-            services.AddAuthentication();
 
             services.AddControllers();
         }

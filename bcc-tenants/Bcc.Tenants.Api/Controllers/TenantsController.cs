@@ -1,8 +1,8 @@
+using Bcc.Tenants.Api.Queries;
 using Bcc.Tenants.Contracts;
-using Bcc.Tenants.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bcc.Tenants.Controllers;
+namespace Bcc.Tenants.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -16,10 +16,16 @@ public class TenantsController : ControllerBase
         _logger = logger;
         _tenantsQueries = tenantsQueries;
     }
-
+    
     [HttpGet]
     public async Task<IList<Tenant>> Get()
     {
         return await _tenantsQueries.GetAllTenants();
+    }
+
+    [HttpGet]
+    public async Task<IList<ApplicationTenant>> GetTenantsForApplication(Guid applicationId)
+    {
+        
     }
 }

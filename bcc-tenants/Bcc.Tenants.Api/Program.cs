@@ -1,4 +1,4 @@
-using Bcc.Tenants.Configuration;
+using Bcc.Tenants.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
