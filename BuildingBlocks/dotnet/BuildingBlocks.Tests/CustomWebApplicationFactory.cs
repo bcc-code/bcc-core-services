@@ -58,16 +58,6 @@ namespace BuildingBlocks.Tests
 
                 Logger.Log(LogLevel.Debug, "ConnectionString changed to: {ConnectionString}", connectionString);
 
-                services.AddAuthorization(options =>
-                {
-                    var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(
-                        JwtBearerDefaults.AuthenticationScheme,
-                        TestAuthenticationScheme.AuthenticationScheme);
-                    defaultAuthorizationPolicyBuilder =
-                        defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
-                    options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
-                });
-
                 SqlConnectionService = services.BuildServiceProvider().GetRequiredService<ISqlConnectionService>();
                 ServiceProvier = services.BuildServiceProvider();
             });
