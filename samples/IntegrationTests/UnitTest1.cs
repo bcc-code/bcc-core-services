@@ -16,6 +16,13 @@ namespace IntegrationTests
             
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
-
+        
+        [Test]
+        public async Task AuthenticationTest()
+        {
+            var response = await Client.GetAsync("/Authenticated");
+            
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

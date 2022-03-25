@@ -47,5 +47,12 @@ namespace WebApi.Controllers
             })
             .ToArray();
         }
+        
+        [Authorize]
+        [HttpGet("/Authenticated")]
+        public ActionResult Authenticated()
+        {
+            return Ok();
+        }
     }
 }
