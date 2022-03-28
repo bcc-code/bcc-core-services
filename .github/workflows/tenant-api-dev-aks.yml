@@ -15,7 +15,7 @@ env:
   CLUSTER_RESOURCE_GROUP: BCC-Platform-Dev
   SECRET: bcc-platform-dev 
   APP_NAME: tenants-api-dev
-  APP_PATH: bcc-tenants/Bcc.Tenants
+  APP_PATH: bcc-tenants/Bcc.Tenants.Api
   AZURE_REGISTRY_USERNAME: ${{ secrets.DEV_REGISTRY_USERNAME }}
   AZURE_REGISTRY_PASSWORD: ${{ secrets.DEV_REGISTRY_PASSWORD }}
   AZURE_CREDENTIALS: ${{ secrets.DEV_AZURE_CREDENTIALS }}
