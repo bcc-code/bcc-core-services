@@ -17,3 +17,7 @@ spec:
           image: bccplatformdev.azurecr.io/bccplatformdev
           ports:
           - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
