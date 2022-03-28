@@ -1,12 +1,12 @@
 name: DEV Tenants API - Azure
 
 on:
-  pull_request:
-    branches:
-      [ master ]
-    paths:
-      - bcc-tenants/**
-      - .github/workflows/tenant-api-dev-azure.yml  
+#  pull_request:
+#    branches:
+#      [ master ]
+#    paths:
+#      - bcc-tenants/**
+#      - .github/workflows/tenant-api-dev-azure.yml  
   workflow_dispatch:
 
 env:

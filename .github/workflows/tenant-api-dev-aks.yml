@@ -40,29 +40,31 @@ jobs:
         working-directory: ${{env.APP_PATH}}/Dockerfile
         
   deploy:
-    # Set the target Azure Kubernetes Service (AKS) cluster. 
-    - uses: azure/aks-set-context@v1
-      with:
-        creds: ${{ env.AZURE_CREDENTIALS }}
-        cluster-name: ${{ env.CLUSTER_NAME }}
-        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
-    
-    # Create image pull secret for ACR
-    - uses: azure/k8s-create-secret@v1
-      with:
-        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
-        container-registry-username: ${{ env.AZURE_REGISTRY_USERNAME }}
-        container-registry-password: ${{ env.AZURE_REGISTRY_PASSWORD }}
-        secret-name: ${{ env.SECRET }}
-        arguments: --force true
-    
-    # Deploy app to AKS
-    - uses: azure/k8s-deploy@v1
-      with:
-        manifests: |
-          ${{ github.workspace }}/${{ env.APP_PATH }}/deployment.yaml
-          ${{ github.workspace }}/${{ env.APP_PATH }}/service.yaml
-        images: |
-          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        imagepullsecrets: |
-          ${{ env.SECRET }}
+    runs-on: ubuntu-latest
+    steps:
+      # Set the target Azure Kubernetes Service (AKS) cluster. 
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: ${{ env.AZURE_CREDENTIALS }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+      
+      # Create image pull secret for ACR
+      - uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+          container-registry-username: ${{ env.AZURE_REGISTRY_USERNAME }}
+          container-registry-password: ${{ env.AZURE_REGISTRY_PASSWORD }}
+          secret-name: ${{ env.SECRET }}
+          arguments: --force true
+      
+      # Deploy app to AKS
+      - uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            ${{ github.workspace }}/${{ env.APP_PATH }}/deployment.yaml
+            ${{ github.workspace }}/${{ env.APP_PATH }}/service.yaml
+          images: |
+            ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          imagepullsecrets: |
+            ${{ env.SECRET }}
