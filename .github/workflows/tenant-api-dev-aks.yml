@@ -3,10 +3,11 @@ name: DEV Tenants API - AKS
 on:
   pull_request:
     branches:
-      - master
+      [ master ]
     paths:
-      - "bcc-sender/api/**"
-      - ".github/workflows/prod-bcc-sender-api.yml"
+      - bcc-tenants/**
+      - .github/workflows/tenant-api-dev-aks.yml
+  workflow_dispatch:
         
 env:
   REGISTRY_NAME: bccplatformdev
