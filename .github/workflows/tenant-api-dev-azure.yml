@@ -1,4 +1,4 @@
-name: DEV Tenants API
+name: DEV Tenants API - Azure
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       [ master ]
     paths:
       - bcc-tenants/**
-      - .github/workflows/tenant-api-dev.yml  
+      - .github/workflows/tenant-api-dev-azure.yml  
   workflow_dispatch:
 
 env:
