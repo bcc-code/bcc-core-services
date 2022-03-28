@@ -1,6 +1,11 @@
 name: DEV Tenants API - dziala
 
-on: 
+on:
+  pull_request:
+    branches:
+      [ master ]
+    paths:
+      - bcc-tenants/**
   workflow_dispatch:
     
 jobs:
