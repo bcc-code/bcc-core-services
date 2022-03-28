@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "bccplatformdev-8a19"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "bccplatformdev-8a19"
+  template:
+    metadata:
+      labels:
+        app: "bccplatformdev-8a19"
+    spec:
+      containers:
+        - name: "bccplatformdev-8a19"
+          image: "bccplatformdev.azurecr.io/bccplatformdev"
+          ports:
+          - containerPort: 80
