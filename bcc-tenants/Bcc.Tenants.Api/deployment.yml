@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: "bcc-tenant-api"
-          image: "bccplatformdev.azurecr.io/bccplatformdev"
+          image: "bccplatformdev.azurecr.io/tenants-api-dev"
           ports:
           - containerPort: 80
