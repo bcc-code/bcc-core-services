@@ -20,6 +20,7 @@ env:
   AZURE_REGISTRY_USERNAME: ${{ secrets.DEV_REGISTRY_USERNAME }}
   AZURE_REGISTRY_PASSWORD: ${{ secrets.DEV_REGISTRY_PASSWORD }}
   AZURE_CREDENTIALS: ${{ secrets.DEV_AZURE_CREDENTIALS }}
+  NAMESPACE: bcc-platform-dev
 
 jobs:
   build:
@@ -55,10 +56,19 @@ jobs:
           creds: ${{ env.AZURE_CREDENTIALS }}
           cluster-name: ${{ env.CLUSTER_NAME }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
-      
+
+      - name: Create namespace
+        run: |
+          namespacePresent=`kubectl get namespace | grep ${{ env.NAMESPACE }} | wc -l`
+          if [ $namespacePresent -eq 0 ]
+          then
+              echo `kubectl create namespace ${{ env.NAMESPACE }}`
+          fi
+          
       # Create image pull secret for ACR
       - uses: azure/k8s-create-secret@v1
         with:
+          namespace: ${{ env.NAMESPACE }}
           container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
           container-registry-username: ${{ env.AZURE_REGISTRY_USERNAME }}
           container-registry-password: ${{ env.AZURE_REGISTRY_PASSWORD }}
@@ -68,10 +78,11 @@ jobs:
       # Deploy app to AKS
       - uses: azure/k8s-deploy@v1
         with:
+          namespace: ${{ env.NAMESPACE }}
           manifests: |
             ${{ env.APP_PATH }}/deployment.yml
             ${{ env.APP_PATH }}/service.yml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
           imagepullsecrets: |
-            ${{ env.SECRET }}
+            ${{ env.SECRET }}            
