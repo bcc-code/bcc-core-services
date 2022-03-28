@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: bcc-tenant-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bcc-tenant-api
+  template:
+    metadata:
+      labels:
+        app: bcc-tenant-api
+    spec:
+      containers:
+        - name: bcc-tenant-api
+          image: bccplatformdev.azurecr.io/bccplatformdev
+          ports:
+          - containerPort: 80
