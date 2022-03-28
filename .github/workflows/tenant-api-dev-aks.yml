@@ -48,7 +48,8 @@ jobs:
     continue-on-error: false
     
     steps:
-      # Set the target Azure Kubernetes Service (AKS) cluster. 
+      - uses: actions/checkout@main
+      
       - uses: azure/aks-set-context@v1
         with:
           creds: ${{ env.AZURE_CREDENTIALS }}
@@ -68,8 +69,8 @@ jobs:
       - uses: azure/k8s-deploy@v1
         with:
           manifests: |
-            bcc-tenants/Bcc.Tenants.Api/deployment.yml
-            bcc-tenants/Bcc.Tenants.Api/service.yml
+            ${{ env.APP_PATH }}/deployment.yml
+            ${{ env.APP_PATH }}/service.yml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
           imagepullsecrets: |
