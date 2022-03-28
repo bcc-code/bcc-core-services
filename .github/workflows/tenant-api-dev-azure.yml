@@ -1,4 +1,4 @@
-name: DEV Tenants API
+name: DEV Tenants API - Azure
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       [ main ]
     paths:
       - bcc-tenants/**
-      - .github/workflows/tenant-api-dev.yml
+      - .github/workflows/tenant-api-dev-gcp.yml
   workflow_dispatch:
 
 env:
