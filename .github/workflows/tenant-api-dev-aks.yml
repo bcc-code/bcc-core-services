@@ -26,7 +26,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@master
       
       # Connect to Azure Container Registry (ACR)
       - uses: azure/docker-login@v1
@@ -44,7 +44,7 @@ jobs:
           file: ${{env.APP_PATH}}/Dockerfile
       
       - name: Get K8s context
-      - uses: azure/aks-set-context@v1
+        uses: azure/aks-set-context@v1
         with:
           creds: ${{ env.AZURE_CREDENTIALS }}
           cluster-name: ${{ env.CLUSTER_NAME }}
@@ -59,7 +59,7 @@ jobs:
           fi
           
       - uses: azure/k8s-create-secret@v1
-        with:
+        with: 
           namespace: ${{ env.NAMESPACE }}
           container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
           container-registry-username: ${{ env.AZURE_REGISTRY_USERNAME }}
