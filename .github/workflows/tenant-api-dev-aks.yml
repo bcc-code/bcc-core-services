@@ -43,7 +43,7 @@ jobs:
           context: ${{env.APP_CONTEXT}}
           file: ${{env.APP_PATH}}/Dockerfile
         
-      - uses: azure/k8s-set-context@v1
+      - uses: azure/aks-set-context@v1
         with:
           creds: ${{ env.AZURE_CREDENTIALS }}
           cluster-name: ${{ env.CLUSTER_NAME }}
