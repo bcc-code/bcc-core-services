@@ -41,6 +41,9 @@ jobs:
         
   deploy:
     runs-on: ubuntu-latest
+    needs: build
+    continue-on-error: false
+    
     steps:
       # Set the target Azure Kubernetes Service (AKS) cluster. 
       - uses: azure/aks-set-context@v1
