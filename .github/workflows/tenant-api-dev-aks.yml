@@ -46,7 +46,7 @@ jobs:
       - name: Get K8s context
       - uses: azure/aks-set-context@v1
         with:
-          creds: '${{ env.AZURE_CREDENTIALS }}'
+          creds: ${{ env.AZURE_CREDENTIALS }}
           cluster-name: ${{ env.CLUSTER_NAME }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
 
