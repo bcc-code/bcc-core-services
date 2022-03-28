@@ -39,7 +39,7 @@ jobs:
         with:
           push: true
           tags: ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-          context: ${{env.APP_PATH}}
+          context: ${{env.APP_CONTEXT}}
           file: ${{env.APP_PATH}}/Dockerfile
         
   deploy:

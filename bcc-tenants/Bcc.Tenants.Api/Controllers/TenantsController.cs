@@ -22,10 +22,4 @@ public class TenantsController : ControllerBase
     {
         return await _tenantsQueries.GetAllTenants();
     }
-
-    [HttpGet]
-    public async Task<IList<ApplicationTenant>> GetTenantsForApplication(Guid applicationId)
-    {
-        
-    }
 }
