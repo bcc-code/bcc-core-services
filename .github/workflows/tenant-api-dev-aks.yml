@@ -44,11 +44,11 @@ jobs:
           file: ${{env.APP_PATH}}/Dockerfile
       
       - name: Get K8s context
-        uses: azure/aks-set-context@v2.0
+      - uses: azure/aks-set-context@v1
         with:
-          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+          creds: '${{ env.AZURE_CREDENTIALS }}'
           cluster-name: ${{ env.CLUSTER_NAME }}
-        id: login
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
 
       - name: Create namespace
         run: |
@@ -58,7 +58,7 @@ jobs:
               echo `kubectl create namespace ${{ env.NAMESPACE }}`
           fi
           
-      - uses: azure/k8s-create-secret@v1.1
+      - uses: azure/k8s-create-secret@v1
         with:
           namespace: ${{ env.NAMESPACE }}
           container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
@@ -68,9 +68,8 @@ jobs:
       
       # Deploy app to AKS
       - name: Deploys application
-        uses: Azure/k8s-deploy@v3.0
+        uses: Azure/k8s-deploy@v1
         with:
-          action: deploy
           namespace: ${{ env.NAMESPACE }}
           manifests: |
             ${{ env.APP_PATH }}/deployment.yml
