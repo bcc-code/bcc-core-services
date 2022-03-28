@@ -14,7 +14,7 @@
 
 
     <ItemGroup>
-      <PackageReference Include="BccCode.BuildingBlocks.Common" Version="5.0.1.52" />
+      <PackageReference Include="BccCode.BuildingBlocks.Common" Version="5.0.2.58" />
     </ItemGroup>
 
 </Project>
