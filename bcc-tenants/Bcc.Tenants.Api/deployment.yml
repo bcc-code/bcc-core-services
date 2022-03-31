@@ -11,14 +11,15 @@ spec:
     metadata:
       labels:
         app: "bcc-tenant-api"
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "tenant-api-dev"
+        dapr.io/app-port: "7112"
+        dapr.io/config: "tracing"
     spec:
       containers:
         - name: "bcc-tenant-api"
           image: "bccplatformdev.azurecr.io/tenants-api-dev"
           ports:
           - containerPort: 80
-          annotations:
-            dapr.io/enabled: "true"
-            dapr.io/app-id: "tenant-api-dev"
-            dapr.io/app-port: "7112"
-            dapr.io/config: "tracing"
+         
