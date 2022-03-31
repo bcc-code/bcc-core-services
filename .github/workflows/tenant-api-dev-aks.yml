@@ -70,11 +70,6 @@ jobs:
       - name: Deploys application
         uses: Azure/k8s-deploy@v1.2
         with:
-          annotations: 
-            dapr.io/enabled: "true"
-            dapr.io/app-id: "tenant-api-dev"
-            dapr.io/app-port: "7112"
-            dapr.io/config: "tracing"
           namespace: ${{ env.NAMESPACE }}
           manifests: |
             ${{ env.APP_PATH }}/deployment.yml
