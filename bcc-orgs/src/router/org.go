@@ -7,7 +7,7 @@ import (
 )
 
 func LoadOrgRoutes(r *gin.Engine) {
-	orgSvc := r.Group("/org-test")
+	orgSvc := r.Group("/orgs")
 	orgController := controller.OrgController{}
 	orgSvc.GET("/:id", orgController.Get)
 	orgSvc.GET("/", orgController.Find)
