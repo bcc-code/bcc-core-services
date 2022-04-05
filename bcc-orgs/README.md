@@ -16,21 +16,21 @@ Copy ```.env.example``` to ```.env```
 
 #### Without live-reload
 
-1. Install go [link](https://go.dev/doc/install)
+1. Install [go](https://go.dev/doc/install)
 2. From application root directory run
    ```go run src/main.go```
 
 #### With live-reload
 
-1. Install go [link](https://go.dev/doc/install)
-2. Install air [link](https://github.com/cosmtrek/air)
+1. Install [go](https://go.dev/doc/install)
+2. Install [air](https://github.com/cosmtrek/air)
 3. From application root directory run
    ```air```
 
 ### Run in docker
 
-1. Install docker [link](https://docs.docker.com/get-docker/)
-2. Install docker-compose [link](https://docs.docker.com/compose/install/)
+1. Install [docker](https://docs.docker.com/get-docker/)
+2. Install [docker-compose](https://docs.docker.com/compose/install/)
 3. Run one of the following scripts:
    1. ```./scripts/run-dev-docker.sh``` for live-reload
    2. ```./scripts/run-prod-docker.sh``` for production-like image
@@ -54,7 +54,6 @@ Add following snippet to your editor ```settings.json``` file
 },
 ```
 It will allow for correct module highlighting if the go.mod file is not in root directory
-
 
 ## Deployment
 
