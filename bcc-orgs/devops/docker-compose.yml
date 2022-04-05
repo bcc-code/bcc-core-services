@@ -7,6 +7,7 @@ services:
     env_file: ../.env
     environment:
       - GIN_MODE=release
+    container_name: org_api
     build: 
       context: ../
       dockerfile: devops/Dockerfile

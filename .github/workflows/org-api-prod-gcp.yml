@@ -15,6 +15,7 @@ env:
   IMAGE_NAME: default
   APP_BUILD_CONTEXT: bcc-orgs
   APP_DOCKERFILE: bcc-orgs/devops/Dockerfile
+  SERVICE_NAME: dev-org-api
 
 jobs:
   build:
@@ -45,6 +46,6 @@ jobs:
     - id: deploy
       uses: google-github-actions/deploy-cloudrun@v0
       with:
-        service: dev-org-api
+        service: ${{env.SERVICE_NAME}}
         image: ${{env.REGISTRY_URL}}/${{env.PROJECT_ID}}/${{env.REGISTRY_NAME}}/${{env.IMAGE_NAME}}:${{ github.sha }}
         region: europe-west1
