@@ -1,18 +1,17 @@
 ##
 ## Build
 ##
-FROM golang:1.18-bullseye
+FROM golang:1.18-bullseye as build
 WORKDIR /app
 COPY go.mod go.sum ./
 COPY src ./src
 
-RUN go build -o /main ./src/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main ./src/main.go
 
 ##
 ## Deploy
 ##
-FROM gcr.io/distroless/base-debian10
+FROM scratch
 WORKDIR /
-COPY --from=0 /main /main
-USER nonroot:nonroot
-ENTRYPOINT ["/main"]
+COPY --from=build /app/main /usr/bin/
+ENTRYPOINT ["main"]
