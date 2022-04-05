@@ -1,0 +1,45 @@
+name: Build and deploy the Org API to GCP
+
+on:  
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - bcc-orgs/**
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: bcc-core-services
+  REGISTRY_URL: europe-west1-docker.pkg.dev/${{ env.PROJECT_ID }}/org-api
+  IMAGE_NAME: default
+  APP_BUILD_CONTEXT: bcc-orgs
+  APP_DOCKERFILE: bcc-orgs/devops/Dockerfile
+
+jobs:
+  build:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+    # Configure Docker to use the gcloud command-line tool as a credential
+    # helper for authentication
+    - run: |-
+        gcloud --quiet auth configure-docker europe-west1-docker.pkg.dev
+
+    # Build and push the Docker image
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ${env.REGISTRY_URL}/${{env.IMAGE_NAME}}:${{ github.sha }}
+        context: ${{env.APP_BUILD_CONTEXT}}
+        file: ${{env.APP_DOCKERFILE}}
