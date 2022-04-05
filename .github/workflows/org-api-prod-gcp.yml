@@ -9,19 +9,14 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: bcc-core-services
-  REGISTRY_URL: europe-west1-docker.pkg.dev
-  REGISTRY_NAME: org-api
-  IMAGE_NAME: default
   APP_BUILD_CONTEXT: bcc-orgs
   APP_DOCKERFILE: bcc-orgs/devops/Dockerfile
-  SERVICE_NAME: dev-org-api
 
 jobs:
   build:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: production
+    environment: bcc-orgs-dev
 
     steps:
     - name: Checkout
@@ -33,19 +28,19 @@ jobs:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
     - run: |-
-        gcloud --quiet auth configure-docker ${{env.REGISTRY_URL}}
+        gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_URL }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{env.REGISTRY_URL}}/${{env.PROJECT_ID}}/${{env.REGISTRY_NAME}}/${{env.IMAGE_NAME}}:${{ github.sha }}
+        tags: ${{ secrets.REGISTRY_URL }}:${{ github.sha }}
         context: ${{env.APP_BUILD_CONTEXT}}
         file: ${{env.APP_DOCKERFILE}}
 
     - id: deploy
       uses: google-github-actions/deploy-cloudrun@v0
       with:
-        service: ${{env.SERVICE_NAME}}
-        image: ${{env.REGISTRY_URL}}/${{env.PROJECT_ID}}/${{env.REGISTRY_NAME}}/${{env.IMAGE_NAME}}:${{ github.sha }}
+        service: ${{ secrets.SERVICE_NAME }}
+        image: ${{ secrets.REGISTRY_URL }}:${{ github.sha }}
         region: europe-west1
