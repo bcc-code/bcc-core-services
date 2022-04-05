@@ -54,3 +54,8 @@ Add following snippet to your editor ```settings.json``` file
 },
 ```
 It will allow for correct module highlighting if the go.mod file is not in root directory
+
+
+## Deployment
+
+Application is automatically deployed to Google Cloud Run on any commit to master that updates any file inside bcc-orgs directory
