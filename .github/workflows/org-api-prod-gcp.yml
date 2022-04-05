@@ -10,7 +10,7 @@ on:
 
 env:
   PROJECT_ID: bcc-core-services
-  REGISTRY_URL: europe-west1-docker.pkg.dev/${{ env.PROJECT_ID }}/org-api
+  REGISTRY_URL: europe-west1-docker.pkg.dev/bcc-core-services/org-api
   IMAGE_NAME: default
   APP_BUILD_CONTEXT: bcc-orgs
   APP_DOCKERFILE: bcc-orgs/devops/Dockerfile
