@@ -47,3 +47,4 @@ jobs:
       with:
         service: defualt
         image: ${{env.REGISTRY_URL}}/${{env.PROJECT_ID}}/${{env.REGISTRY_NAME}}/${{env.IMAGE_NAME}}:${{ github.sha }}
+        region: europe-west1
