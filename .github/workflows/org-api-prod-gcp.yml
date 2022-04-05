@@ -45,6 +45,6 @@ jobs:
     - id: deploy
       uses: google-github-actions/deploy-cloudrun@v0
       with:
-        service: defualt
+        service: dev-org-api
         image: ${{env.REGISTRY_URL}}/${{env.PROJECT_ID}}/${{env.REGISTRY_NAME}}/${{env.IMAGE_NAME}}:${{ github.sha }}
         region: europe-west1
