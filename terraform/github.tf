@@ -39,7 +39,7 @@ resource "github_actions_environment_secret" "registry-name" {
 }
 resource "github_actions_environment_secret" "org-service-name" {
   repository      = github_repository_environment.default.repository
-  environment     = github_repository_environment.default.environment
+  environment     = github_repository_environment.default.environment 
   secret_name     = "ORG_SERVICE_NAME"
   plaintext_value = orgs-api.google_cloud_run_service.default.name
 }
