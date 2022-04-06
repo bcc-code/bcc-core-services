@@ -29,12 +29,12 @@ jobs:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
     - run: |-
-        gcloud --quiet auth configure-docker ${{ secrets.IMAGE_REGISTRY_URL}}
+        gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_BASE_URL }}
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ secrets.IMAGE_REGISTRY_URL}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        tags: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         context: ${{env.APP_BUILD_CONTEXT}}
         file: ${{env.APP_DOCKERFILE}}
 
@@ -42,5 +42,5 @@ jobs:
       uses: google-github-actions/deploy-cloudrun@v0
       with:
         service: ${{ secrets.SERVICE_NAME }}
-        image: ${{ secrets.IMAGE_REGISTRY_URL}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        image: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         region: ${{ secrets.SERVICE_REGION }}
