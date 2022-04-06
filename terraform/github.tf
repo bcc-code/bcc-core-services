@@ -47,5 +47,5 @@ resource "github_actions_environment_secret" "service-region" {
   repository      = github_repository_environment.default.repository
   environment     = github_repository_environment.default.environment
   secret_name     = "SERVICE_REGION"
-  plaintext_value = var.gcp-project-id
+  plaintext_value = var.gcp-project-id 
 }
