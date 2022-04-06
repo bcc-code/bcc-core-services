@@ -16,7 +16,7 @@ resource "google_cloud_run_service" "default" {
   }
 }
 
-resource "google_cloud_run_service_iam_policy" "noauth" {
+resource "google_cloud_run_service_iam_member" "noauth" {
   location    = google_cloud_run_service.default.location
   service     = google_cloud_run_service.default.name
   role = "roles/run.invoker"
