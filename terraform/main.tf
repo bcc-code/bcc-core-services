@@ -7,14 +7,14 @@ terraform {
 }
 
 provider "google-beta" {
-  credentials = var.google-credentials
+  credentials = base64decode(var.google-credentials)
 
   project = var.gcp-project-id
   region  = var.gcp-location
 }
 
 provider "google" {
-  credentials = var.google-credentials
+  credentials = base64decode(var.google-credentials)
 
   project = var.gcp-project-id
   region  = var.gcp-location
