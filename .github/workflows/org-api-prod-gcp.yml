@@ -1,4 +1,4 @@
-name: Build and deploy the Org API to GCP
+name: Orgs API Prod Deployment 
 
 on:  
   push:

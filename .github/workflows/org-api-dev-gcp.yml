@@ -1,4 +1,4 @@
-name: Build and deploy the Org API to GCP
+name: Orgs API Dev Deployment 
 
 on:  
   workflow_dispatch:
