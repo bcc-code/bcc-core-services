@@ -11,3 +11,10 @@ services:
     build: 
       context: ../
       dockerfile: devops/dev.Dockerfile
+  orgs_db:
+    ports:
+      - "5432:5432"
+    image: postgres
+    container_name: orgs_db
+    restart: always
+    env_file: ../.env
