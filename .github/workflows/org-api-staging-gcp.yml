@@ -6,6 +6,7 @@ on:
       [ master ]
     paths:
     - bcc-orgs/**
+  workflow_dispatch:
 
 env:
   APP_BUILD_CONTEXT: bcc-orgs
@@ -16,7 +17,7 @@ jobs:
   build:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: prod
+    environment: staging
 
     steps:
     - name: Checkout
