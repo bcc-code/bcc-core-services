@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	host     = "localhost"
+	host     = "host.docker.internal"
 	port     = 5432
 	user     = "admin"
 	password = "password1234"
@@ -26,16 +26,27 @@ func Query() {
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		fmt.Println("PRINT: ", err)
 		panic(err)
+	} else {
+		q := "select name,orgid FROM orgs "
+		rows, err := db.Query(q)
+		if err != nil {
+			fmt.Println("Error Query,", err)
+		}
+
+		fmt.Println("Rows received", rows)
+
+		for rows.Next() {
+			var (
+				name  string
+				orgid int
+			)
+			if err := rows.Scan(&name, &orgid); err != nil {
+				panic(err)
+			}
+			fmt.Printf("orgid %d name is %s\n", orgid, name)
+		}
+		defer rows.Close()
 	}
 	defer db.Close()
-
-	err = db.Ping()
-	if err != nil {
-		fmt.Println("PRINT: ", err)
-		panic(err)
-	}
-
-	fmt.Println("Successfully connected!")
 }
