@@ -10,7 +10,7 @@ on:
 
 env:
   APP_CONTEXT: bcc-tenants
-  DOCKERFILE_PATH: bcc-tenants/Bcc.Tenants/Dockerfile
+  DOCKERFILE_PATH: bcc-tenants/Bcc.Tenants.Api/Dockerfile
   APP_NAME: tenants-api-prod
   APP_ENV_NAME: bcc-platform-env-prod
   RESOURCE_GROUP: BCC-Platform-Prod
