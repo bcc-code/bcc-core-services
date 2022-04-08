@@ -15,7 +15,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ../db/migrations.sql:/docker-entrypoint-initdb.d/
+      - ../db/migrations:/docker-entrypoint-initdb.d/
     image: postgres:13.6-alpine
     env_file: ../.env
     container_name: orgs_db

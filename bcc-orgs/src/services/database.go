@@ -19,14 +19,15 @@ var (
 	user      = os.Getenv("POSTGRES_USER")
 	password  = os.Getenv("POSTGRES_PASSWORD")
 	dbname    = os.Getenv("POSTGRES_DB")
+	sslmode   = os.Getenv("POSTGRES_SSL_MODE")
 )
 
 func Query() []models.Org {
 	orgs := []models.Org{}
 
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
+		"password=%s dbname=%s sslmode=%s",
+		host, port, user, password, dbname, sslmode)
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
