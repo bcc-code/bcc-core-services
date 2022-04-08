@@ -35,7 +35,7 @@ jobs:
         with:
           push: true
           tags: bccplatformdev.azurecr.io/test:${{ github.sha }}
-          context: bcc-tenants/Bcc.Tenants.Api/Dockerfile
+          context: bcc-tenants/Bcc.Tenants.Api
 
 
   deploy:
