@@ -73,6 +73,7 @@ jobs:
             az containerapp registry set -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} --server ${{ env.CONTAINER_REGISTRY }} --username  ${{ env.REGISTRY_USERNAME }} --password ${{ env.REGISTRY_PASSWORD }} --debug
 
             existing_app=$(az containerapp show -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}})
+            echo existing_app
             if [[ ${#existing_app} -gt 0 ]]
             then
               az containerapp update -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} --image ${{ env.CONTAINER_REGISTRY }}/${{env.APP_NAME}}:${{ github.sha }} \
