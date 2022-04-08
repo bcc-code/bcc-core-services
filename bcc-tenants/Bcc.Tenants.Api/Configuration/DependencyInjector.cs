@@ -1,4 +1,5 @@
 using Bcc.Tenants.Api.Queries;
+using Bcc.Tenants.Contracts;
 using BuildingBlocks.MongoDB;
 
 namespace Bcc.Tenants.Api.Configuration;

@@ -1,12 +1,13 @@
 using Bcc.Tenants.Contracts;
 using BuildingBlocks.MongoDB;
 using MongoDB.Driver;
+using SharpCompress.Common;
 
 namespace Bcc.Tenants.Api.Queries;
 
 public interface ITenantsQueries
 {
-    Task<List<Tenant>> GetAllTenants();
+    Task<List<Tenant>> GetTenants();
     Task CreateTenant(Tenant tenant);
 }
 
@@ -19,8 +20,7 @@ public class TenantsQueries : ITenantsQueries
         Collection = mongoService.GetCollection<Tenant>();
     }
 
-    [Obsolete]
-    public async Task<List<Tenant>> GetAllTenants()
+    public async Task<List<Tenant>> GetTenants()
     {
         var tenants = await Collection.FindAsync(tenant => true);
         return tenants.ToList();
@@ -28,14 +28,23 @@ public class TenantsQueries : ITenantsQueries
 
     public async Task CreateTenant(Tenant tenant)
     {
-        await Collection.InsertOneAsync(new Tenant
+        if (string.IsNullOrEmpty(tenant.TenantKey))
         {
-            Id = Guid.NewGuid(),
-            Name = "Testowy tenant",
-            ApplicationId = Guid.NewGuid(),
-            Culture = "pl-PL",
-            Owner = OrganizationId.From(Guid.NewGuid()),
-            OrganizationsWithAccess = new List<OrganizationId> {OrganizationId.From(Guid.NewGuid())}
-        });
+            throw new ArgumentNullException(nameof(tenant.TenantKey));
+        }
+        if (string.IsNullOrEmpty(tenant.Name))
+        {
+            throw new ArgumentNullException(nameof(tenant.Name));
+        }
+        if (tenant.Owners.Any() == false)
+        {
+            throw new ArgumentNullException(nameof(tenant.Owners));
+        }
+        if (tenant.Owners.Any(x => x == 0))
+        {
+            throw new ArgumentException("Invalid Owner (OrgId)");
+        }
+        
+        await Collection.InsertOneAsync(tenant);
     }
 }

@@ -20,6 +20,12 @@ public class TenantsController : ControllerBase
     [HttpGet]
     public async Task<IList<Tenant>> Get()
     {
-        return await _tenantsQueries.GetAllTenants();
+        return await _tenantsQueries.GetTenants();
+    }
+
+    [HttpPost]
+    public async Task CreateTenant(Tenant tenant)
+    {
+        await _tenantsQueries.CreateTenant(tenant);
     }
 }
