@@ -22,6 +22,12 @@ public class TenantsController : ControllerBase
     {
         return await _tenantsQueries.GetTenants();
     }
+    [HttpGet]
+    [Route("ForOrganisation")]
+    public async Task<IList<Tenant>> GetTenantsForOrganisation(int orgId)
+    {
+        return await _tenantsQueries.GetTenantsForOrganisation(orgId);
+    }
 
     [HttpPost]
     public async Task CreateTenant(Tenant tenant)

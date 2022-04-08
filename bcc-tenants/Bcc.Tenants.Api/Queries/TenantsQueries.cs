@@ -9,6 +9,7 @@ public interface ITenantsQueries
 {
     Task<List<Tenant>> GetTenants();
     Task CreateTenant(Tenant tenant);
+    Task<IList<Tenant>> GetTenantsForOrganisation(int orgId);
 }
 
 public class TenantsQueries : ITenantsQueries
@@ -46,5 +47,11 @@ public class TenantsQueries : ITenantsQueries
         }
         
         await Collection.InsertOneAsync(tenant);
+    }
+
+    public async Task<IList<Tenant>> GetTenantsForOrganisation(int orgId)
+    {
+        var tenants = await Collection.FindAsync(tenant => tenant.Owners.Contains(orgId));
+        return tenants.ToList();
     }
 }
