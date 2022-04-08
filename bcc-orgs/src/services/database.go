@@ -31,26 +31,25 @@ func Query() []models.Org {
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
-	} else {
-		q := "select name,orgid FROM orgs "
-		rows, err := db.Query(q)
-		if err != nil {
-			fmt.Println("Error Query,", err)
-		}
-
-		for rows.Next() {
-			var (
-				name  string
-				orgid int
-			)
-			if err := rows.Scan(&name, &orgid); err != nil {
-				panic(err)
-			}
-			org := models.Org{OrgID: orgid, Name: name}
-			orgs = append(orgs, org)
-		}
-		defer rows.Close()
 	}
+	q := "select name,orgid FROM orgs "
+	rows, err := db.Query(q)
+	if err != nil {
+		fmt.Println("Error Query,", err)
+	}
+
+	for rows.Next() {
+		var (
+			name  string
+			orgid int
+		)
+		if err := rows.Scan(&name, &orgid); err != nil {
+			panic(err)
+		}
+		org := models.Org{OrgID: orgid, Name: name}
+		orgs = append(orgs, org)
+	}
+	defer rows.Close()
 	defer db.Close()
 
 	return orgs
