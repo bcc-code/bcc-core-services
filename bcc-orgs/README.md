@@ -37,7 +37,7 @@ Copy ```.env.example``` to ```.env```
 
 ## Develop application
 
-The only officially supported development environment is VS Code
+The only officially supported development environment is VS Code. A Database management tool is included in the docker compose setup. Go to localhost:8080 and login with the settings in the .env to make use of this tool.
 
 ### Recomended extensions
 
