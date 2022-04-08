@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>Bcc.Tenants.Api</AssemblyName>
+        <RootNamespace>Bcc.Tenants.Api</RootNamespace>
     </PropertyGroup>
     
     <ItemGroup>

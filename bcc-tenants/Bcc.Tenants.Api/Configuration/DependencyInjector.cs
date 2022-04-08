@@ -1,7 +1,8 @@
-using Bcc.Tenants.Queries;
+using Bcc.Tenants.Api.Queries;
+using Bcc.Tenants.Contracts;
 using BuildingBlocks.MongoDB;
 
-namespace Bcc.Tenants.Configuration;
+namespace Bcc.Tenants.Api.Configuration;
 
 public static class DependencyInjector
 {

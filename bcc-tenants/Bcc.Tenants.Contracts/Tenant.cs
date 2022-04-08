@@ -1,4 +1,5 @@
 using BuildingBlocks.MongoDB;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Bcc.Tenants.Contracts;
 
@@ -7,8 +8,7 @@ public class Tenant
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
-    public Guid ApplicationId { get; set; }
-    public string Culture { get; set; } = null!;
-    public OrganizationId Owner { get; set; } = null!;
-    public List<OrganizationId> OrganizationsWithAccess { get; set; } = null!;
+    [BsonId]
+    public string TenantKey { get; set; } = null!;
+    public List<int> Owners { get; set; } = new();
 }
