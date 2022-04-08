@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
+	"bcc-orgs/src/models"
 	"bcc-orgs/src/services"
 
 	"github.com/gin-gonic/gin"
@@ -11,22 +11,16 @@ import (
 
 type OrgController struct{}
 
-type Org struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
-}
-
 func (ctrl OrgController) Get(c *gin.Context) {
-	c.JSON(http.StatusOK, Org{})
+	c.JSON(http.StatusOK, models.Org{})
 }
 func (ctrl OrgController) Find(c *gin.Context) {
-	fmt.Println("Find call")
-	services.Query()
-	c.JSON(http.StatusOK, []Org{{}, {}})
+	orgs := services.Query()
+	c.JSON(http.StatusOK, orgs)
 }
 func (ctrl OrgController) Create(c *gin.Context) {
-	c.JSON(http.StatusOK, Org{})
+	c.JSON(http.StatusOK, models.Org{})
 }
 func (ctrl OrgController) Update(c *gin.Context) {
-	c.JSON(http.StatusOK, Org{})
+	c.JSON(http.StatusOK, models.Org{})
 }

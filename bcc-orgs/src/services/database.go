@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
+	"bcc-orgs/src/models"
+
 	_ "github.com/lib/pq"
 )
 
@@ -15,10 +17,8 @@ const (
 	dbname   = "orgsdb"
 )
 
-func Query() {
-	fmt.Println("Query from Orgs service")
-
-	fmt.Println("Initiating database connection")
+func Query() []models.Org {
+	orgs := []models.Org{}
 
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
@@ -34,8 +34,6 @@ func Query() {
 			fmt.Println("Error Query,", err)
 		}
 
-		fmt.Println("Rows received", rows)
-
 		for rows.Next() {
 			var (
 				name  string
@@ -44,9 +42,12 @@ func Query() {
 			if err := rows.Scan(&name, &orgid); err != nil {
 				panic(err)
 			}
-			fmt.Printf("orgid %d name is %s\n", orgid, name)
+			org := models.Org{OrgID: orgid, Name: name}
+			orgs = append(orgs, org)
 		}
 		defer rows.Close()
 	}
 	defer db.Close()
+
+	return orgs
 }
