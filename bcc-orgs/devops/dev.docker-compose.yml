@@ -11,3 +11,21 @@ services:
     build: 
       context: ../
       dockerfile: devops/dev.Dockerfile
+  orgs_db:
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../db/migrations:/docker-entrypoint-initdb.d/
+    image: postgres:13.6-alpine
+    env_file: ../.env
+    container_name: orgs_db
+    restart: always
+  orgs_db_management:
+    image: adminer:latest
+    container_name: orgs_db_management
+    environment: 
+      ADMINER_DEFAULT_SERVER: orgs_db
+    ports: 
+      - 8080:8080
+    depends_on:
+      - "orgs_db"
