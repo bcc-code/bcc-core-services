@@ -73,6 +73,7 @@ jobs:
             az containerapp registry set -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} --server ${{ env.CONTAINER_REGISTRY }} --username  ${{ env.REGISTRY_USERNAME }} --password ${{ env.REGISTRY_PASSWORD }} --debug
 
             existing_app=$(az containerapp show -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}})
+            echo "App exists" 
             echo existing_app
             if [[ ${#existing_app} -gt 0 ]]
             then
