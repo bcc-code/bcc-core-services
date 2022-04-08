@@ -30,6 +30,7 @@ func Query() []models.Org {
 		host, port, user, password, dbname, sslmode)
 
 	db, err := sql.Open("postgres", psqlInfo)
+	defer db.Close()
 	if err != nil {
 		panic(err)
 	}
@@ -51,7 +52,6 @@ func Query() []models.Org {
 		orgs = append(orgs, org)
 	}
 	defer rows.Close()
-	defer db.Close()
 
 	return orgs
 }
