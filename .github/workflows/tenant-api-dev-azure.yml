@@ -2,8 +2,7 @@ name: DEV Tenants API - Azure
 
 on:
   pull_request:
-    branches:
-      [ master ]
+    branches: master
     paths:
       - bcc-tenants/**
       - .github/workflows/tenant-api-dev-azure.yml  
