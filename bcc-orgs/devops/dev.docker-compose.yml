@@ -17,5 +17,6 @@ services:
     build: 
       context: ../db
       dockerfile: Dockerfile
+    env_file: ../.env
     container_name: orgs_db
     restart: always

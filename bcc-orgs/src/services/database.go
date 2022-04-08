@@ -3,18 +3,22 @@ package services
 import (
 	"database/sql"
 	"fmt"
+	"os"
+	"strconv"
 
 	"bcc-orgs/src/models"
 
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "host.docker.internal"
-	port     = 5432
-	user     = "admin"
-	password = "password1234"
-	dbname   = "orgsdb"
+var portString = os.Getenv("POSTGRES_PORT")
+
+var (
+	host      = os.Getenv("POSTGRES_HOST")
+	port, err = strconv.Atoi(portString)
+	user      = os.Getenv("POSTGRES_USER")
+	password  = os.Getenv("POSTGRES_PASSWORD")
+	dbname    = os.Getenv("POSTGRES_DB")
 )
 
 func Query() []models.Org {
