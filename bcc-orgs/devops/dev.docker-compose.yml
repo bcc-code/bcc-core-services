@@ -14,7 +14,8 @@ services:
   orgs_db:
     ports:
       - "5432:5432"
-    image: postgres
+    build: 
+      context: ../db
+      dockerfile: Dockerfile
     container_name: orgs_db
     restart: always
-    env_file: ../.env
