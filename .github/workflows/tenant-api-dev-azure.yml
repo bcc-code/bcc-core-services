@@ -1,12 +1,12 @@
 name: DEV Tenants API - Azure
 
 on:
-#  pull_request:
-#    branches:
-#      [ master ]
-#    paths:
-#      - bcc-tenants/**
-#      - .github/workflows/tenant-api-dev-azure.yml  
+  pull_request:
+    branches:
+      [ master ]
+    paths:
+      - bcc-tenants/**
+      - .github/workflows/tenant-api-dev-azure.yml  
   workflow_dispatch:
 
 env:
@@ -81,10 +81,10 @@ jobs:
                 --registry-password ${{ env.REGISTRY_PASSWORD }} \
                 --min-replicas 1 \
                 --max-replicas 1 \
-                --enable-dapr \
-                --dapr-app-port ${{env.DAPR_PORT}} \
-                --dapr-app-id ${{env.APP_NAME}} \
-                --dapr-components ${{env.COMPONENTS_PATH}} \
+#                --enable-dapr \
+#                --dapr-app-port ${{env.DAPR_PORT}} \
+#                --dapr-app-id ${{env.APP_NAME}} \
+#                --dapr-components ${{env.COMPONENTS_PATH}} \
                 --debug
             else
               az containerapp create -n ${{env.APP_NAME}} -g ${{env.RESOURCE_GROUP}} \
@@ -95,9 +95,9 @@ jobs:
                 --registry-password ${{ env.REGISTRY_PASSWORD }} \
                 --min-replicas 1 \
                 --max-replicas 1 \
-                --enable-dapr \
-                --dapr-app-port ${{env.DAPR_PORT}} \
-                --dapr-app-id ${{env.APP_NAME}} \
-                --dapr-components ${{env.COMPONENTS_PATH}} \
+#                --enable-dapr \
+#                --dapr-app-port ${{env.DAPR_PORT}} \
+#                --dapr-app-id ${{env.APP_NAME}} \
+#                --dapr-components ${{env.COMPONENTS_PATH}} \
                 --debug
             fi
