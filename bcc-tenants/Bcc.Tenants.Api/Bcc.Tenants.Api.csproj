@@ -18,8 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Data\tenants.csv" />
-      <Content Include="Data\tenants.csv" />
+      <None Update="Data\tenants.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
