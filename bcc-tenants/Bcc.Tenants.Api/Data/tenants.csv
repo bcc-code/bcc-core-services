@@ -1,0 +1,192 @@
+OrgId,Name,Country,TenantKey
+1,Abu Dhabi,ae,bccbdhbi
+3,Twente,nl,bcctwente
+7,Bergen,no,bccbergen
+8,Berlin,de,bccberlin
+9,Mumbai,in,bccmmbi
+10,Lilienhof,de,bcclilienhof
+11,Cairo,eg,bccciro
+12,Connecticut,us,bccconnectict
+15,Delaware,us,bccdelwre
+16,Detroit,us,bccdetroit
+17,Didcot,gb,bccdidcot
+18,Drammen,no,bccdrmmen
+20,Eiker,no,bcceiker
+22,Dürrmenz,de,bccdurrmenz
+23,Esbjerg,dk,bccesbjerg
+24,Mittewald,at,bccmittewld
+26,Graz,at,bccgrz
+27,Grenland,no,bccgrenlnd
+29,Groningen,nl,bccgroningen
+30,Gross-Godems,de,bccgrossgodems
+32,Hallingdal,no,bcchllingdl
+33,Hamar,no,bcchmr
+34,Hamburg,de,bcchmbrg
+35,Exter,de,bccexter
+36,Harstad,no,bcchrstd
+39,Hessenhöfe,de,bcchessenhofe
+40,Holstebro,dk,bccholstebro
+41,Hong Kong,hk,bcchongkong
+42,Horten,no,bcchorten
+43,Hønefoss,no,bcchonefoss
+44,Israel,il,bccisrel
+45,Istanbul,tr,bccistnbl
+46,Bafoussam,cm,bccbfossm
+47,Nyakweri,kn,bccnukweri
+48,Raumberg,at,bccrmberg
+49,Sørlandet,no,bccsorlndet
+50,Kyrkslätt,fi,bcckurkslatt
+51,København,dk,bcckobenhvn
+52,Lahti,fi,bcclhti
+54,Linnenbach,de,bcclinnenbch
+55,Malinka,pl,bccmlink
+56,Mansfeld,de,bccmnsfeld
+57,Maubach,de,bccmbch
+58,Melbourne,au,bccmelborne
+59,Zeeland-Belgie,nl,bcczeelndbelgie
+60,Missouri,us,bccmissori
+61,Molde,no,bccmolde
+62,Missoula,us,bccmissol
+64,Måløy,no,bccmalou
+66,Utrecht,nl,bcctrecht
+67,Novo Sarandi,br,bccnovosrndi
+68,Ober-Erlenbach,de,bccobererlenbch
+69,Oslo/Follo,no,bccoslofollo
+70,Ottawa,ca,bccottw
+72,Paso Flores,ar,bccpsoflores
+73,Fulda,de,bccfld
+76,Rotterdam,nl,bccrotterdm
+77,Salem,us,bccslem
+78,Sandefjord,no,bccsndefjord
+80,Sardinia,it,bccsrdini
+81,Scheppach,de,bccscheppch
+82,Sdr. Jylland,dk,bccsdrjullnd
+83,Seattle,us,bccsettle
+84,Singapore,cn,bccsingpore
+86,Schweiz,ch,bccschweiz
+87,St. Petersburg,ru,bccstpetersbrg
+88,Stavanger,no,bccstvnger
+89,Stockholm,se,bccstockholm
+90,Stord,no,bccstord
+92,Sydney,au,bccsudneu
+93,Syracuse,us,bccsurcse
+95,Huntworth,gb,bcchntworth
+96,Terwolde,nl,bccterwolde
+97,Toronto,ca,bcctoronto
+98,Trondheim,no,bcctrondheim
+101,Tønsberg,no,bcctonsberg
+102,Urbana,us,bccrbn
+103,Usselo,nl,bccsselo
+104,Vácduka,hu,bccvcdk
+105,Valdivia,cl,bccvldivi
+106,Vancouver,ca,bccvncover
+107,Varna,bg,bccvrn
+108,De Wijk,nl,bccdewijk
+109,Nancy,fr,bccnncu
+110,Waldhausen,de,bccwldhsen
+111,Waltrop,de,bccwltrop
+112,Weißbach,de,bccweißbch
+114,Winnipeg,ca,bccwinnipeg
+115,Wisconsin,us,bccwisconsin
+116,Wien,at,bccwien
+117,Wroclaw,pl,bccwroclw
+118,Yakima,us,bccukim
+119,Østfold,no,bccostfold
+122,Valdres,no,bccvldres
+125,Schermer,nl,bccschermer
+145,São Paulo - Cabreúva,br,bccsoplocbrev
+146,Kuwait,kw,bcckwit
+147,New Zealand,nz,bccnewzelnd
+149,Växsjö,se,bccvaxsjo
+150,Horetice,cz,bcchoretice
+151,Kroatia,hr,bcckroti
+165,Paradera,aw,bccprder
+167,Joensuu,fi,bccjoens
+168,Paris,fr,bccpris
+169,Nimes,fr,bccnimes
+170,Steinseltz,fr,bccsteinseltz
+171,Palmi,it,bccplmi
+172,Shanghai,cn,bccshnghi
+205,Slovenia,si,bccsloveni
+225,Etiopia,et,bccetiopi
+265,Perth,au,bccperth
+267,Shenzhen,cn,bccshenzhen
+286,Estland,ee,bccestlnd
+287,A-lag Brunstad,no,bcclgbrnstd
+305,Ozornoe,ua,bccozornoe
+325,Malaga,es,bccmlg
+326,Flevoland,nl,bccflevolnd
+327,Crasna,ro,bcccrsn
+345,Brasov,ro,bccbrsov
+367,Lima,pe,bcclim
+368,"Tulsa,",us,"bcctls,"
+369,Zhitkovichi,by,bcczhitkovichi
+370,Slobozia Mare,md,bccslobozimre
+371,Bangalore,in,bccbnglore
+372,Trivandrum,in,bcctrivndrm
+373,Vanderbijlpark,za,bccvnderbijlprk
+374,Pretoria,za,bccpretori
+375,Cape Town,za,bcccpetown
+376,Alwaye,in,bcclwue
+377,Mallorca,es,bccmllorc
+379,Padej,CS,bccpdej
+380,Medias,ro,bccmedis
+381,Ilo,pe,bccilo
+382,Leon,mx,bccleon
+383,Pune,in,bccpne
+384,Mersin,tr,bccmersin
+385,Jakarta,id,bccjkrt
+387,Dubai,ae,bccdbi
+388,Colombo,lk,bcccolombo
+390,Adjud,ro,bccdjd
+391,Caragiale,ro,bcccrgile
+392,Bucharest,ro,bccbchrest
+393,Iasi,ro,bccisi
+394,Cràiova,ro,bcccriov
+395,Giurgiu,ro,bccgirgi
+396,Dorohoi,ro,bccdorohoi
+397,Rome,it,bccrome
+398,Catania,it,bccctni
+399,Curico,cl,bcccrico
+400,Sofia,bg,bccsofi
+401,Dobarsko,bg,bccdobrsko
+402,Blagoevgrad,bg,bccblgoevgrd
+405,Debrecen,hu,bccdebrecen
+406,Inke,hu,bccinke
+407,Bakonycsernye,hu,bccbkonucsernue
+409,Majlat,ro,bccmjlt
+410,Ukraina,ua,bcckrin
+424,Yaoundé,cm,bccuondé
+427,Ternopol,ua,bccternopol
+428,Beljaevka,ua,bccbeljevk
+429,Kharkov,ua,bcckhrkov
+430,Zakarpattia,ua,bcczkrptti
+431,Cherkassy,ua,bcccherkssu
+433,Tudora,md,bcctdor
+435,BCC,no,bccbcc
+439,Kreta,GR,bcckret
+440,Goa,in,bccgo
+441,Coimbatore,in,bcccoimbtore
+443,Langtore,in,bcclngtore
+444,New Delhi,in,bccnewdelhi
+445,Douala,cm,bccdol
+446,Bishkek,kg,bccbishkek
+447,Mwanza,tz,bccmwnz
+448,Congo,cd,bcccongo
+450,Villa Regina,ar,bccvillregin
+451,Para,br,bccpr
+452,A-lag MOBILT,no,bcclgmobilt
+453,Administration,no,bccdministrtion
+455,Arequipa,pe,bccreqip
+456,Kiisi,kn,bcckiisi
+457,Kisumu,kn,bcckism
+458,Santa Rosa,br,bccsntros
+459,Brunstad,no,bccbrnstd
+469,Porto Alegre,br,bccportolegre
+471,Rodi Kopany,kn,bccrodikopnu
+473,Russia,ru,bccrssi
+475,Malawi,mw,bccmlwi
+476,Nairobi,kn,bccnirobi
+478,Uganda,ug,bccgnd
+479,A-team Vanderbijlpark,za,bcctemvnderbijlprk
+505,Svartskog,no,bccsvrtskog

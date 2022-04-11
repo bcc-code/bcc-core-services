@@ -18,20 +18,15 @@ public class TenantsController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IList<Tenant>> Get()
+    public IList<Tenant> Get()
     {
-        return await _tenantsQueries.GetTenants();
+        return _tenantsQueries.GetTenants();
     }
     [HttpGet]
     [Route("ForOrganisation")]
-    public async Task<IList<Tenant>> GetTenantsForOrganisation(int orgId)
+    public IList<Tenant> GetTenantsForOrganisation(int orgId)
     {
-        return await _tenantsQueries.GetTenantsForOrganisation(orgId);
+        return _tenantsQueries.GetTenantsForOrganisation(orgId);
     }
 
-    [HttpPost]
-    public async Task CreateTenant(Tenant tenant)
-    {
-        await _tenantsQueries.CreateTenant(tenant);
-    }
 }
