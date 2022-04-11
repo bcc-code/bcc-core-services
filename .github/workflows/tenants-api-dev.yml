@@ -1,0 +1,71 @@
+name: DEV - Tenants API
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "bcc-tenants/**"
+      - ".github/workflows/tenants-api-dev.yml"
+
+env:
+  AUTHENTICATION_TYPE: "Auth0"
+  ORIGINS: "http://localhost:3000,https://app-dev.myshare.today,https://app-dev.myshare.today,https://admin-dev.myshare.today"
+  GCP_PROJECT: bcc-core-services
+  GCP_KEY: ${{ secrets.GOOGLE_CREDENTIALS }}
+  APPLICATION_INSIGHTS: InstrumentationKey=15ed08f4-e214-4e9f-9459-82621aed35b8;IngestionEndpoint=https://westeurope-1.in.applicationinsights.azure.com/
+  APPLICATION_NAME: tenants-api-dev
+  ENVIRONMENT: Staging
+  DOCKERFILE_PATH: bcc-tenants/Bcc.Tenants.Api/Dockerfile
+  PORT: 7112
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Google Auth SDK
+        uses: google-github-actions/auth@v0
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+          credentials_json: ${{ env.GCP_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+
+      - name: Build the Docker image
+        run: |
+          docker build -f ${{ env.DOCKERFILE_PATH}} -t eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} . \
+          --build-arg ASPNETCORE_ENVIRONMENT=${{ env.ENVIRONMENT }}
+
+      - name: Configure Docker to use Google Cloud Platform
+        run: gcloud auth configure-docker --quiet
+
+      - name: Docker push image
+        run: docker push eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/auth@v0
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+          credentials_json: ${{ env.GCP_KEY }}
+
+      - name: Cloud run deploy
+        run: |
+          gcloud run deploy ${{ env.APPLICATION_NAME }} --image eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} \
+          --region=europe-west1 --project=${{ env.GCP_PROJECT }} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 \ 
+          --port=${{ env.PORT }}
+
+      - name: Cloud run serve traffic
+        run: gcloud run services update-traffic ${{ env.APPLICATION_NAME }} --to-latest --platform=managed --region=europe-west1
