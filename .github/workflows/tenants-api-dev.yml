@@ -14,7 +14,7 @@ env:
   APPLICATION_NAME: tenants-api-dev
   APPLICATION_INSIGHTS: InstrumentationKey=15ed08f4-e214-4e9f-9459-82621aed35b8;IngestionEndpoint=https://westeurope-1.in.applicationinsights.azure.com/
   ENVIRONMENT: Staging
-  PORT: 7112
+  PORT: 5174
 
 jobs:
   build:
