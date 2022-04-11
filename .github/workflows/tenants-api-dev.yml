@@ -43,7 +43,7 @@ jobs:
         run: gcloud auth configure-docker --quiet
 
       - name: Docker push image
-        run: docker push ${{env.APP_DOCKERFILE}} -t ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }}
+        run: docker push ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }}
       
   deploy:
     runs-on: ubuntu-latest
