@@ -51,12 +51,12 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      - name: Cloud run deploy
-        id: deploy
-        run: |
-          gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
-          --region=europe-west1 --project=${{ secrets.PROJECT_ID }} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 \ 
-          --port=${{ env.PORT }}
+      - id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{ env.APPLICATION_NAME }}
+          image: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }}
+          region: europe-west1
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic ${{ env.APPLICATION_NAME }} --to-latest --platform=managed --region=europe-west1
