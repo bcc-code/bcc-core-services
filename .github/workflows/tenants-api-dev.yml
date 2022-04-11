@@ -1,4 +1,4 @@
-name: DEV - Tenants API
+name: Tenants API Dev Deployment
 
 on:
   pull_request:
@@ -46,6 +46,9 @@ jobs:
     needs: build
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
       - name: Set up Cloud SDK          
         id: auth
         uses: google-github-actions/auth@v0
