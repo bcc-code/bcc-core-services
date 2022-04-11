@@ -46,7 +46,8 @@ jobs:
     needs: build
 
     steps:
-      - name: Set up Cloud SDK
+      - name: Set up Cloud SDK          
+        id: auth
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
