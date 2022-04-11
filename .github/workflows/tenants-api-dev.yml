@@ -36,7 +36,7 @@ jobs:
           
       - name: Build the Docker image
         run: |
-          docker build -f ${{env.APP_DOCKERFILE}} -t ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} . \
+          docker build -f ${{env.APP_DOCKERFILE}} -t ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} ${{ env.APP_BUILD_CONTEXT }} \
           --build-arg ASPNETCORE_ENVIRONMENT=Staging
           
       - name: Configure Docker to use Google Cloud Platform
