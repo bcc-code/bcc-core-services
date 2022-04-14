@@ -1,24 +1,24 @@
-name: Tenants API Dev Deployment
+name: Tenants API Prod Deployment
 
 on:
-  pull_request:
+  push:
     branches:
       - master
     paths:
       - "bcc-tenants/**"
-      - ".github/workflows/tenants-api-dev.yml"
+      - ".github/workflows/tenants-api-prod.yml"
 
 env:
   APP_BUILD_CONTEXT: bcc-tenants
   APP_DOCKERFILE: bcc-tenants/Bcc.Tenants.Api/Dockerfile
-  APPLICATION_NAME: tenants-api-dev
-  ENVIRONMENT: Staging
+  APPLICATION_NAME: tenants-api-prod
+  ENVIRONMENT: Production
   PORT: 5174
   
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
 
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build      
-    environment: dev
+    environment: prod
 
     steps:
       - name: Checkout
@@ -62,7 +62,7 @@ jobs:
       - name: Cloud run deploy
         run: |
           gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
-          --region=europe-west1 --project=${{secrets.PROJECT_ID}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT }}
+          --region=europe-west1 --project=${{secrets.PROJECT_ID}} --memory=1024M --min-instances=1 --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT }}
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic ${{ env.APPLICATION_NAME }} --to-latest --platform=managed --region=europe-west1
