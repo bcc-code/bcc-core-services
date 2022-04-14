@@ -17,4 +17,10 @@
       <ProjectReference Include="..\Bcc.Tenants.Contracts\Bcc.Tenants.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Data\tenants.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
