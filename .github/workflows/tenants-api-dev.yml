@@ -7,6 +7,8 @@ on:
     paths:
       - "bcc-tenants/**"
       - ".github/workflows/tenants-api-dev.yml"
+      
+  workflow_dispatch:
 
 env:
   APP_BUILD_CONTEXT: bcc-tenants
