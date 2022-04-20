@@ -21,7 +21,14 @@ jobs:
     - name: Build and deploy
       uses: ./.github/actions/deploy-cloud-run-app
       with:
+        projectId: ${{ secrets.GOOGLE_PROJECT_ID }}
+        googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
         buildContext: bcc-orgs
         dockerfilePath:  bcc-orgs/devops/Dockerfile
         imageName: bcc-orgs
+        registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
+        registryName: ${{secrets.REGISTRY_NAME}}
+        serviceName: ${{secrets.ORG_SERVICE_NAME}}
+        serviceLocation: ${{secrets.ORG_SERVICE_LOCATION}}
+
 
