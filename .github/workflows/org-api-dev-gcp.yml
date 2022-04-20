@@ -3,11 +3,6 @@ name: Orgs API Dev Deployment
 on:  
   workflow_dispatch:
 
-env:
-  APP_BUILD_CONTEXT: bcc-orgs
-  APP_DOCKERFILE: bcc-orgs/devops/Dockerfile
-  IMAGE_NAME: bcc-orgs
-
 jobs:
   build:
     name: Setup, Build, Publish, and Deploy
