@@ -4,28 +4,25 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-	"strconv"
 
 	"bcc-orgs/src/models"
 
 	_ "github.com/lib/pq"
 )
 
-var portString = os.Getenv("POSTGRES_PORT")
-
 var (
-	host      = os.Getenv("POSTGRES_HOST")
-	port, err = strconv.Atoi(portString)
-	user      = os.Getenv("POSTGRES_USER")
-	password  = os.Getenv("POSTGRES_PASSWORD")
-	dbname    = os.Getenv("POSTGRES_DB")
-	sslmode   = os.Getenv("POSTGRES_SSL_MODE")
+	host     = os.Getenv("POSTGRES_HOST")
+	port     = os.Getenv("POSTGRES_PORT")
+	user     = os.Getenv("POSTGRES_USER")
+	password = os.Getenv("POSTGRES_PASSWORD")
+	dbname   = os.Getenv("POSTGRES_DB")
+	sslmode  = os.Getenv("POSTGRES_SSL_MODE")
 )
 
 func Query() []models.Org {
 	orgs := []models.Org{}
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		host, port, user, password, dbname, sslmode)
 
