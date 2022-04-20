@@ -1,4 +1,5 @@
 name: Build and push Go application to cloud run
+description: 'Deploys a new cloud run revision'
 
 inputs:
   buildContext:
@@ -20,6 +21,7 @@ runs:
       credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
   - run: |-
       gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_BASE_URL }}
+    shell: bash
   - name: Build and push container image to registry
     uses: docker/build-push-action@v2
     with:

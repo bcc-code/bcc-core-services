@@ -18,24 +18,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v0'
+    - name: Build and deploy
+      uses: ./.github/actions/deploy-cloud-run-app
       with:
-        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        buildContext: bcc-orgs
+        dockerfilePath:  bcc-orgs/devops/Dockerfile
+        imageName: bcc-orgs
 
-    - run: |-
-        gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_BASE_URL }}
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        context: ${{env.APP_BUILD_CONTEXT}}
-        file: ${{env.APP_DOCKERFILE}}
-
-    - id: deploy
-      uses: google-github-actions/deploy-cloudrun@v0
-      with:
-        service: ${{ secrets.ORG_SERVICE_NAME }}
-        image: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        region: ${{ secrets.ORG_SERVICE_REGION }}
