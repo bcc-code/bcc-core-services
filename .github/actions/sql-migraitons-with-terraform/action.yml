@@ -1,0 +1,12 @@
+name: 'Set environment variables'
+description: 'Configures environment variables for a workflow'
+inputs:
+  terraformPath:
+    description: 'Path to the terraform configuration'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "{{ inputs.terraformPath }}"
+      shell: bash
