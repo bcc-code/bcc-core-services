@@ -26,6 +26,8 @@ jobs:
         serviceName: ${{secrets.ORGS_SERVICE_NAME}}
         serviceRegion: ${{secrets.ORGS_SERVICE_REGION}}
   migrate:
+    env:
+      GOPATH: ${{ github.workspace }}
     name: Migrate database
     runs-on: ubuntu-latest
     environment: dev
