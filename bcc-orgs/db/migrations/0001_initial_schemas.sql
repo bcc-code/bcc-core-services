@@ -14,15 +14,17 @@ CREATE TABLE address (
 CREATE TABLE org (
    org_id int,
    PRIMARY KEY(org_id),
-   name varchar,
-   legal_name varchar NULL,
-   type varchar,
-   fk_visiting_address_id int references address (address_id),
-   fk_postal_address_id int references address (address_id),
-   fk_billing_address_id int references address (address_id)
+   name varchar NOT NULL,
+   legal_name varchar,
+   type varchar NOT NULL,
+   fk_visiting_address_id int REFERENCES address (address_id),
+   fk_postal_address_id int REFERENCES address (address_id),
+   fk_billing_address_id int REFERENCES address (address_id)
 );
 
 CREATE TABLE org_association (
-   parent_org_id int,
-   child_org_id int
+   association_id int,
+   PRIMARY KEY(association_id),
+   fk_parent_id int REFERENCES org (org_id) NOT NULL,
+   fk_child_id int REFERENCES org (org_id) NOT NULL
 );
