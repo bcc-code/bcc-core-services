@@ -32,7 +32,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-go@v3
+    - uses: actions/setup-go@v2
     - run: go install -tags "nomymysql nomysql nosqlite3" github.com/pressly/goose/v3/cmd/goose@latest
       shell: bash
     - run: goose
