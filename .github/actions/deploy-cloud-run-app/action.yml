@@ -53,4 +53,4 @@ runs:
     with:
       service: ${{ inputs.serviceName }}
       image: ${{ inputs.registryBaseUrl }}/${{ inputs.projectId}}/${{inputs.registryName}}/${{ inputs.imageName }}:${{ github.sha }}
-      region: ${{ inputs.serviceLocation }}
+      region: ${{ inputs.serviceRegion }}

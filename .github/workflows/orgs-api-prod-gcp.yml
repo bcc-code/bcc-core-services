@@ -28,4 +28,4 @@ jobs:
         registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
         registryName: ${{secrets.REGISTRY_NAME}}
         serviceName: ${{secrets.ORGS_SERVICE_NAME}}
-        serviceLocation: ${{secrets.ORGS_SERVICE_LOCATION}}
+        serviceRegion: ${{secrets.ORGS_SERVICE_REGION}}
