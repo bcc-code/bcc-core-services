@@ -1,13 +1,13 @@
 version: '3.1'
 
 services:
-  org_api:
+  orgs_api:
     ports:
       - "4000:4000"
     env_file: ../.env
     environment:
       - GIN_MODE=release
-    container_name: org_api
+    container_name: orgs_api
     build: 
       context: ../
       dockerfile: devops/Dockerfile
