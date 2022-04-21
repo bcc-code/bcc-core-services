@@ -1,5 +1,5 @@
 CREATE TABLE address (
-   address_id int,
+   address_id SERIAL,
    PRIMARY KEY(address_id),
    street_1 varchar,
    street_2 varchar,
@@ -12,7 +12,7 @@ CREATE TABLE address (
 );
 
 CREATE TABLE org (
-   org_id int,
+   org_id SERIAL,
    PRIMARY KEY(org_id),
    name varchar NOT NULL,
    legal_name varchar,
@@ -23,7 +23,7 @@ CREATE TABLE org (
 );
 
 CREATE TABLE org_association (
-   association_id int,
+   association_id SERIAL,
    PRIMARY KEY(association_id),
    fk_parent_id int REFERENCES org (org_id) NOT NULL,
    fk_child_id int REFERENCES org (org_id) NOT NULL
