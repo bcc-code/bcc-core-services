@@ -152,12 +152,6 @@ namespace BuildingBlocks.Api.OpenApi
             });
         }
 
-        public static void AddBccTelemetry(this IServiceCollection services, string connectionString)
-        {
-            services.AddApplicationInsightsTelemetry(options => options.ConnectionString = connectionString);
-            services.AddSingleton<TelemetryClient>();
-        }
-
         public static void UseBccSwagger(this IApplicationBuilder app, IConfiguration configuration)
         {
             var options = ValidateOpenApiOptions(configuration);
