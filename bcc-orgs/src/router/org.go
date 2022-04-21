@@ -6,11 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func LoadOrgRoutes(r *gin.Engine) {
-	orgSvc := r.Group("/orgs")
-	orgController := controller.OrgController{}
-	orgSvc.GET("/:id", orgController.Get)
-	orgSvc.GET("/", orgController.Find)
-	orgSvc.POST("/", orgController.Create)
-	orgSvc.PUT("/:id", orgController.Update)
+func LoadOrgsRoutes(r *gin.Engine) {
+	orgsSvc := r.Group("/orgs")
+	orgsController := controller.OrgsController{}
+	orgsSvc.GET("/:id", orgsController.Get)
+	orgsSvc.GET("/", orgsController.Find)
+	orgsSvc.POST("/", orgsController.Create)
+	orgsSvc.PUT("/:id", orgsController.Update)
 }
