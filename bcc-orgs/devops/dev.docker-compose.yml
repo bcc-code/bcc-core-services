@@ -6,11 +6,17 @@ services:
       - "4000:4000"
     volumes:
       - ../src:/app/src
+      - ../db/migrations/:/db/migrations
+      - ../db/test-data/:/db/test-data
+    command: ["./scripts/wait-for-it.sh", "orgs_db:5432", "--", "./scripts/start-app-with-migrations.sh"]
     env_file: ../.env
     container_name: orgs_api
     build: 
       context: ../
       dockerfile: devops/dev.Dockerfile
+    depends_on:
+      - "orgs_db"
+
   orgs_db:
     image: postgres:13.6-alpine
     ports:
@@ -18,19 +24,7 @@ services:
     env_file: ../.env
     container_name: orgs_db
     restart: always
-  orgs_db_migrations:
-    container_name: orgs_db_migrations
-    tty: true
-    build: 
-      context: ../
-      dockerfile: devops/db-migrations.Dockerfile
-    env_file: ../.env
-    volumes:
-      - ../db/migrations/:/migrations
-      - ../db/test_data/:/test-data
-    depends_on:
-      - "orgs_db"
-    
+  
   orgs_db_management:
     image: adminer:latest
     container_name: orgs_db_management
