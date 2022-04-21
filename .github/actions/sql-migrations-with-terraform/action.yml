@@ -15,3 +15,6 @@ runs:
       with:
         creds: ${{ inputs.googleCredentials }}
         instance: ${{ inputs.dbInstance }}
+    - uses: actions/setup-go@v3
+    - run: go version
+      shell: bash

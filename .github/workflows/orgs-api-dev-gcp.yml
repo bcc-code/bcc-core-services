@@ -25,5 +25,15 @@ jobs:
         registryName: ${{secrets.REGISTRY_NAME}}
         serviceName: ${{secrets.ORGS_SERVICE_NAME}}
         serviceRegion: ${{secrets.ORGS_SERVICE_REGION}}
+  migrate:
+    name: Migrate database
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: actions/setup-go@v3
+    - run: go version
+      shell: bash
 
 
