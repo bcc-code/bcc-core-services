@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Bcc.Tenants.Contracts\Bcc.Tenants.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="CreateTenant.cs" />
+    </ItemGroup>
+
 </Project>

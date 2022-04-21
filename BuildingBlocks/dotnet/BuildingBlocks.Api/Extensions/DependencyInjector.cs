@@ -35,8 +35,8 @@ namespace BuildingBlocks.Api.Extensions
                 services.AddBccSwagger(configuration);
             }
 
-            services.AddBccTelemetry(configuration.GetConnectionString("ApplicationInsights"));
-            
+            services.AddApplicationInsightsTelemetry();
+
             services.AddBccAuthentication(configuration);
             
             services.RegisterCors(configuration);

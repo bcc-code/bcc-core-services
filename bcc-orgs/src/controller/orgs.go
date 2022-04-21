@@ -9,18 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type OrgController struct{}
+type OrgsController struct{}
 
-func (ctrl OrgController) Get(c *gin.Context) {
+func (ctrl OrgsController) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, models.Org{})
 }
-func (ctrl OrgController) Find(c *gin.Context) {
+func (ctrl OrgsController) Find(c *gin.Context) {
 	orgs := services.Query()
 	c.JSON(http.StatusOK, orgs)
 }
-func (ctrl OrgController) Create(c *gin.Context) {
+func (ctrl OrgsController) Create(c *gin.Context) {
 	c.JSON(http.StatusOK, models.Org{})
 }
-func (ctrl OrgController) Update(c *gin.Context) {
+func (ctrl OrgsController) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, models.Org{})
 }

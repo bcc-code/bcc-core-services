@@ -1,13 +1,13 @@
 version: '3.1'
 
 services:
-  org_api:
+  orgs_api:
     ports:
       - "4000:4000"
     volumes:
       - ../src:/app/src
     env_file: ../.env
-    container_name: org_api
+    container_name: orgs_api
     build: 
       context: ../
       dockerfile: devops/dev.Dockerfile

@@ -1,0 +1,32 @@
+name: Orgs API Staging Deployment 
+
+on:  
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - bcc-orgs/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build and deploy
+      uses: ./.github/actions/deploy-cloud-run-app
+      with:
+        projectId: ${{ secrets.GOOGLE_PROJECT_ID }}
+        googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+        buildContext: bcc-orgs
+        dockerfilePath:  bcc-orgs/devops/Dockerfile
+        imageName: bcc-orgs
+        registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
+        registryName: ${{secrets.REGISTRY_NAME}}
+        serviceName: ${{secrets.ORGS_SERVICE_NAME}}
+        serviceRegion: ${{secrets.ORGS_SERVICE_REGION}}
