@@ -27,5 +27,5 @@ jobs:
         imageName: bcc-orgs
         registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
         registryName: ${{secrets.REGISTRY_NAME}}
-        serviceName: ${{secrets.ORG_SERVICE_NAME}}
-        serviceLocation: ${{secrets.ORG_SERVICE_LOCATION}}
+        serviceName: ${{secrets.ORGS_SERVICE_NAME}}
+        serviceLocation: ${{secrets.ORGS_SERVICE_LOCATION}}
