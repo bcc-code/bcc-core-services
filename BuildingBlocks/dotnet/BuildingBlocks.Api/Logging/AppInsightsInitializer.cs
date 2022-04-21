@@ -1,5 +1,6 @@
 using BuildingBlocks.Api.Authentication;
 using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -37,6 +38,11 @@ namespace BuildingBlocks.Api.Logging
                 properties.Add("Age", _user.GetClaimsIdentity(Claims.Age));
             }
 
+            if (telemetry is RequestTelemetry requestTelemetry && ExcludeUrls.Contains(requestTelemetry.Url.AbsolutePath))
+            {
+                return;
+            }
+
             var to = new TelemetryObject
             {
                 UserId = _user.Id.ToString(),
@@ -49,6 +55,19 @@ namespace BuildingBlocks.Api.Logging
             };
 
             TelemetryHelper.Create(to).Initialize(telemetry);
+        }
+
+        private IEnumerable<string> ExcludeUrls
+        {
+            get
+            {
+                return new string[]
+                {
+                    "/swagger",
+                    "/health",
+                    "/server-status"
+                };
+            }
         }
     }
 }
