@@ -26,7 +26,7 @@ inputs:
   serviceName:
     description: 'Name of the cloud run service'
     required: true
-  serviceLocation:
+  serviceRegion:
     description: 'Location of the cloud run service'
     required: true
 
