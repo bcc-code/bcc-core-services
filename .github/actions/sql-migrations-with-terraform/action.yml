@@ -1,12 +1,17 @@
 name: 'Set environment variables'
 description: 'Configures environment variables for a workflow'
 inputs:
-  terraformPath:
-    description: 'Path to the terraform configuration'
+  googleCredentials:
+    description: 'Google credentials in JSON format'
     required: true
+  dbInstance:
+    description: 'Database instance name'
+    required: true
+
 runs:
   using: "composite"
   steps:
-    - run: |
-        echo "{{ inputs.terraformPath }}"
-      shell: bash
+    - uses: mattes/gce-cloudsql-proxy-action@v1
+      with:
+        creds: ${{ inputs.googleCredentials }}
+        instance: ${{ inputs.dbInstance }}

@@ -1,0 +1,2 @@
+#!/bin/bash 
+docker-compose -f ${BASH_SOURCE%/*}/../devops/dev.docker-compose.yml exec orgs_db_migrations migrate -path ./migrations -database postgres://admin:1234@orgs_db:5432/orgsdb?sslmode=disable up

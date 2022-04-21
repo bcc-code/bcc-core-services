@@ -51,4 +51,5 @@ jobs:
       
     - uses: ./.github/actions/sql-migrations-with-terraform
       with:
-        terraformPath: "test path"
+        googleCredentials: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        dbInstance: '${{ secrets.DB_INSTANCE_CONNECTION }}'

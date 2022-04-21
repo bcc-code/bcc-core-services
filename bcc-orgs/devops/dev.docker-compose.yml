@@ -12,14 +12,25 @@ services:
       context: ../
       dockerfile: devops/dev.Dockerfile
   orgs_db:
+    image: postgres:13.6-alpine
     ports:
       - "5432:5432"
-    volumes:
-      - ../db/migrations:/docker-entrypoint-initdb.d/
-    image: postgres:13.6-alpine
     env_file: ../.env
     container_name: orgs_db
     restart: always
+  orgs_db_migrations:
+    container_name: orgs_db_migrations
+    tty: true
+    build: 
+      context: ../
+      dockerfile: devops/db-migrations.Dockerfile
+    env_file: ../.env
+    volumes:
+      - ../db/migrations/:/migrations
+      - ../db/test_data/:/test-data
+    depends_on:
+      - "orgs_db"
+    
   orgs_db_management:
     image: adminer:latest
     container_name: orgs_db_management
