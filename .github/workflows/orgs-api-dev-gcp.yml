@@ -36,9 +36,7 @@ jobs:
       uses: ./.github/actions/postgres-migrations
       with:
         googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
-        dbInstance: ${{ secrets.DB_INSTANCE_CONNECTION }}
+        dbInstance: ${{ secrets.SQL_INSTANCE_CONNECTION }}
         dbName: ${{ secrets.ORGS_DB_NAME }}
         dbUsername: ${{ secrets.ORGS_DB_USERNAME }}
         dbPassword: ${{ secrets.ORGS_DB_PASSWORD }}
-
-
