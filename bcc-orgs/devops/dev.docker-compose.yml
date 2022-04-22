@@ -8,7 +8,8 @@ services:
       - ../src:/app/src
       - ../db/migrations/:/db/migrations
       - ../db/test-data/:/db/test-data
-    command: ["./scripts/wait-for-it.sh", "orgs_db:5432", "--", "./scripts/start-app-with-migrations.sh"]
+      - ./docker-scripts/:/scripts
+    command: ["/scripts/wait-for-orgs-db.sh", "--", "air"]
     env_file: ../.env
     container_name: orgs_api
     build: 
