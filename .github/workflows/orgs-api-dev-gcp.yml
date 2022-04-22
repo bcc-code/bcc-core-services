@@ -37,7 +37,11 @@ jobs:
         go-version: '>=1.17.0'
     - run: go install -tags "nomymysql nomysql nosqlite3" github.com/pressly/goose/v3/cmd/goose@latest
       shell: bash
-    - run: goose
+    - uses: mattes/gce-cloudsql-proxy-action@v1
+      with:
+        creds: ${{ secrets.GOOGLE_CREDENTIALS }}
+        instance: ${{ secrets.DB_INSTANCE_CONNECTION }}
+    - run: goose -dir db/migrations -table schema_migrations postgres "user=${{ secrets.ORGS_DB_USERNAME }} password=${{ secrets.ORGS_DB_PASSWORD }} dbname=${{ secrets.ORGS_DB_NAME }} sslmode=disable" up 
       shell: bash
 
 
