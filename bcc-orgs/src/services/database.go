@@ -6,8 +6,6 @@ import (
 	"os"
 	"strconv"
 
-	"bcc-orgs/src/models"
-
 	_ "github.com/lib/pq"
 )
 
@@ -22,36 +20,14 @@ var (
 	sslmode   = os.Getenv("POSTGRES_SSL_MODE")
 )
 
-func Query() []models.Org {
-	orgs := []models.Org{}
-
+func OpenDb() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		host, port, user, password, dbname, sslmode)
 
 	db, err := sql.Open("postgres", psqlInfo)
-	defer db.Close()
 	if err != nil {
 		panic(err)
 	}
-	q := "select name,orgid FROM orgs "
-	rows, err := db.Query(q)
-	if err != nil {
-		fmt.Println("Error Query,", err)
-	}
-
-	for rows.Next() {
-		var (
-			name  string
-			orgid int
-		)
-		if err := rows.Scan(&name, &orgid); err != nil {
-			panic(err)
-		}
-		org := models.Org{OrgID: orgid, Name: name}
-		orgs = append(orgs, org)
-	}
-	defer rows.Close()
-
-	return orgs
+	return db
 }

@@ -15,7 +15,7 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, models.Org{})
 }
 func (ctrl OrgsController) Find(c *gin.Context) {
-	orgs := services.Query()
+	orgs := services.Find()
 	c.JSON(http.StatusOK, orgs)
 }
 func (ctrl OrgsController) Create(c *gin.Context) {
