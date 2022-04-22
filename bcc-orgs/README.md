@@ -41,9 +41,9 @@ The only officially supported development environment is VS Code. A Database man
 
 ### Recomended extensions
 
-1. [Go] (https://marketplace.visualstudio.com/items?itemName=golang.Go)
-2. [Go-Outliner] (https://marketplace.visualstudio.com/items?itemName=766b.go-outliner)
-3. [Go-Doc] (https://marketplace.visualstudio.com/items?itemName=msyrus.go-doc)
+1. [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)
+2. [Go-Outliner](https://marketplace.visualstudio.com/items?itemName=766b.go-outliner)
+3. [Go-Doc](https://marketplace.visualstudio.com/items?itemName=msyrus.go-doc)
 
 ### Database migrations
 
