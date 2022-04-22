@@ -1,3 +1,4 @@
+-- +goose Up
 INSERT INTO address (street_1, street_2, city, region, country_iso_2_code, postal_code, country_name, country_name_native)
 VALUES 
     ('Straat', 'Straat2', 'Apeldoorn', 'Gelderland', 'NL', '7322EE', 'Netherlands', 'Nederland'),

@@ -1,3 +1,4 @@
+-- +goose Up
 CREATE TABLE address (
    address_id SERIAL,
    PRIMARY KEY(address_id),
@@ -28,3 +29,9 @@ CREATE TABLE org_association (
    fk_parent_id int REFERENCES org (org_id) NOT NULL,
    fk_child_id int REFERENCES org (org_id) NOT NULL
 );
+
+-- +goose Down
+DROP TABLE org_association;
+DROP TABLE org;
+DROP TABLE address;
+

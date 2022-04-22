@@ -41,14 +41,30 @@ The only officially supported development environment is VS Code. A Database man
 
 ### Recomended extensions
 
-1. [Go] (https://marketplace.visualstudio.com/items?itemName=golang.Go)
-2. [Go-Outliner] (https://marketplace.visualstudio.com/items?itemName=766b.go-outliner)
-3. [Go-Doc] (https://marketplace.visualstudio.com/items?itemName=msyrus.go-doc)
+1. [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)
+2. [Go-Outliner](https://marketplace.visualstudio.com/items?itemName=766b.go-outliner)
+3. [Go-Doc](https://marketplace.visualstudio.com/items?itemName=msyrus.go-doc)
+
+### Database migrations
+
+#### Docker
+
+1. When using ```./scripts/run-dev-docker.sh``` script the database is reset automatically.
+2. Database reset can also be triggered by running ```./scripts/reset-db-docker.sh```
+
+#### Locally
+
+1. Install [goose](https://github.com/pressly/goose)
+2. Run 
+   ```bash
+      goose -dir /db/migrations -table schema_migrations postgres "host=$POSTGRES_HOST port=$POSTGRES_PORT user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB sslmode=$POSTGRES_SSL_MODE" up
+   ```
+   With correct env vars
 
 ### Other tips
 
 Add following snippet to your editor ```settings.json``` file
-```
+```json
 "gopls": {
    "experimentalWorkspaceModule": true,
 },
@@ -57,4 +73,5 @@ It will allow for correct module highlighting if the go.mod file is not in root 
 
 ## Deployment
 
-Application is automatically deployed to Google Cloud Run on any commit to master that updates any file inside bcc-orgs directory
+1. Production and staging environments are automatically deployed to Google Cloud Run on any commit to master that updates any file inside bcc-orgs directory.
+2. Dev and staging environments can be manually deployed in github actions UI.
