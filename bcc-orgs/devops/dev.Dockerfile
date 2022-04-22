@@ -8,4 +8,3 @@ WORKDIR /app
 RUN go install github.com/cosmtrek/air@latest
 COPY .air.toml go.mod go.sum ./
 RUN go mod download
-
