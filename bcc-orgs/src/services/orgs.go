@@ -7,12 +7,9 @@ import (
 )
 
 func FindOrgs() []models.Org {
-	db := OpenDb()
-	defer db.Close()
-
 	var orgs []models.Org
 
-	err := db.Select(&orgs, `
+	err := Db.Select(&orgs, `
 		SELECT 
 			o.org_id AS org_id, 
 			o.name AS name, 
@@ -59,12 +56,9 @@ func FindOrgs() []models.Org {
 }
 
 func GetOrg(orgID int) (models.Org, error) {
-	db := OpenDb()
-	defer db.Close()
-
 	var org models.Org
 
-	err := db.Get(&org, `
+	err := Db.Get(&org, `
 		SELECT 
 			o.org_id AS org_id, 
 			o.name AS name, 
@@ -113,35 +107,14 @@ func GetOrg(orgID int) (models.Org, error) {
 }
 
 func CreateOrg(org models.Org) (int, error) {
-	db := OpenDb()
-	defer db.Close()
-
-	var visitingAddressID *int = nil
-	var postalAddressID *int = nil
-	var billingAddressID *int = nil
-
-	if addressEntered(org.VisitingAddress) {
-		visitingAddressID, err = CreateAddress(org.VisitingAddress)
-		if err != nil {
-			panic(err)
-		}
-	}
-	if addressEntered(org.PostalAddress) {
-		postalAddressID, err = CreateAddress(org.PostalAddress)
-		if err != nil {
-			panic(err)
-		}
-	}
-	if addressEntered(org.BillingAddress) {
-		billingAddressID, err = CreateAddress(org.BillingAddress)
-		if err != nil {
-			panic(err)
-		}
+	visitingAddressID, postalAddressID, billingAddressID, addressErr := CreateOrgAddresses(org)
+	if addressErr != nil {
+		panic(addressErr)
 	}
 
 	lastInsertId := 0
 
-	err := db.QueryRow(`
+	err := Db.QueryRow(`
 		INSERT INTO org (
 			name, 
 			legal_name, 
@@ -156,8 +129,4 @@ func CreateOrg(org models.Org) (int, error) {
 	}
 
 	return lastInsertId, nil
-}
-
-func addressEntered(address models.Address) bool {
-	return (models.Address{}) != address
 }

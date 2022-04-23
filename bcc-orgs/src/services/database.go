@@ -20,7 +20,9 @@ var (
 	sslmode   = os.Getenv("POSTGRES_SSL_MODE")
 )
 
-func OpenDb() *sqlx.DB {
+var Db *sqlx.DB
+
+func OpenDb() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		host, port, user, password, dbname, sslmode)
@@ -29,5 +31,5 @@ func OpenDb() *sqlx.DB {
 	if err != nil {
 		panic(err)
 	}
-	return db
+	Db = db
 }

@@ -5,11 +5,8 @@ import (
 )
 
 func CreateAddress(address models.Address) (*int, error) {
-	db := OpenDb()
-	defer db.Close()
-
 	var lastInsertId = 0
-	err := db.QueryRow(`
+	err := Db.QueryRow(`
 		INSERT INTO address (
 			street_1,
 			street_2,
@@ -34,4 +31,35 @@ func CreateAddress(address models.Address) (*int, error) {
 	}
 
 	return &lastInsertId, nil
+}
+
+func CreateOrgAddresses(org models.Org) (*int, *int, *int, error) {
+	var visitingAddressID *int = nil
+	var postalAddressID *int = nil
+	var billingAddressID *int = nil
+
+	if addressEntered(org.VisitingAddress) {
+		visitingAddressID, err = CreateAddress(org.VisitingAddress)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if addressEntered(org.PostalAddress) {
+		postalAddressID, err = CreateAddress(org.PostalAddress)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if addressEntered(org.BillingAddress) {
+		billingAddressID, err = CreateAddress(org.BillingAddress)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return visitingAddressID, postalAddressID, billingAddressID, nil
+}
+
+func addressEntered(address models.Address) bool {
+	return (models.Address{}) != address
 }
