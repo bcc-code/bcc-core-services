@@ -1,37 +1,39 @@
 package models
 
-type OrgEntity struct {
-	Org_id                               int
-	Name                                 string
-	Legal_name                           string
-	Type                                 string
-	Visiting_address_address_id          int
-	Visiting_address_street_1            string
-	Visiting_address_street_2            string
-	Visiting_address_city                string
-	Visiting_address_region              string
-	Visiting_address_country_iso_2_code  string
-	Visiting_address_postal_code         string
-	Visiting_address_country_name        string
-	Visiting_address_country_name_native string
-	Postal_address_address_id            int
-	Postal_address_street_1              string
-	Postal_address_street_2              string
-	Postal_address_city                  string
-	Postal_address_region                string
-	Postal_address_country_iso_2_code    string
-	Postal_address_postal_code           string
-	Postal_address_country_name          string
-	Postal_address_country_name_native   string
-	Billing_address_address_id           int
-	Billing_address_street_1             string
-	Billing_address_street_2             string
-	Billing_address_city                 string
-	Billing_address_region               string
-	Billing_address_country_iso_2_code   string
-	Billing_address_postal_code          string
-	Billing_address_country_name         string
-	Billing_address_country_name_native  string
+type VisitingAddressEntity struct {
+	AddressID         *int    `json:"addressID" db:"visiting_address_id"`
+	Street1           *string `json:"street1" db:"visiting_address_street_1"`
+	Street2           *string `json:"street2" db:"visiting_address_street_2"`
+	City              *string `json:"city" db:"visiting_address_city"`
+	Region            *string `json:"region" db:"visiting_address_region"`
+	CountryIso2Code   *string `json:"countryIso2Code" db:"visiting_address_country_iso_2_code"`
+	PostalCode        *string `json:"postalCode" db:"visiting_address_postal_code"`
+	CountryName       *string `json:"countryName" db:"visiting_address_country_name"`
+	CountryNameNative *string `json:"countryNameNative" db:"visiting_address_country_name_native"`
+}
+
+type PostalAddressEntity struct {
+	AddressID         *int    `json:"addressID" db:"postal_address_id"`
+	Street1           *string `json:"street1" db:"postal_address_street_1"`
+	Street2           *string `json:"street2" db:"postal_address_street_2"`
+	City              *string `json:"city" db:"postal_address_city"`
+	Region            *string `json:"region" db:"postal_address_region"`
+	CountryIso2Code   *string `json:"countryIso2Code" db:"postal_address_country_iso_2_code"`
+	PostalCode        *string `json:"postalCode" db:"postal_address_postal_code"`
+	CountryName       *string `json:"countryName" db:"postal_address_country_name"`
+	CountryNameNative *string `json:"countryNameNative" db:"postal_address_country_name_native"`
+}
+
+type BillingAddressEntity struct {
+	AddressID         *int    `json:"addressID" db:"billing_address_id"`
+	Street1           *string `json:"street1" db:"billing_address_street_1"`
+	Street2           *string `json:"street2" db:"billing_address_street_2"`
+	City              *string `json:"city" db:"billing_address_city"`
+	Region            *string `json:"region" db:"billing_address_region"`
+	CountryIso2Code   *string `json:"countryIso2Code" db:"billing_address_country_iso_2_code"`
+	PostalCode        *string `json:"postalCode" db:"billing_address_postal_code"`
+	CountryName       *string `json:"countryName" db:"billing_address_country_name"`
+	CountryNameNative *string `json:"countryNameNative" db:"billing_address_country_name_native"`
 }
 
 type AddressEntity struct {

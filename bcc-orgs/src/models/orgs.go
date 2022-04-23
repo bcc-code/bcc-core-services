@@ -12,11 +12,11 @@ type Address struct {
 	CountryNameNative string `json:"countryNameNative"`
 }
 type Org struct {
-	OrgID           int     `json:"orgID"`
-	Name            string  `json:"name"`
-	LegalName       string  `json:"legalName"`
-	Type            string  `json:"type"`
-	VisitingAddress Address `json:"visitingAddress"`
-	PostalAddress   Address `json:"postalAddress"`
-	BillingAddress  Address `json:"billingAddress"`
+	OrgID           int     `json:"orgID" db:"org_id"`
+	Name            string  `json:"name" db:"name"`
+	LegalName       *string `json:"legalName" db:"legal_name"`
+	Type            string  `json:"type" db:"type"`
+	VisitingAddressEntity `json:"visitingAddress"`
+	PostalAddressEntity `json:"postalAddress"`
+	BillingAddressEntity `json:"billingAddress"`
 }

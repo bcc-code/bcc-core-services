@@ -1,11 +1,11 @@
 package services
 
 import (
-	"database/sql"
 	"fmt"
 	"os"
 	"strconv"
 
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
@@ -20,12 +20,12 @@ var (
 	sslmode   = os.Getenv("POSTGRES_SSL_MODE")
 )
 
-func OpenDb() *sql.DB {
+func OpenDb() *sqlx.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		host, port, user, password, dbname, sslmode)
 
-	db, err := sql.Open("postgres", psqlInfo)
+	db, err := sqlx.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
