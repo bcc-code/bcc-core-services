@@ -34,3 +34,16 @@ func GetOrg(orgID int) (models.Org, error) {
 
 	return org, nil
 }
+
+func CreateOrg(org models.Org) (int, error) {
+	db := OpenDb()
+	defer db.Close()
+
+	lastInsertId := 0
+	err := db.QueryRow("INSERT INTO org (name, legal_name, type) VALUES ($1, $2, $3) RETURNING org_id", org.Name, org.LegalName, org.Type).Scan(&lastInsertId)
+	if err != nil {
+		return 0, err
+	}
+
+	return lastInsertId, nil
+}

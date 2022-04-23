@@ -24,13 +24,27 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 		c.JSON(http.StatusOK, org)
 	}
 }
+
 func (ctrl OrgsController) Find(c *gin.Context) {
 	orgs := services.FindOrgs()
 	c.JSON(http.StatusOK, orgs)
 }
+
 func (ctrl OrgsController) Create(c *gin.Context) {
-	c.JSON(http.StatusOK, models.Org{})
+	var org models.Org
+	err := c.BindJSON(&org)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": err.Error()})
+	}
+
+	orgID, err := services.CreateOrg(org)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
+	} else {
+		c.JSON(http.StatusOK, orgID)
+	}
 }
+
 func (ctrl OrgsController) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, models.Org{})
 }
