@@ -116,12 +116,41 @@ func CreateOrg(org models.Org) (int, error) {
 	db := OpenDb()
 	defer db.Close()
 
+	var visitingAddressID *int = nil
+	var postalAddressID *int = nil
+	var billingAddressID *int = nil
+
+	if addressEntered(org.VisitingAddress) {
+		visitingAddressID, err = CreateAddress(org.VisitingAddress)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if addressEntered(org.PostalAddress) {
+		postalAddressID, err = CreateAddress(org.PostalAddress)
+		if err != nil {
+			panic(err)
+		}
+	}
+	if addressEntered(org.BillingAddress) {
+		billingAddressID, err = CreateAddress(org.BillingAddress)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	lastInsertId := 0
 
-	// vaEntered := addressEntered(org.VisitingAddress)
-
-	// Add Addresses too!
-	err := db.QueryRow("INSERT INTO org (name, legal_name, type) VALUES ($1, $2, $3) RETURNING org_id", org.Name, org.LegalName, org.Type).Scan(&lastInsertId)
+	err := db.QueryRow(`
+		INSERT INTO org (
+			name, 
+			legal_name, 
+			type, 
+			fk_visiting_address_id,
+			fk_postal_address_id,
+			fk_billing_address_id
+		) VALUES ($1, $2, $3, $4, $5, $6)
+		RETURNING org_id`, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&lastInsertId)
 	if err != nil {
 		return 0, err
 	}
@@ -130,5 +159,5 @@ func CreateOrg(org models.Org) (int, error) {
 }
 
 func addressEntered(address models.Address) bool {
-	return false
+	return (models.Address{}) != address
 }
