@@ -4,8 +4,8 @@ import (
 	"bcc-orgs/src/models"
 )
 
-func CreateAddress(address models.Address) (*int, error) {
-	var lastInsertId = 0
+func CreateAddress(address models.Address) (*models.Address, error) {
+	var result models.Address
 	err := Db.QueryRow(`
 		INSERT INTO address (
 			street_1,
@@ -16,7 +16,8 @@ func CreateAddress(address models.Address) (*int, error) {
 			postal_code,
 			country_name,
 			country_name_native
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING address_id`,
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+		RETURNING *`,
 		address.Street1,
 		address.Street2,
 		address.City,
@@ -25,39 +26,130 @@ func CreateAddress(address models.Address) (*int, error) {
 		address.PostalCode,
 		address.CountryName,
 		address.CountryNameNative,
-	).Scan(&lastInsertId)
+	).Scan(
+		&result.AddressID,
+		&result.Street1,
+		&result.Street2,
+		&result.City,
+		&result.Region,
+		&result.CountryIso2Code,
+		&result.PostalCode,
+		&result.CountryName,
+		&result.CountryNameNative)
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
 
-	return &lastInsertId, nil
+	return &result, nil
+}
+
+func UpdateAddress(addressID int, address models.Address) (*models.Address, error) {
+	var result models.Address
+	err := Db.QueryRow(`
+		UPDATE address
+			SET street_1 = $2, street_2 = $3, city = $4, region = $5, country_iso_2_code = $6, postal_code = $7, country_name = $8, country_name_native = $9
+		WHERE address_id = $1
+		RETURNING *`,
+		addressID,
+		address.Street1,
+		address.Street2,
+		address.City,
+		address.Region,
+		address.CountryIso2Code,
+		address.PostalCode,
+		address.CountryName,
+		address.CountryNameNative,
+	).Scan(
+		&result.AddressID,
+		&result.Street1,
+		&result.Street2,
+		&result.City,
+		&result.Region,
+		&result.CountryIso2Code,
+		&result.PostalCode,
+		&result.CountryName,
+		&result.CountryNameNative)
+	if err != nil {
+		return &result, err
+	}
+
+	return &result, nil
 }
 
 func CreateOrgAddresses(org models.Org) (*int, *int, *int, error) {
-	var visitingAddressID *int = nil
-	var postalAddressID *int = nil
-	var billingAddressID *int = nil
+	var visitingAddress *models.Address
+	var postalAddress *models.Address
+	var billingAddress *models.Address
 
 	if addressEntered(org.VisitingAddress) {
-		visitingAddressID, err = CreateAddress(org.VisitingAddress)
+		visitingAddress, err = CreateAddress(org.VisitingAddress)
 		if err != nil {
 			panic(err)
 		}
 	}
 	if addressEntered(org.PostalAddress) {
-		postalAddressID, err = CreateAddress(org.PostalAddress)
+		postalAddress, err = CreateAddress(org.PostalAddress)
 		if err != nil {
 			panic(err)
 		}
 	}
 	if addressEntered(org.BillingAddress) {
-		billingAddressID, err = CreateAddress(org.BillingAddress)
+		billingAddress, err = CreateAddress(org.BillingAddress)
 		if err != nil {
 			panic(err)
 		}
 	}
 
-	return visitingAddressID, postalAddressID, billingAddressID, nil
+	visitingAddressID := *visitingAddress.AddressID
+	postalAddressID := *postalAddress.AddressID
+	billingAddressID := *billingAddress.AddressID
+
+	return &visitingAddressID, &postalAddressID, &billingAddressID, nil
+}
+
+func UpdateOrgAddresses(current models.Org, changedOrg models.Org) (*models.Address, *models.Address, *models.Address, error) {
+	var visitingAddress *models.Address
+	var postalAddress *models.Address
+	var billingAddress *models.Address
+
+	if addressEntered(changedOrg.VisitingAddress) {
+		visitingAddressID := current.VisitingAddress.AddressID
+		if visitingAddressID == nil {
+			visitingAddress, err = CreateAddress(changedOrg.VisitingAddress)
+		} else {
+			visitingAddress, err = UpdateAddress(*visitingAddressID, changedOrg.VisitingAddress)
+		}
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if addressEntered(changedOrg.PostalAddress) {
+		postalAddressID := current.PostalAddress.AddressID
+		if postalAddressID == nil {
+			postalAddress, err = CreateAddress(changedOrg.PostalAddress)
+		} else {
+			postalAddress, err = UpdateAddress(*postalAddressID, changedOrg.PostalAddress)
+		}
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if addressEntered(changedOrg.BillingAddress) {
+		billingAddressID := current.BillingAddress.AddressID
+
+		if billingAddressID == nil {
+			billingAddress, err = CreateAddress(changedOrg.BillingAddress)
+		} else {
+			billingAddress, err = UpdateAddress(*billingAddressID, changedOrg.BillingAddress)
+		}
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	return visitingAddress, postalAddress, billingAddress, nil
 }
 
 func addressEntered(address models.Address) bool {

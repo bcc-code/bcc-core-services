@@ -4,17 +4,19 @@ import (
 	"bcc-orgs/src/models"
 	"errors"
 	"fmt"
+
+	"github.com/imdario/mergo"
 )
 
 func FindOrgs() []models.Org {
 	var orgs []models.Org
 
 	err := Db.Select(&orgs, `
-		SELECT 
-			o.org_id AS org_id, 
-			o.name AS name, 
+		SELECT
+			o.org_id AS org_id,
+			o.name AS name,
 			o.legal_name AS legal_name,
-			o.type AS type, 
+			o.type AS type,
 			va.address_id AS "va.address_id",
 			va.street_1 AS "va.street_1",
 			va.street_2 AS "va.street_2",
@@ -59,11 +61,11 @@ func GetOrg(orgID int) (models.Org, error) {
 	var org models.Org
 
 	err := Db.Get(&org, `
-		SELECT 
-			o.org_id AS org_id, 
-			o.name AS name, 
+		SELECT
+			o.org_id AS org_id,
+			o.name AS name,
 			o.legal_name AS legal_name,
-			o.type AS type, 
+			o.type AS type,
 			va.address_id AS "va.address_id",
 			va.street_1 AS "va.street_1",
 			va.street_2 AS "va.street_2",
@@ -116,9 +118,9 @@ func CreateOrg(org models.Org) (int, error) {
 
 	err := Db.QueryRow(`
 		INSERT INTO org (
-			name, 
-			legal_name, 
-			type, 
+			name,
+			legal_name,
+			type,
 			fk_visiting_address_id,
 			fk_postal_address_id,
 			fk_billing_address_id
@@ -129,4 +131,47 @@ func CreateOrg(org models.Org) (int, error) {
 	}
 
 	return lastInsertId, nil
+}
+
+func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
+	var result models.Org
+
+	currentOrg, _ := GetOrg(orgID)
+
+	if err := mergo.Merge(&org, currentOrg); err != nil {
+		panic(err)
+	}
+
+	visitingAddress, postalAddress, billingAddress, addressErr := UpdateOrgAddresses(currentOrg, org)
+	if addressErr != nil {
+		panic(addressErr)
+	}
+
+	var visitingAddressID *int
+	var postalAddressID *int
+	var billingAddressID *int
+
+	if visitingAddress != nil {
+		result.VisitingAddress = *visitingAddress
+		visitingAddressID = visitingAddress.AddressID
+	}
+	if postalAddress != nil {
+		result.PostalAddress = *postalAddress
+		postalAddressID = postalAddress.AddressID
+	}
+	if billingAddress != nil {
+		result.BillingAddress = *billingAddress
+		billingAddressID = billingAddress.AddressID
+	}
+
+	err := Db.QueryRow(`
+		UPDATE org
+			SET name = $2, legal_name = $3, type = $4, fk_visiting_address_id = $5, fk_postal_address_id = $6, fk_billing_address_id = $7
+		WHERE org_id = $1
+		RETURNING org_id, name, legal_name, type`, orgID, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&result.OrgID, &result.Name, &result.LegalName, &result.Type)
+	if err != nil {
+		return result, nil
+	}
+
+	return result, nil
 }

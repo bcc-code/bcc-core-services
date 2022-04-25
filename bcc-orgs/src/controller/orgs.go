@@ -46,5 +46,17 @@ func (ctrl OrgsController) Create(c *gin.Context) {
 }
 
 func (ctrl OrgsController) Update(c *gin.Context) {
-	c.JSON(http.StatusOK, models.Org{})
+	idString := c.Param("id")
+	orgID, _ := strconv.Atoi(idString)
+
+	var org models.Org
+	err := c.BindJSON(&org)
+
+	updatedOrg, err := services.UpdateOrg(orgID, org)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": err.Error()})
+	} else {
+		c.JSON(http.StatusOK, updatedOrg)
+	}
 }
