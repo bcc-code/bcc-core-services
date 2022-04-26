@@ -9,8 +9,6 @@ import (
 
 var keySet jwk.Set = nil
 
-// GetKeySet for the specified domain.
-// The result is cached for the lifetime of the program
 func GetKeySet(domain string) jwk.Set {
 	if keySet != nil {
 		return keySet

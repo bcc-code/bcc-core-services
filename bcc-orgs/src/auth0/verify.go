@@ -17,8 +17,6 @@ var (
 
 func JWTCheckWithScopes(scopes []string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
-		// middleware
 		token, err := parseToken(c)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, "Couldn't parse token")
@@ -42,7 +40,6 @@ func JWTCheckWithScopes(scopes []string) gin.HandlerFunc {
 }
 
 func parseToken(c *gin.Context) (jwt.Token, error) {
-	// middleware
 	token, err := jwt.ParseRequest(
 		c.Request,
 		jwt.WithKeySet(GetKeySet(auth0Issuer)),
