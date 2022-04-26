@@ -61,7 +61,6 @@ func (ctrl OrgsController) Update(c *gin.Context) {
 
 	var org models.Org
 	err := c.BindJSON(&org)
-
 	updatedOrg, err := services.UpdateOrg(orgID, org)
 
 	if err != nil {

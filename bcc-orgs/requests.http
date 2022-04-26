@@ -2,7 +2,6 @@
 @auth0Host={{$dotenv AUTH0_ISSUER}}
 @clientID={{$dotenv AUTH0_CLIENT_ID}}
 @clientSecret={{$dotenv AUTH0_CLIENT_SECRET}}
-
 @localHost=http://localhost:{{$dotenv PORT}}
 
 # @name getCredentials
@@ -37,19 +36,21 @@ POST {{localHost}}/orgs HTTP/1.1
 Authorization: {{token}}
 
 {
-    "orgID": 0,
-    "name": "TEST",
+    "name": "Terwolde",
+    "type": "Church"
 }
 
 ###
 
 # @name updateOrg
-GET {{localHost}}/orgs/1 HTTP/1.1
+PUT {{localHost}}/orgs/1 HTTP/1.1
 content-type: application/json
 Authorization: {{token}}
 
 {
-    "orgID": 0,
     "name": "TEST",
+    "visitingAddress": {
+        "street1": "Velzel"
+    }
 }
 
