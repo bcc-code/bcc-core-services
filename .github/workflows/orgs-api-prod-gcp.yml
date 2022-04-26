@@ -29,3 +29,18 @@ jobs:
         registryName: ${{secrets.REGISTRY_NAME}}
         serviceName: ${{secrets.ORGS_SERVICE_NAME}}
         serviceRegion: ${{secrets.ORGS_SERVICE_REGION}}
+  migrate:
+    name: Migrate database
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Migrate database
+      uses: ./.github/actions/postgres-migrations
+      with:
+        googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+        dbInstance: ${{ secrets.SQL_INSTANCE_CONNECTION }}
+        dbName: ${{ secrets.ORGS_DB_NAME }}
+        dbUsername: ${{ secrets.ORGS_DB_USERNAME }}
+        dbPassword: ${{ secrets.ORGS_DB_PASSWORD }}
