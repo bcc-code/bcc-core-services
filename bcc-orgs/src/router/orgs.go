@@ -1,6 +1,7 @@
 package router
 
 import (
+	"bcc-orgs/src/auth0"
 	"bcc-orgs/src/controller"
 
 	"github.com/gin-gonic/gin"
@@ -9,8 +10,8 @@ import (
 func LoadOrgsRoutes(r *gin.Engine) {
 	orgsSvc := r.Group("/orgs")
 	orgsController := controller.OrgsController{}
-	orgsSvc.GET("/:id", orgsController.Get)
-	orgsSvc.GET("/", orgsController.Find)
-	orgsSvc.POST("/", orgsController.Create)
-	orgsSvc.PUT("/:id", orgsController.Update)
+	orgsSvc.GET("/:id", auth0.JWTCheckWithScopes([]string{"read:org"}), orgsController.Get)
+	orgsSvc.GET("/", auth0.JWTCheckWithScopes([]string{"read:org"}), orgsController.Find)
+	orgsSvc.POST("/", auth0.JWTCheckWithScopes([]string{"write:org"}), orgsController.Create)
+	orgsSvc.PUT("/:id", auth0.JWTCheckWithScopes([]string{"write:org"}), orgsController.Update)
 }
