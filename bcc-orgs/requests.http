@@ -13,7 +13,8 @@ content-type: application/json
     "audience": "{{audience}}",
     "grant_type": "client_credentials",
     "client_id": "{{clientID}}",
-    "client_secret": "{{clientSecret}}"
+    "client_secret": "{{clientSecret}}",
+    "scope": "read:org write:org"
 }
 
 ###
