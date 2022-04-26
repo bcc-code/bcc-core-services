@@ -12,5 +12,6 @@ func main() {
 
 	r := gin.Default()
 	router.LoadRoutes(r)
+
 	r.Run()
 }
