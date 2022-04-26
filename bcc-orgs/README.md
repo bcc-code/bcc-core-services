@@ -39,6 +39,10 @@ Copy ```.env.example``` to ```.env```
 
 The only officially supported development environment is VS Code. A Database management tool is included in the docker compose setup. Go to localhost:8080 and login with the settings in the .env to make use of this tool.
 
+### Testing
+
+To run tests locally you can attach a shell to the "orgs-api" container. In the container running the ```go test -v ./...``` command will run all files with a *_test.go naming. Running the tests in the CI/CD pipeline is a to do.
+
 ### Recomended extensions
 
 1. [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)
