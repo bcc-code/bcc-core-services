@@ -1,4 +1,4 @@
-package controller
+package controllers
 
 import (
 	"net/http"
@@ -26,8 +26,13 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 }
 
 func (ctrl OrgsController) Find(c *gin.Context) {
-	orgs := services.FindOrgs()
-	c.JSON(http.StatusOK, orgs)
+	orgs, err := services.FindOrgs()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
+	} else {
+		c.JSON(http.StatusOK, orgs)
+
+	}
 }
 
 func (ctrl OrgsController) Create(c *gin.Context) {

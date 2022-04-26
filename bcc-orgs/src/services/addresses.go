@@ -2,11 +2,12 @@ package services
 
 import (
 	"bcc-orgs/src/models"
+	"bcc-orgs/src/utils"
 )
 
 func CreateAddress(address models.Address) (*models.Address, error) {
 	var result models.Address
-	err := Db.QueryRow(`
+	err := utils.Db.QueryRow(`
 		INSERT INTO address (
 			street_1,
 			street_2,
@@ -36,16 +37,13 @@ func CreateAddress(address models.Address) (*models.Address, error) {
 		&result.PostalCode,
 		&result.CountryName,
 		&result.CountryNameNative)
-	if err != nil {
-		return &result, err
-	}
 
-	return &result, nil
+	return &result, err
 }
 
 func UpdateAddress(addressID int, address models.Address) (*models.Address, error) {
 	var result models.Address
-	err := Db.QueryRow(`
+	err := utils.Db.QueryRow(`
 		UPDATE address
 			SET street_1 = $2, street_2 = $3, city = $4, region = $5, country_iso_2_code = $6, postal_code = $7, country_name = $8, country_name_native = $9
 		WHERE address_id = $1
@@ -76,35 +74,34 @@ func UpdateAddress(addressID int, address models.Address) (*models.Address, erro
 	return &result, nil
 }
 
-func CreateOrgAddresses(org models.Org) (*int, *int, *int, error) {
+func CreateOrgAddresses(org models.Org) (*models.Address, *models.Address, *models.Address, error) {
 	var visitingAddress *models.Address
 	var postalAddress *models.Address
 	var billingAddress *models.Address
 
 	if addressEntered(org.VisitingAddress) {
+		var err error
 		visitingAddress, err = CreateAddress(org.VisitingAddress)
 		if err != nil {
 			panic(err)
 		}
 	}
 	if addressEntered(org.PostalAddress) {
+		var err error
 		postalAddress, err = CreateAddress(org.PostalAddress)
 		if err != nil {
 			panic(err)
 		}
 	}
 	if addressEntered(org.BillingAddress) {
+		var err error
 		billingAddress, err = CreateAddress(org.BillingAddress)
 		if err != nil {
 			panic(err)
 		}
 	}
 
-	visitingAddressID := *visitingAddress.AddressID
-	postalAddressID := *postalAddress.AddressID
-	billingAddressID := *billingAddress.AddressID
-
-	return &visitingAddressID, &postalAddressID, &billingAddressID, nil
+	return visitingAddress, postalAddress, billingAddress, nil
 }
 
 func UpdateOrgAddresses(current models.Org, changedOrg models.Org) (*models.Address, *models.Address, *models.Address, error) {
@@ -113,6 +110,7 @@ func UpdateOrgAddresses(current models.Org, changedOrg models.Org) (*models.Addr
 	var billingAddress *models.Address
 
 	if addressEntered(changedOrg.VisitingAddress) {
+		var err error
 		visitingAddressID := current.VisitingAddress.AddressID
 		if visitingAddressID == nil {
 			visitingAddress, err = CreateAddress(changedOrg.VisitingAddress)
@@ -125,6 +123,7 @@ func UpdateOrgAddresses(current models.Org, changedOrg models.Org) (*models.Addr
 	}
 
 	if addressEntered(changedOrg.PostalAddress) {
+		var err error
 		postalAddressID := current.PostalAddress.AddressID
 		if postalAddressID == nil {
 			postalAddress, err = CreateAddress(changedOrg.PostalAddress)
@@ -137,6 +136,7 @@ func UpdateOrgAddresses(current models.Org, changedOrg models.Org) (*models.Addr
 	}
 
 	if addressEntered(changedOrg.BillingAddress) {
+		var err error
 		billingAddressID := current.BillingAddress.AddressID
 
 		if billingAddressID == nil {

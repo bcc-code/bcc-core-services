@@ -5,13 +5,15 @@ import (
 	"errors"
 	"fmt"
 
+	"bcc-orgs/src/utils"
+
 	"github.com/imdario/mergo"
 )
 
-func FindOrgs() []models.Org {
+func FindOrgs() ([]models.Org, error) {
 	var orgs []models.Org
 
-	err := Db.Select(&orgs, `
+	err := utils.Db.Select(&orgs, `
 		SELECT
 			o.org_id AS org_id,
 			o.name AS name,
@@ -50,17 +52,14 @@ func FindOrgs() []models.Org {
 			LEFT JOIN address AS pa ON pa.address_id = o.fk_postal_address_id
 			LEFT JOIN address AS ba ON ba.address_id = o.fk_billing_address_id
 		`)
-	if err != nil {
-		panic(err)
-	}
 
-	return orgs
+	return orgs, err
 }
 
 func GetOrg(orgID int) (models.Org, error) {
 	var org models.Org
 
-	err := Db.Get(&org, `
+	err := utils.Db.Get(&org, `
 		SELECT
 			o.org_id AS org_id,
 			o.name AS name,
@@ -109,14 +108,28 @@ func GetOrg(orgID int) (models.Org, error) {
 }
 
 func CreateOrg(org models.Org) (int, error) {
-	visitingAddressID, postalAddressID, billingAddressID, addressErr := CreateOrgAddresses(org)
+	visitingAddress, postalAddress, billingAddress, addressErr := CreateOrgAddresses(org)
 	if addressErr != nil {
 		panic(addressErr)
 	}
 
+	var visitingAddressID *int
+	var postalAddressID *int
+	var billingAddressID *int
+
+	if visitingAddress != nil {
+		visitingAddressID = visitingAddress.AddressID
+	}
+	if postalAddress != nil {
+		postalAddressID = postalAddress.AddressID
+	}
+	if billingAddress != nil {
+		billingAddressID = billingAddress.AddressID
+	}
+
 	lastInsertId := 0
 
-	err := Db.QueryRow(`
+	err := utils.Db.QueryRow(`
 		INSERT INTO org (
 			name,
 			legal_name,
@@ -164,7 +177,7 @@ func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
 		billingAddressID = billingAddress.AddressID
 	}
 
-	err := Db.QueryRow(`
+	err := utils.Db.QueryRow(`
 		UPDATE org
 			SET name = $2, legal_name = $3, type = $4, fk_visiting_address_id = $5, fk_postal_address_id = $6, fk_billing_address_id = $7
 		WHERE org_id = $1

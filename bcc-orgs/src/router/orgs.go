@@ -1,14 +1,14 @@
 package router
 
 import (
-	"bcc-orgs/src/controller"
+	"bcc-orgs/src/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
 func LoadOrgsRoutes(r *gin.Engine) {
 	orgsSvc := r.Group("/orgs")
-	orgsController := controller.OrgsController{}
+	orgsController := controllers.OrgsController{}
 	orgsSvc.GET("/:id", orgsController.Get)
 	orgsSvc.GET("/", orgsController.Find)
 	orgsSvc.POST("/", orgsController.Create)

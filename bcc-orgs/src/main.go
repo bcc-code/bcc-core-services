@@ -3,16 +3,21 @@ package main
 import (
 	"bcc-orgs/src/router"
 
-	"bcc-orgs/src/services"
+	"bcc-orgs/src/utils"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	godotenv.Load()
+	envErr := utils.InitEnv()
+	if envErr != nil {
+		panic(envErr)
+	}
 
-	services.OpenDb()
+	dbErr := utils.OpenDb()
+	if dbErr != nil {
+		panic(dbErr)
+	}
 
 	r := gin.Default()
 	router.LoadRoutes(r)
