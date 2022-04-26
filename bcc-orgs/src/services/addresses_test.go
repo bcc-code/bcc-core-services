@@ -25,7 +25,7 @@ func TestCreateOrgAddresses(t *testing.T) {
 		},
 	}
 
-	visitingAddress, postalAddress, billingAddress, err := CreateOrgAddresses(orgWithAddresses)
+	visitingAddress, postalAddress, billingAddress, err := CreateOrUpdateOrgAddresses(orgWithAddresses, models.Org{})
 	if err != nil {
 		panic(err)
 	}

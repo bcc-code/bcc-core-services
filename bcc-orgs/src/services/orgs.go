@@ -2,8 +2,6 @@ package services
 
 import (
 	"bcc-orgs/src/models"
-	"errors"
-	"fmt"
 
 	"bcc-orgs/src/utils"
 
@@ -99,65 +97,16 @@ func GetOrg(orgID int) (models.Org, error) {
 			LEFT JOIN address AS ba ON ba.address_id = o.fk_billing_address_id
 		WHERE o.org_id = $1
 	`, orgID)
-	if err != nil {
-		notFound := fmt.Sprintf("Organization could not be found for orgID %v", orgID)
-		return org, errors.New(notFound)
-	}
 
-	return org, nil
+	return org, err
 }
 
 func CreateOrg(org models.Org) (models.Org, error) {
-	var createdOrg models.Org
-
-	visitingAddress, postalAddress, billingAddress, addressErr := CreateOrUpdateOrgAddresses(org, models.Org{})
-	if addressErr != nil {
-		panic(addressErr)
-	}
-
-	var visitingAddressID *int
-	var postalAddressID *int
-	var billingAddressID *int
-
-	if visitingAddress != nil {
-		createdOrg.VisitingAddress = *visitingAddress
-		visitingAddressID = visitingAddress.AddressID
-	}
-	if postalAddress != nil {
-		createdOrg.PostalAddress = *postalAddress
-		postalAddressID = postalAddress.AddressID
-	}
-	if billingAddress != nil {
-		createdOrg.BillingAddress = *billingAddress
-		billingAddressID = billingAddress.AddressID
-	}
-
-	err := utils.Db.QueryRow(`
-		INSERT INTO org (
-			name,
-			legal_name,
-			type,
-			fk_visiting_address_id,
-			fk_postal_address_id,
-			fk_billing_address_id
-		) VALUES ($1, $2, $3, $4, $5, $6)
-		RETURNING org_id, name, legal_name, type`, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&createdOrg.OrgID, &createdOrg.Name, &createdOrg.LegalName, &createdOrg.Type)
-
-	return createdOrg, err
-}
-
-func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
 	var result models.Org
 
-	currentOrg, _ := GetOrg(orgID)
-
-	if err := mergo.Merge(&org, currentOrg); err != nil {
-		panic(err)
-	}
-
-	visitingAddress, postalAddress, billingAddress, addressErr := CreateOrUpdateOrgAddresses(currentOrg, org)
-	if addressErr != nil {
-		panic(addressErr)
+	visitingAddress, postalAddress, billingAddress, err := CreateOrUpdateOrgAddresses(org, models.Org{})
+	if err != nil {
+		return result, err
 	}
 
 	var visitingAddressID *int
@@ -177,14 +126,59 @@ func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
 		billingAddressID = billingAddress.AddressID
 	}
 
-	err := utils.Db.QueryRow(`
+	err = utils.Db.QueryRow(`
+		INSERT INTO org (
+			name,
+			legal_name,
+			type,
+			fk_visiting_address_id,
+			fk_postal_address_id,
+			fk_billing_address_id
+		) VALUES ($1, $2, $3, $4, $5, $6)
+		RETURNING org_id, name, legal_name, type`, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&result.OrgID, &result.Name, &result.LegalName, &result.Type)
+
+	return result, err
+}
+
+func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
+	var result models.Org
+
+	currentOrg, err := GetOrg(orgID)
+	if err != nil {
+		return result, err
+	}
+
+	if err := mergo.Merge(&org, currentOrg); err != nil {
+		return result, err
+	}
+
+	visitingAddress, postalAddress, billingAddress, err := CreateOrUpdateOrgAddresses(org, currentOrg)
+	if err != nil {
+		return result, err
+	}
+
+	var visitingAddressID *int
+	var postalAddressID *int
+	var billingAddressID *int
+
+	if visitingAddress != nil {
+		result.VisitingAddress = *visitingAddress
+		visitingAddressID = visitingAddress.AddressID
+	}
+	if postalAddress != nil {
+		result.PostalAddress = *postalAddress
+		postalAddressID = postalAddress.AddressID
+	}
+	if billingAddress != nil {
+		result.BillingAddress = *billingAddress
+		billingAddressID = billingAddress.AddressID
+	}
+
+	err = utils.Db.QueryRow(`
 		UPDATE org
 			SET name = $2, legal_name = $3, type = $4, fk_visiting_address_id = $5, fk_postal_address_id = $6, fk_billing_address_id = $7
 		WHERE org_id = $1
 		RETURNING org_id, name, legal_name, type`, orgID, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&result.OrgID, &result.Name, &result.LegalName, &result.Type)
-	if err != nil {
-		return result, nil
-	}
 
-	return result, nil
+	return result, err
 }

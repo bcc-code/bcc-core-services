@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -14,12 +15,16 @@ type OrgsController struct{}
 
 func (ctrl OrgsController) Get(c *gin.Context) {
 	idString := c.Param("id")
-	orgID, _ := strconv.Atoi(idString)
+	orgID, convError := strconv.Atoi(idString)
+	if convError != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": "Invalid orgID was used."})
+	}
 
 	org, err := services.GetOrg(orgID)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": err.Error()})
+		notFound := fmt.Sprintf("Organization could not be found for orgID %v", orgID)
+		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": notFound})
 	} else {
 		c.JSON(http.StatusOK, org)
 	}

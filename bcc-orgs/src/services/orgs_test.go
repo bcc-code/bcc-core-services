@@ -30,22 +30,17 @@ func TestCreateOrg(t *testing.T) {
 		Type:      "Church",
 	}
 
-	createdOrgID, err := CreateOrg(org)
+	result, err := CreateOrg(org)
 	if err != nil {
 		panic(err)
 	}
 
-	createdOrg, err := GetOrg(createdOrgID)
-	if err != nil {
-		panic(err)
-	}
-
-	assert.Equal(t, createdOrg.Name, org.Name, "Org Name was not correct")
-	assert.Equal(t, createdOrg.LegalName, org.LegalName, "Org LegalName was not correct")
-	assert.Equal(t, createdOrg.Type, org.Type, "Org Type was not correct")
-	assert.Equal(t, createdOrg.VisitingAddress.AddressID, org.VisitingAddress.AddressID, "Org VisitingAddress was not correct")
-	assert.Equal(t, createdOrg.BillingAddress.AddressID, org.BillingAddress.AddressID, "Org BillingAddress was not correct")
-	assert.Equal(t, createdOrg.PostalAddress.AddressID, org.PostalAddress.AddressID, "Org PostalAddress was not correct")
+	assert.Equal(t, result.Name, org.Name, "Org Name was not correct")
+	assert.Equal(t, result.LegalName, org.LegalName, "Org LegalName was not correct")
+	assert.Equal(t, result.Type, org.Type, "Org Type was not correct")
+	assert.Equal(t, result.VisitingAddress.AddressID, org.VisitingAddress.AddressID, "Org VisitingAddress was not correct")
+	assert.Equal(t, result.BillingAddress.AddressID, org.BillingAddress.AddressID, "Org BillingAddress was not correct")
+	assert.Equal(t, result.PostalAddress.AddressID, org.PostalAddress.AddressID, "Org PostalAddress was not correct")
 }
 
 func TestFindOrgs(t *testing.T) {

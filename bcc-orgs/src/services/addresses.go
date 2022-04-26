@@ -3,6 +3,7 @@ package services
 import (
 	"bcc-orgs/src/models"
 	"bcc-orgs/src/utils"
+	"fmt"
 )
 
 func CreateAddress(address models.Address) (*models.Address, error) {
@@ -67,40 +68,44 @@ func UpdateAddress(addressID int, address models.Address) (*models.Address, erro
 		&result.PostalCode,
 		&result.CountryName,
 		&result.CountryNameNative)
-	if err != nil {
-		return &result, err
-	}
 
-	return &result, nil
+	return &result, err
 }
 
-func CreateOrUpdateOrgAddresses(current models.Org, changedOrg models.Org) (*models.Address, *models.Address, *models.Address, error) {
-	visitingAddress := checkAndSaveAddress(changedOrg.VisitingAddress, current.VisitingAddress)
-	postalAddress := checkAndSaveAddress(changedOrg.PostalAddress, current.PostalAddress)
-	billingAddress := checkAndSaveAddress(changedOrg.BillingAddress, current.BillingAddress)
+func CreateOrUpdateOrgAddresses(changedOrg models.Org, current models.Org) (*models.Address, *models.Address, *models.Address, error) {
+	visitingAddress, err := checkAndSaveAddress(changedOrg.VisitingAddress, current.VisitingAddress)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	postalAddress, err := checkAndSaveAddress(changedOrg.PostalAddress, current.PostalAddress)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	billingAddress, err := checkAndSaveAddress(changedOrg.BillingAddress, current.BillingAddress)
+	if err != nil {
+		return nil, nil, nil, err
+	}
 
 	return visitingAddress, postalAddress, billingAddress, nil
 }
 
-func checkAndSaveAddress(changedAddress models.Address, currentAddress models.Address) *models.Address {
+func checkAndSaveAddress(changedAddress models.Address, currentAddress models.Address) (*models.Address, error) {
+	var err error
 	var address *models.Address = &currentAddress
 
 	if addressEntered(changedAddress) == false {
-		return address
+		return address, nil
 	}
 
 	existingAddressID := currentAddress.AddressID
-	var err error
 
 	if existingAddressID == nil {
 		address, err = CreateAddress(changedAddress)
+		fmt.Printf("%+v\n", *address)
 	} else {
 		address, err = UpdateAddress(*existingAddressID, changedAddress)
 	}
-	if err != nil {
-		panic(err)
-	}
-	return address
+	return address, err
 }
 
 func addressEntered(address models.Address) bool {
