@@ -1,13 +1,13 @@
 package auth
 
 import (
-	"bcc-orgs/src/utilities"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lestrrat-go/jwx/jwt"
+	"github.com/samber/lo"
 )
 
 var (
@@ -55,7 +55,7 @@ func checkScopes(token jwt.Token, requiredScopes []string) bool {
 	}
 	tokenScopes := strings.Split(scope.(string), " ")
 	for _, requiredScope := range requiredScopes {
-		if !utilities.Contains(tokenScopes, requiredScope) {
+		if !lo.Contains(tokenScopes, requiredScope) {
 			return false
 		}
 	}
