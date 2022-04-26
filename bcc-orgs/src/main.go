@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	envErr := utils.InitEnv()
-	if envErr != nil {
-		panic(envErr)
-	}
+	utils.InitEnv()
 
 	dbErr := utils.OpenDb()
 	if dbErr != nil {
