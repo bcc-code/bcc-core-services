@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	auth0Issuer   = os.Getenv("AUTH0_ISSUER_URL")
+	auth0Issuer   = os.Getenv("AUTH0_ISSUER")
 	auth0Audience = os.Getenv("AUTH0_AUDIENCE")
 )
 
