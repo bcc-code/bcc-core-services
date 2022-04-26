@@ -1,11 +1,13 @@
 package services
 
 import (
+	"bcc-orgs/src/models"
 	"bcc-orgs/src/utils"
 	"fmt"
 	"os"
-	"sort"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMain(m *testing.M) {
@@ -21,19 +23,41 @@ func TestMain(m *testing.M) {
 }
 
 func TestCreateOrg(t *testing.T) {
-	orgs, err := FindOrgs()
+	legalName := "BCC Svartskog"
+	org := models.Org{
+		Name:      "Svartskog",
+		LegalName: &legalName,
+		Type:      "Church",
+	}
 
+	createdOrgID, err := CreateOrg(org)
 	if err != nil {
 		panic(err)
 	}
-	sort.Slice(orgs, func(i, j int) bool {
-		return orgs[i].OrgID < orgs[j].OrgID
-	})
 
-	fmt.Println("Sorting test", orgs[0])
+	createdOrg, err := GetOrg(createdOrgID)
+	if err != nil {
+		panic(err)
+	}
 
-	// createdOrg, err := CreateOrg(models.Org{})
+	assert.Equal(t, createdOrg.Name, org.Name, "Org Name was not correct")
+	assert.Equal(t, createdOrg.LegalName, org.LegalName, "Org LegalName was not correct")
+	assert.Equal(t, createdOrg.Type, org.Type, "Org Type was not correct")
+	assert.Equal(t, createdOrg.VisitingAddress.AddressID, org.VisitingAddress.AddressID, "Org VisitingAddress was not correct")
+	assert.Equal(t, createdOrg.BillingAddress.AddressID, org.BillingAddress.AddressID, "Org BillingAddress was not correct")
+	assert.Equal(t, createdOrg.PostalAddress.AddressID, org.PostalAddress.AddressID, "Org PostalAddress was not correct")
+}
 
-	// if createdOrg
-	// t.Fatal()
+func TestFindOrgs(t *testing.T) {
+	orgs, err := FindOrgs()
+	if err != nil {
+		panic(err)
+	}
+
+	assert.True(t, len(orgs) >= 4, "Orgs count was too low")
+	for _, org := range orgs {
+		assert.NotEmpty(t, org.OrgID, "OrgID was not correct")
+		assert.NotEmpty(t, org.Name, "Name was not correct")
+		assert.NotEmpty(t, org.Type, "Type was not correct")
+	}
 }
