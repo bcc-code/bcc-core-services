@@ -107,8 +107,10 @@ func GetOrg(orgID int) (models.Org, error) {
 	return org, nil
 }
 
-func CreateOrg(org models.Org) (int, error) {
-	visitingAddress, postalAddress, billingAddress, addressErr := CreateOrgAddresses(org)
+func CreateOrg(org models.Org) (models.Org, error) {
+	var createdOrg models.Org
+
+	visitingAddress, postalAddress, billingAddress, addressErr := CreateOrUpdateOrgAddresses(org, models.Org{})
 	if addressErr != nil {
 		panic(addressErr)
 	}
@@ -118,16 +120,17 @@ func CreateOrg(org models.Org) (int, error) {
 	var billingAddressID *int
 
 	if visitingAddress != nil {
+		createdOrg.VisitingAddress = *visitingAddress
 		visitingAddressID = visitingAddress.AddressID
 	}
 	if postalAddress != nil {
+		createdOrg.PostalAddress = *postalAddress
 		postalAddressID = postalAddress.AddressID
 	}
 	if billingAddress != nil {
+		createdOrg.BillingAddress = *billingAddress
 		billingAddressID = billingAddress.AddressID
 	}
-
-	lastInsertId := 0
 
 	err := utils.Db.QueryRow(`
 		INSERT INTO org (
@@ -138,12 +141,9 @@ func CreateOrg(org models.Org) (int, error) {
 			fk_postal_address_id,
 			fk_billing_address_id
 		) VALUES ($1, $2, $3, $4, $5, $6)
-		RETURNING org_id`, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&lastInsertId)
-	if err != nil {
-		return 0, err
-	}
+		RETURNING org_id, name, legal_name, type`, org.Name, org.LegalName, org.Type, visitingAddressID, postalAddressID, billingAddressID).Scan(&createdOrg.OrgID, &createdOrg.Name, &createdOrg.LegalName, &createdOrg.Type)
 
-	return lastInsertId, nil
+	return createdOrg, err
 }
 
 func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
@@ -155,7 +155,7 @@ func UpdateOrg(orgID int, org models.Org) (models.Org, error) {
 		panic(err)
 	}
 
-	visitingAddress, postalAddress, billingAddress, addressErr := UpdateOrgAddresses(currentOrg, org)
+	visitingAddress, postalAddress, billingAddress, addressErr := CreateOrUpdateOrgAddresses(currentOrg, org)
 	if addressErr != nil {
 		panic(addressErr)
 	}

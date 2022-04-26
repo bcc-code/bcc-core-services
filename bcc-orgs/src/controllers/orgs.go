@@ -42,11 +42,11 @@ func (ctrl OrgsController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": err.Error()})
 	}
 
-	orgID, err := services.CreateOrg(org)
-	if err != nil {
+	org, creationErr := services.CreateOrg(org)
+	if creationErr != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
 	} else {
-		c.JSON(http.StatusOK, orgID)
+		c.JSON(http.StatusOK, org)
 	}
 }
 

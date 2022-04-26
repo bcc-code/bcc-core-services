@@ -1,7 +1,7 @@
 package models
 
 type Address struct {
-	AddressID         *int    `json:"addressID" db:"address_id"`
+	AddressID         *int    `json:"-" db:"address_id"`
 	Street1           *string `json:"street1" db:"street_1"`
 	Street2           *string `json:"street2" db:"street_2"`
 	City              *string `json:"city" db:"city"`
