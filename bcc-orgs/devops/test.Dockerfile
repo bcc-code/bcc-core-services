@@ -7,3 +7,4 @@ RUN go install -tags "nomymysql nomysql nosqlite3" github.com/pressly/goose/v3/c
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
+CMD ["/scripts/run-tests.sh"]
