@@ -60,7 +60,7 @@ jobs:
         registryName: ${{secrets.REGISTRY_NAME}}
 
   deploy:
-    needs: [test, migrate, build]
+    needs: [test, build]
     name: Deploy image to cloud run
     runs-on: ubuntu-latest
     environment: dev
