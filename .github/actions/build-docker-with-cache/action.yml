@@ -6,7 +6,7 @@ inputs:
     description: 'Google project ID'
     required: true
   buildContext:
-    description: 'Path to the directory containing the application source code. Defaults to the current directory if none specified.'
+    description: 'Path to the directory containing the applications build context'
     required: true
   dockerfilePath:
     description: 'Path to the Dockerfile for the application'
@@ -40,13 +40,6 @@ runs:
     run: |-
       gcloud --quiet auth configure-docker ${{ inputs.registryBaseUrl }}
 
-  - name: Cache Docker layers
-    uses: actions/cache@v2
-    with:
-      path: /tmp/.buildx-cache
-      key: ${{ runner.os }}-buildx-${{ github.sha }}
-      restore-keys: |
-        ${{ runner.os }}-buildx
   - name: Build and push container image to registry
     uses: docker/build-push-action@v2
     with:
@@ -54,12 +47,5 @@ runs:
       tags: ${{ inputs.registryBaseUrl }}/${{ inputs.projectId}}/${{inputs.registryName}}/${{ inputs.imageName }}:${{ github.sha }}
       context: ${{ inputs.buildContext }}
       file: ${{ inputs.dockerfilePath }}
-      cache-from: type=local,src=/tmp/.buildx-cache
-      cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-  - name: Move cache
-    shell: bash
-    run: |
-      rm -rf /tmp/.buildx-cache
-      mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
+      cache-from: type=gha
+      cache-to: type=gha
