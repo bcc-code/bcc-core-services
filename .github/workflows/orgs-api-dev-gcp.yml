@@ -26,7 +26,6 @@ jobs:
         context: bcc-orgs
         file:  bcc-orgs/devops/test.Dockerfile
         push: false
-        load: true
         tags: orgs_api_test:latest
         cache-from: type=local,src=/tmp/.buildx-cache-test
         cache-to: type=local,dest=/tmp/.buildx-cache-test-new
