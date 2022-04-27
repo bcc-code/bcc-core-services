@@ -26,6 +26,7 @@ jobs:
         context: bcc-orgs
         file:  bcc-orgs/devops/test.Dockerfile
         push: false
+        load: true
         tags: orgs_api_test:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
