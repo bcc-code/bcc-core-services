@@ -4,6 +4,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build and test
+      run: |
+        ./bcc-orgs/scripts/create-test-docker.sh
+
   build:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
