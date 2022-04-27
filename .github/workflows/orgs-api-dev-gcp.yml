@@ -19,9 +19,9 @@ jobs:
         AUTH0_CLIENT_ID: ${{ secrets.AUTH0_ORGS_CLIENT_ID }}
         AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_ORGS_CLIENT_SECRET }}
       with:
-        cachedImageBuildContext: ./bcc-orgs
-        cachedImageDockerfile: ./bcc-orgs/devops/test.Dockerfile
-        dockerComposePath: ./bcc-orgs/devops/test.docker-compose.yml
+        cachedImageBuildContext: bcc-orgs
+        cachedImageDockerfile: bcc-orgs/devops/test.Dockerfile
+        dockerComposePath: bcc-orgs/devops/test.docker-compose.yml
         imageName: orgs_api_test
   migrate:
     name: Migrate database

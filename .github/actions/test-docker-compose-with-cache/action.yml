@@ -23,7 +23,7 @@ runs:
   - name: Build docker image
     uses: docker/build-push-action@v2
     with:
-      context: ${{inputs.cachedImageDockerfile}}
+      context: ${{inputs.cachedImageBuildContext}}
       file:  ${{inputs.cachedImageDockerfile}}
       push: false
       load: true
