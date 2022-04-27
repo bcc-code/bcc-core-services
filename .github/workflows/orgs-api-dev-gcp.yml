@@ -38,10 +38,6 @@ jobs:
         AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_ORGS_CLIENT_SECRET }}
       run: |
         docker-compose -f bcc-orgs/devops/test.docker-compose.yml run --rm orgs_api_test
-    - name: Move cache
-      run: |
-        rm -rf /tmp/.buildx-cache-test
-        mv /tmp/.buildx-cache-test-new /tmp/.buildx-cache-test
 
   migrate:
     name: Migrate database
