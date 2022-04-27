@@ -31,9 +31,6 @@ runs:
     uses: 'google-github-actions/auth@v0'
     with:
       credentials_json: '${{ inputs.googleCredentials }}'
-  - name: Set up Docker Buildx
-    id: buildx
-    uses: docker/setup-buildx-action@v1
 
   - name: Login to the artifact registry
     shell: bash
@@ -47,5 +44,3 @@ runs:
       tags: ${{ inputs.registryBaseUrl }}/${{ inputs.projectId}}/${{inputs.registryName}}/${{ inputs.imageName }}:${{ github.sha }}
       context: ${{ inputs.buildContext }}
       file: ${{ inputs.dockerfilePath }}
-      cache-from: type=gha
-      cache-to: type=gha
