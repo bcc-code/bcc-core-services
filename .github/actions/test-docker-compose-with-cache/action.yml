@@ -24,7 +24,7 @@ runs:
     uses: docker/build-push-action@v2
     with:
       context: ${{inputs.cachedImageDockerfile}}
-      file:  ${{inputs.dockerfilePath}}
+      file:  ${{inputs.cachedImageDockerfile}}
       push: false
       load: true
       tags: ${{inputs.imageName}}:latest
