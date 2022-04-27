@@ -9,7 +9,7 @@ services:
       - ../db/migrations/:/db/migrations
       - ../db/test-data/:/db/test-data
       - ./docker-scripts/:/scripts
-    command: ["/scripts/wait-for-orgs-db.sh", "--", "air"]
+    tty: true
     env_file: ../.env.example
     environment:
       - AUTH0_ISSUER=${AUTH0_ISSUER}
@@ -19,7 +19,7 @@ services:
     container_name: orgs_api
     build: 
       context: ../
-      dockerfile: devops/dev.Dockerfile
+      dockerfile: devops/test.Dockerfile
     depends_on:
       - "orgs_db"
 
