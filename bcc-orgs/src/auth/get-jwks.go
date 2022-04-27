@@ -14,7 +14,7 @@ func GetKeySet(domain string) jwk.Set {
 		return keySet
 	}
 
-	keyURL := fmt.Sprintf("%s/.well-known/jwks.json", domain)
+	keyURL := fmt.Sprintf("https://%s/.well-known/jwks.json", domain)
 	fechedKeySet, err := jwk.Fetch(context.Background(), keyURL)
 	if err != nil {
 		panic(err)
