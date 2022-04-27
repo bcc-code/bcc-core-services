@@ -1,2 +1,2 @@
 #!/bin/bash 
-docker exec orgs_api go test -v ./...
+docker exec orgs_api /scripts/run-tests.sh
