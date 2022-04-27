@@ -29,7 +29,7 @@ jobs:
         load: true
         tags: orgs_api_test:latest
         cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-to: type=gha
     - name: Run tests with docker-compose
       env:
         AUTH0_ISSUER: ${{ secrets.AUTH0_ISSUER }}
