@@ -37,7 +37,7 @@ jobs:
         dbPassword: ${{ secrets.ORGS_DB_PASSWORD }}
 
   build:
-    name: Build and publish to container registry
+    name: Build and publish image
     runs-on: ubuntu-latest
     environment: dev
 
