@@ -28,8 +28,8 @@ jobs:
         push: false
         load: true
         tags: orgs_api_test:latest
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache-new
+        cache-from: type=local,src=/tmp/.buildx-cache-test
+        cache-to: type=local,dest=/tmp/.buildx-cache-test-new
     - name: Run tests with docker-compose
       env:
         AUTH0_ISSUER: ${{ secrets.AUTH0_ISSUER }}
