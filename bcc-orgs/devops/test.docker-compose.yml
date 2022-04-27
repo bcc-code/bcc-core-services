@@ -2,6 +2,11 @@ version: '3.1'
 
 services:
   orgs_api_test:
+    build: 
+      context: ../
+      dockerfile: devops/test.Dockerfile
+    image: orgs_api_test
+    container_name: orgs_api_test
     ports:
       - "4000:4000"
     volumes:
@@ -16,10 +21,7 @@ services:
       - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
       - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
       - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
-    container_name: orgs_api
-    build: 
-      context: ../
-      dockerfile: devops/test.Dockerfile
+    entrypoint: "/scripts/run-tests.sh"
     depends_on:
       - "orgs_db"
 

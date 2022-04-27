@@ -16,10 +16,10 @@ jobs:
     - name: Cache Docker layers
       uses: actions/cache@v2
       with:
-        path: /tmp/.buildx-cache
+        path: /tmp/.buildx-cache-test
         key: ${{ runner.os }}-buildx-${{ github.sha }}
         restore-keys: |
-          ${{ runner.os }}-buildx-
+          ${{ runner.os }}-buildx
     - name: Build docker image
       uses: docker/build-push-action@v2
       with:
@@ -30,21 +30,18 @@ jobs:
         tags: orgs_api_test:latest
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new
-    - name: Docker compose
+    - name: Run tests with docker-compose
       env:
         AUTH0_ISSUER: ${{ secrets.AUTH0_ISSUER }}
         AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
         AUTH0_CLIENT_ID: ${{ secrets.AUTH0_ORGS_CLIENT_ID }}
         AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_ORGS_CLIENT_SECRET }}
       run: |
-        docker-compose -f bcc-orgs/devops/test.docker-compose.yml up -d --build
-    - name: Run tests
-      run: |
-        docker exec orgs_api /scripts/run-tests.sh
+        docker-compose -f bcc-orgs/devops/test.docker-compose.yml run --rm orgs_api_test
     - name: Move cache
       run: |
-        rm -rf /tmp/.buildx-cache
-        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+        rm -rf /tmp/.buildx-cache-test
+        mv /tmp/.buildx-cache-test-new /tmp/.buildx-cache-test
 
   migrate:
     name: Migrate database
