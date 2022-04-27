@@ -10,7 +10,7 @@ The application is responsible for the following core APIs
 
 ## Running applicaiton
 
-Copy ```.env.example``` to ```.env```
+Copy ```.env.example``` to ```.env``` and fill in the values.
 
 ### Run locally
 
@@ -35,6 +35,10 @@ Copy ```.env.example``` to ```.env```
    1. ```./scripts/run-dev-docker.sh``` for live-reload
    2. ```./scripts/run-prod-docker.sh``` for production-like image
 
+## Interact with the application
+
+1. Use REST Client extension with requests from ```requests.http```
+
 ## Develop application
 
 The only officially supported development environment is VS Code. A Database management tool is included in the docker compose setup. Go to localhost:8080 and login with the settings in the .env to make use of this tool.
@@ -48,6 +52,7 @@ To run tests locally you can attach a shell to the "orgs-api" container. In the 
 1. [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)
 2. [Go-Outliner](https://marketplace.visualstudio.com/items?itemName=766b.go-outliner)
 3. [Go-Doc](https://marketplace.visualstudio.com/items?itemName=msyrus.go-doc)
+4. [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
 
 ### Database migrations
 
@@ -61,7 +66,7 @@ To run tests locally you can attach a shell to the "orgs-api" container. In the 
 1. Install [goose](https://github.com/pressly/goose)
 2. Run 
    ```bash
-      goose -dir /db/migrations -table schema_migrations postgres "host=$POSTGRES_HOST port=$POSTGRES_PORT user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB sslmode=$POSTGRES_SSL_MODE" up
+      goose -dir /db/migrations -table schema_migrations postgres "host=$POSTGRES_HOST port=$POSTGRES_PORT user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB sslmode=disable" up
    ```
    With correct env vars
 
