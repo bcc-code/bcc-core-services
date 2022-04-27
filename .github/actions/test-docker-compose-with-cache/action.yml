@@ -32,6 +32,7 @@ runs:
       cache-to: type=gha
 
   - name: Run tests with docker-compose
+    shell: bash
     run: |
       docker-compose -f ${{ inputs.dockerComposePath }} run --rm ${{inputs.imageName}}
 
