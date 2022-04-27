@@ -50,7 +50,7 @@ Authorization: {{token}}
 {
     "name": "TEST",
     "visitingAddress": {
-        "street1": "Velzel"
+        "street1": "Veien1"
     }
 }
 
