@@ -15,7 +15,7 @@ services:
       - ../db/test-data/:/db/test-data
       - ./docker-scripts/:/scripts
     tty: true
-    env_file: ../.env.example
+    env_file: ../.env.test
     environment:
       - AUTH0_ISSUER=${AUTH0_ISSUER}
       - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
