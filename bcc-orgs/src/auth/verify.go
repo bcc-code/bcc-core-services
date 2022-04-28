@@ -19,7 +19,8 @@ func JWTCheckWithScopes(scopes []string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token, err := parseToken(c)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, "Couldn't parse token")
+			c.String(http.StatusUnauthorized, "Couldn't parse token")
+			c.Abort()
 			return
 		}
 
@@ -28,12 +29,14 @@ func JWTCheckWithScopes(scopes []string) gin.HandlerFunc {
 			jwt.WithAudience(auth0Audience),
 		)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, "Invalid audience")
+			c.String(http.StatusUnauthorized, "Invalid audience")
+			c.Abort()
 			return
 		}
 
 		if !checkScopes(token, scopes) {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, "Missing scopes")
+			c.String(http.StatusUnauthorized, "Missing scopes")
+			c.Abort()
 			return
 		}
 	}

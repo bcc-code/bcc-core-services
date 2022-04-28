@@ -5,6 +5,12 @@ inputs:
   projectId:
     description: 'Google project ID'
     required: true
+  buildContext:
+    description: 'Path to the directory containing the applications build context'
+    required: true
+  dockerfilePath:
+    description: 'Path to the Dockerfile for the application'
+    required: true
   imageName:
     description: 'Name of the image created in the artifact registry'
     required: true
@@ -17,12 +23,6 @@ inputs:
   registryName:
     description: 'Name of the artifact registry'
     required: true
-  serviceName:
-    description: 'Name of the cloud run service'
-    required: true
-  serviceRegion:
-    description: 'Location of the cloud run service'
-    required: true
 
 runs:
   using: "composite"
@@ -31,9 +31,16 @@ runs:
     uses: 'google-github-actions/auth@v0'
     with:
       credentials_json: '${{ inputs.googleCredentials }}'
-  - id: deploy
-    uses: google-github-actions/deploy-cloudrun@v0
+
+  - name: Login to the artifact registry
+    shell: bash
+    run: |-
+      gcloud --quiet auth configure-docker ${{ inputs.registryBaseUrl }}
+
+  - name: Build and push container image to registry
+    uses: docker/build-push-action@v2
     with:
-      service: ${{ inputs.serviceName }}
-      image: ${{ inputs.registryBaseUrl }}/${{ inputs.projectId}}/${{inputs.registryName}}/${{ inputs.imageName }}:${{ github.sha }}
-      region: ${{ inputs.serviceRegion }}
+      push: true
+      tags: ${{ inputs.registryBaseUrl }}/${{ inputs.projectId}}/${{inputs.registryName}}/${{ inputs.imageName }}:${{ github.sha }}
+      context: ${{ inputs.buildContext }}
+      file: ${{ inputs.dockerfilePath }}
