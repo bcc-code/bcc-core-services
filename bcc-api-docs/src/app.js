@@ -13,6 +13,7 @@ const urls = getDocumentationData()
 var options = {
     explorer: true,
     swaggerOptions: {
+      persistAuthorization: true,
       urls
     }
 }

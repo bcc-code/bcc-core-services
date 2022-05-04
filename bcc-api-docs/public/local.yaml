@@ -1,5 +1,4 @@
 swagger: '2.0'
-persistAuthorization: true
 info:
   description: |
     This is the interface of the core building blocks for usage of data within BCC.   
