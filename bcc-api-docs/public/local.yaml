@@ -165,4 +165,5 @@ definitions:
       billingAddress:
           $ref: '#/definitions/Address'
 schemes:
+ - https
  - http
