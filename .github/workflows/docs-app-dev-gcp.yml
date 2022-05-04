@@ -41,5 +41,5 @@ jobs:
         imageName: bcc-api-docs
         registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
         registryName: ${{secrets.REGISTRY_NAME}}
-        serviceName: ${{secrets.ORGS_SERVICE_NAME}}
-        serviceRegion: ${{secrets.ORGS_SERVICE_REGION}}
+        serviceName: ${{secrets.DOCS_SERVICE_NAME}}
+        serviceRegion: ${{secrets.DOCS_SERVICE_REGION}}
