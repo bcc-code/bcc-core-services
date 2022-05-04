@@ -12,8 +12,7 @@ content-type: application/json
     "audience": "{{audience}}",
     "grant_type": "client_credentials",
     "client_id": "{{clientID}}",
-    "client_secret": "{{clientSecret}}",
-    "scope": "read:org write:org"
+    "client_secret": "{{clientSecret}}"
 }
 
 ###
@@ -26,7 +25,7 @@ Authorization: {{token}}
 ###
 
 # @name getOrgs
-GET {{localHost}}/orgs HTTP/1.1
+GET {{localHost}}/orgs/ HTTP/1.1
 Authorization: {{token}}
 
 ###
@@ -37,7 +36,8 @@ Authorization: {{token}}
 
 {
     "name": "Terwolde",
-    "type": "Church"
+    "type": "Church",
+    "postalAddress": {}
 }
 
 ###
@@ -48,9 +48,8 @@ content-type: application/json
 Authorization: {{token}}
 
 {
-    "name": "TEST",
-    "visitingAddress": {
-        "street1": "Veien1"
-    }
+    "name": "Terwolde",
+    "type": "Church",
+    "postalAddress": {}
 }
 

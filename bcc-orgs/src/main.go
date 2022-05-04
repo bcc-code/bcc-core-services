@@ -15,7 +15,7 @@ func main() {
 	if dbErr != nil {
 		panic(dbErr)
 	}
-
+	utils.GormOpenDb()
 	r := gin.Default()
 	router.LoadRoutes(r)
 

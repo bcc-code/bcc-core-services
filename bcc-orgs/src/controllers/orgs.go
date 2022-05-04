@@ -20,7 +20,7 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": "Invalid orgID was used."})
 	}
 
-	org, err := services.GetOrg(orgID)
+	org, err := services.GormGetOrg(orgID)
 
 	if err != nil {
 		notFound := fmt.Sprintf("Organization could not be found for orgID %v", orgID)
@@ -31,7 +31,7 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 }
 
 func (ctrl OrgsController) Find(c *gin.Context) {
-	orgs, err := services.FindOrgs()
+	orgs, err := services.GormFindOrgs()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
 	} else {
@@ -41,13 +41,16 @@ func (ctrl OrgsController) Find(c *gin.Context) {
 }
 
 func (ctrl OrgsController) Create(c *gin.Context) {
-	var org models.Org
-	err := c.BindJSON(&org)
+	var createData models.ApiOrgCreate
+
+	err := c.BindJSON(&createData)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": err.Error()})
 	}
 
-	org, creationErr := services.CreateOrg(org)
+	fmt.Printf("%+v\n", createData)
+
+	org, creationErr := services.GormCreateOrg(createData)
 	if creationErr != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
 	} else {
@@ -59,9 +62,11 @@ func (ctrl OrgsController) Update(c *gin.Context) {
 	idString := c.Param("id")
 	orgID, _ := strconv.Atoi(idString)
 
-	var org models.Org
+	var org models.ApiOrgUpdate
 	err := c.BindJSON(&org)
-	updatedOrg, err := services.UpdateOrg(orgID, org)
+
+	fmt.Printf("%+v\n%+v\n%+v\n", org, orgID, err)
+	updatedOrg, err := services.GormUpdateOrg(orgID, org)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": err.Error()})
