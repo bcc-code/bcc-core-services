@@ -19,7 +19,7 @@ var options = {
 }
 const router = new express.Router()
 router.post("/token", bodyParser.urlencoded(), tokenEndpoint)
-router.use(express.static('public'))
+router.use(express.static('specs'))
 
 router.use(swaggerUi.serve, swaggerUi.setup(null, options))
 
