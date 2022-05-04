@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY src ./src
-COPY public ./public
+COPY specs ./specs
 RUN npm install
 
 CMD ["npm", "start"]
