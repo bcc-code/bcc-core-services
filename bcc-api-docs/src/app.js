@@ -3,12 +3,12 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express'
 import bodyParser from 'body-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
-import getDocumentationData from './getDocumentationData.js';
+import getDocumentationUrls from './getDocumentationUrls.js';
 import tokenEndpoint from './tokenEndpoint.js';
 
 const app = express()
 
-const urls = getDocumentationData()
+const urls = getDocumentationUrls()
 
 var options = {
     explorer: true,
