@@ -1,0 +1,168 @@
+swagger: '2.0'
+persistAuthorization: true
+info:
+  description: |
+    This is the interface of the core building blocks for usage of data within BCC.   
+  version: 1.0.0
+  title: BCC Core APIs
+  contact:
+    email: steven.malaihollo@bcc.no
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+- name: orgs
+  description: Orgs registry
+paths:
+  /orgs:
+    post: 
+      tags:
+      - orgs
+      summary: Add a new org to the registry
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Org that needs to be added to the registry
+        required: true
+        schema:
+          $ref: '#/definitions/Org'
+      responses:
+        200:
+          description: Succesfully added the org
+          schema:
+            $ref: '#/definitions/Org'
+        405:
+          description: Invalid input
+      security:
+      - core_auth:
+    get:
+      tags:
+      - orgs
+      summary: Finds a list of orgs
+      produces:
+      - application/json
+      parameters:
+      - name: type
+        in: query
+        description: Org type to filter returned list
+        type: array
+        items:
+          type: string
+      responses:
+        200:
+          description: Retrieved the orgs succesfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Org'
+        400:
+          description: Invalid status value
+      security:
+      - core_auth:
+  /orgs/{orgID}:
+    get:
+      tags:
+      - orgs
+      summary: Get org by orgID
+      produces:
+      - application/json
+      parameters:
+      - name: orgID
+        in: path
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Retrieved the org succesfully
+          schema:
+              $ref: '#/definitions/Org'
+        400:
+          description: Could not find an org for the given orgID
+      security:
+      - core_auth:
+    put:
+      tags:
+      - orgs
+      summary: Update an existing Org
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: orgID
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: body
+        description: Org data that needs to be updated in the registry
+        required: true
+        schema:
+          $ref: '#/definitions/Org'
+      responses:
+        200:
+          description: Updated the org succesfully
+          schema:
+              $ref: '#/definitions/Org'
+        400:
+          description: Could not find an org for the given orgID
+      security:
+      - core_auth:
+
+securityDefinitions:
+  core_auth:
+    type: oauth2
+    tokenUrl: /docs/token
+    flow: application
+    scopes:
+      write:org: modify orgs
+      read:org: read orgs
+
+definitions:
+  Address:
+    type: object
+    properties:
+      street1:
+        type: string
+      street2:
+        type: string
+      city:
+        type: string
+      region:
+        type: string
+      countryIso2Code:
+        type: string
+      postalCode:
+        type: string
+      countryName:
+        type: string
+      countryNameNative:
+        type: string
+  Org:
+    type: object
+    required:
+    - orgID
+    - name
+    - type
+    properties:
+      orgID:
+        type: integer
+        format: int64
+      name:
+        type: string
+      legalName:
+        type: string
+      type:
+        type: string
+      visitingAddress:
+          $ref: '#/definitions/Address'
+      postalAddress:
+          $ref: '#/definitions/Address'
+      billingAddress:
+          $ref: '#/definitions/Address'
+schemes:
+ - http
