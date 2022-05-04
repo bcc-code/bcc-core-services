@@ -1,0 +1,71 @@
+basePath: /api/v1
+definitions:
+  Address:
+    properties:
+      city:
+        type: string
+      countryIso2Code:
+        type: string
+      countryName:
+        type: string
+      countryNameNative:
+        type: string
+      postalCode:
+        type: string
+      region:
+        type: string
+      street1:
+        type: string
+      street2:
+        type: string
+    type: object
+  Org:
+    properties:
+      billingAddress:
+        $ref: '#/definitions/Address'
+      legalName:
+        type: string
+      name:
+        type: string
+      orgID:
+        type: integer
+      postalAddress:
+        $ref: '#/definitions/Address'
+      type:
+        type: string
+      visitingAddress:
+        $ref: '#/definitions/Address'
+    type: object
+host: localhost:4000
+info:
+  contact: {}
+  description: This is the Orgs API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: BCC Orgs API
+  version: "1.0"
+paths:
+  /orgs/{orgID}:
+    get:
+      consumes:
+      - application/json
+      description: Org retrieval is permitted through the use of scopes. For scope
+        definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
+      parameters:
+      - description: orgID
+        in: path
+        name: orgID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Org'
+      summary: Get org by orgID
+      tags:
+      - orgs
+swagger: "2.0"

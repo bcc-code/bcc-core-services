@@ -10,4 +10,4 @@ type Address struct {
 	PostalCode        *string `json:"postalCode" db:"postal_code"`
 	CountryName       *string `json:"countryName" db:"country_name"`
 	CountryNameNative *string `json:"countryNameNative" db:"country_name_native"`
-}
+} //@name Address

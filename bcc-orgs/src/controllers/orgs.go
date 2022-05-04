@@ -13,8 +13,16 @@ import (
 
 type OrgsController struct{}
 
+// @Summary      Get org by orgID
+// @Description  Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
+// @Tags         orgs
+// @Accept       json
+// @Produce      json
+// @Param        orgID   path      int  true  "orgID"
+// @Success      200  {object}  models.Org
+// @Router       /orgs/{orgID} [get]
 func (ctrl OrgsController) Get(c *gin.Context) {
-	idString := c.Param("id")
+	idString := c.Param("orgID")
 	orgID, convError := strconv.Atoi(idString)
 	if convError != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": "Invalid orgID was used."})

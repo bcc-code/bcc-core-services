@@ -8,4 +8,4 @@ type Org struct {
 	VisitingAddress Address `json:"visitingAddress" db:"va"`
 	PostalAddress   Address `json:"postalAddress" db:"pa"`
 	BillingAddress  Address `json:"billingAddress" db:"ba"`
-}
+} //@name Org
