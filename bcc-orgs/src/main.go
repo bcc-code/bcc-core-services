@@ -10,14 +10,12 @@ import (
 )
 
 // @title           BCC Orgs API
-// @version         1.0
+// @version         1.0.0
 // @description     This is the Orgs API
 
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host      localhost:4000
-// @BasePath  /
 // @securityDefinitions.oauth2.application ClientCredentials
 // @tokenUrl /docs/token
 // @scope.write:org modify orgs
