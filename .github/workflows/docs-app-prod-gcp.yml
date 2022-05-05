@@ -1,4 +1,4 @@
-name: Docs App Dev Deployment 
+name: Docs App Prod Deployment 
 
 on:  
   workflow_dispatch:
