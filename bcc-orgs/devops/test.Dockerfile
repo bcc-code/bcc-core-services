@@ -5,6 +5,6 @@ RUN go install -tags "nomymysql nomysql nosqlite3" github.com/pressly/goose/v3/c
 
 # Prepare application
 WORKDIR /app
-RUN go install github.com/cosmtrek/air@latest
-COPY .air.toml go.mod go.sum ./
+COPY go.mod go.sum ./
 RUN go mod download
+CMD ["/scripts/run-tests.sh"]

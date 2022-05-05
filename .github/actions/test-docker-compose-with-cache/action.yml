@@ -1,0 +1,38 @@
+name: Build and push Go application to cloud run
+description: 'Deploys a new cloud run revision'
+
+inputs:
+  cachedImageBuildContext:
+    description: 'Path to the cahced image build context'
+    required: true
+  cachedImageDockerfile:
+    description: 'Path to the Dockerfile for the cached image'
+    required: true
+  dockerComposePath:
+    description: 'Path to the test docker-compose file'
+    required: true
+  imageName:
+    description: 'Name of the image created in the artifact registry'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - name: Set up Docker Buildx
+    uses: docker/setup-buildx-action@master
+  - name: Build docker image
+    uses: docker/build-push-action@v2
+    with:
+      context: ${{inputs.cachedImageBuildContext}}
+      file:  ${{inputs.cachedImageDockerfile}}
+      push: false
+      load: true
+      tags: ${{inputs.imageName}}:latest
+      cache-from: type=gha
+      cache-to: type=gha
+
+  - name: Run tests with docker-compose
+    shell: bash
+    run: |
+      docker-compose -f ${{ inputs.dockerComposePath }} run --rm ${{inputs.imageName}}
+

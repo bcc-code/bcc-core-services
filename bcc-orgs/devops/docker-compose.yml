@@ -1,13 +1,33 @@
 version: '3.1'
 
 services:
-  org_api:
+  orgs_api:
     ports:
       - "4000:4000"
+    volumes:
+      - ./docker-scripts/:/scripts
+    command: ["/scripts/wait-for-orgs-db.sh", "--", "main"]
     env_file: ../.env
     environment:
       - GIN_MODE=release
-    container_name: org_api
+    container_name: orgs_api
     build: 
       context: ../
       dockerfile: devops/Dockerfile
+  orgs_db:
+    image: postgres:13.6-alpine
+    ports:
+      - "5432:5432"
+    env_file: ../.env
+    container_name: orgs_db
+    restart: always
+  
+  orgs_db_management:
+    image: adminer:latest
+    container_name: orgs_db_management
+    environment: 
+      ADMINER_DEFAULT_SERVER: orgs_db
+    ports: 
+      - 8080:8080
+    depends_on:
+      - "orgs_db"

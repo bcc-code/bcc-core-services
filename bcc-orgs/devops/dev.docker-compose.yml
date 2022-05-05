@@ -1,25 +1,31 @@
 version: '3.1'
 
 services:
-  org_api:
+  orgs_api:
     ports:
       - "4000:4000"
     volumes:
       - ../src:/app/src
+      - ../db/migrations/:/db/migrations
+      - ../db/test-data/:/db/test-data
+      - ./docker-scripts/:/scripts
+    command: ["/scripts/wait-for-orgs-db.sh", "--", "air"]
     env_file: ../.env
-    container_name: org_api
+    container_name: orgs_api
     build: 
       context: ../
       dockerfile: devops/dev.Dockerfile
+    depends_on:
+      - "orgs_db"
+
   orgs_db:
+    image: postgres:13.6-alpine
     ports:
       - "5432:5432"
-    volumes:
-      - ../db/migrations:/docker-entrypoint-initdb.d/
-    image: postgres:13.6-alpine
     env_file: ../.env
     container_name: orgs_db
     restart: always
+  
   orgs_db_management:
     image: adminer:latest
     container_name: orgs_db_management
