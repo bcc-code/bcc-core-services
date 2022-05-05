@@ -203,8 +203,8 @@ const docTemplate = `{
             "flow": "application",
             "tokenUrl": "/docs/token",
             "scopes": {
-                "read:org:": " read orgs",
-                "write:org:": " modify orgs"
+                "read:org": " read orgs",
+                "write:org": " modify orgs"
             }
         }
     }

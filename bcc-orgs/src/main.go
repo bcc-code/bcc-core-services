@@ -20,8 +20,8 @@ import (
 // @BasePath  /
 // @securityDefinitions.oauth2.application ClientCredentials
 // @tokenUrl /docs/token
-// @scope.write:org: modify orgs
-// @scope.read:org: read orgs
+// @scope.write:org modify orgs
+// @scope.read:org read orgs
 
 func main() {
 	utils.InitEnv()
