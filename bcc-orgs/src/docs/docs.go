@@ -164,54 +164,69 @@ const docTemplate = `{
         "Address": {
             "type": "object",
             "properties": {
-                "city": {
-                    "type": "string"
-                },
-                "countryIso2Code": {
-                    "type": "string"
-                },
-                "countryName": {
-                    "type": "string"
-                },
-                "countryNameNative": {
-                    "type": "string"
-                },
-                "postalCode": {
-                    "type": "string"
-                },
-                "region": {
-                    "type": "string"
-                },
                 "street1": {
-                    "type": "string"
+                    "type": "string",
+                    "x-order": "1"
                 },
                 "street2": {
-                    "type": "string"
+                    "type": "string",
+                    "x-order": "2"
+                },
+                "city": {
+                    "type": "string",
+                    "x-order": "3"
+                },
+                "region": {
+                    "type": "string",
+                    "x-order": "4"
+                },
+                "countryIso2Code": {
+                    "type": "string",
+                    "x-order": "5"
+                },
+                "postalCode": {
+                    "type": "string",
+                    "x-order": "6"
+                },
+                "countryName": {
+                    "type": "string",
+                    "x-order": "7"
+                },
+                "countryNameNative": {
+                    "type": "string",
+                    "x-order": "8"
                 }
             }
         },
         "Org": {
             "type": "object",
             "properties": {
-                "billingAddress": {
-                    "$ref": "#/definitions/Address"
-                },
-                "legalName": {
-                    "type": "string"
+                "orgID": {
+                    "type": "integer",
+                    "x-order": "1"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "x-order": "2"
                 },
-                "orgID": {
-                    "type": "integer"
-                },
-                "postalAddress": {
-                    "$ref": "#/definitions/Address"
+                "legalName": {
+                    "type": "string",
+                    "x-order": "3"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "x-order": "4"
                 },
                 "visitingAddress": {
+                    "x-order": "5",
+                    "$ref": "#/definitions/Address"
+                },
+                "postalAddress": {
+                    "x-order": "6",
+                    "$ref": "#/definitions/Address"
+                },
+                "billingAddress": {
+                    "x-order": "7",
                     "$ref": "#/definitions/Address"
                 }
             }
