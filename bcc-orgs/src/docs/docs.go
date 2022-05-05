@@ -22,6 +22,11 @@ const docTemplate = `{
     "paths": {
         "/orgs/": {
             "get": {
+                "security": [
+                    {
+                        "ClientCredentials": []
+                    }
+                ],
                 "description": "Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
                 "produces": [
                     "application/json"
@@ -43,6 +48,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "ClientCredentials": []
+                    }
+                ],
                 "description": "Org updating is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
                 "consumes": [
                     "application/json"
@@ -75,6 +85,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "ClientCredentials": []
+                    }
+                ],
                 "description": "Org creation is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
                 "consumes": [
                     "application/json"
@@ -109,6 +124,11 @@ const docTemplate = `{
         },
         "/orgs/{orgID}": {
             "get": {
+                "security": [
+                    {
+                        "ClientCredentials": []
+                    }
+                ],
                 "description": "Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
                 "consumes": [
                     "application/json"

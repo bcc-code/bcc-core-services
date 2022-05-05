@@ -21,6 +21,8 @@ import (
 // @scope.write:org modify orgs
 // @scope.read:org read orgs
 
+// @Security ClientCredentials
+
 func main() {
 	utils.InitEnv()
 
