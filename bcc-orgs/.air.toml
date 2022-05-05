@@ -1,6 +1,7 @@
 [build]
   bin = "./tmp/main"
-  cmd = "go build -o ./tmp/main ./src/main.go"
+  cmd = "/scripts/generate-docs.sh && go build -o ./tmp/main ./src/main.go"
   include_dir = ["src"]
+  exclude_dir = ["src/docs"]
   delay = 0
 

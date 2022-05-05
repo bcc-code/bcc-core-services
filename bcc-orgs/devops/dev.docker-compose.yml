@@ -17,6 +17,14 @@ services:
       dockerfile: devops/dev.Dockerfile
     depends_on:
       - "orgs_db"
+  swagger_ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "4001:8080"
+    environment:
+      - SWAGGER_JSON_URL=http://localhost:4000/orgs/swagger.json
+    container_name: swagger_ui
+
 
   orgs_db:
     image: postgres:13.6-alpine
