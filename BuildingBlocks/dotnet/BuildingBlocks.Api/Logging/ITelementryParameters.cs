@@ -2,12 +2,8 @@
 {
     public interface ITelemetryParameters
     {
-        string ClientName();
-
         string AppVersion();
 
         string SystemVersion();
-
-        string InstrumentationKey();
     }
 }
