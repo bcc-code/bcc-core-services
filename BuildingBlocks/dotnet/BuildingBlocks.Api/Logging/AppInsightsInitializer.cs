@@ -17,7 +17,7 @@ namespace BuildingBlocks.Api.Logging
             ITelemetryParameters telemetryParameters)
         {
             _httpContextAccessor = httpContextAccessor;
-            _user = user;
+            _user = user ?? throw new ArgumentNullException(nameof(user));
             _telemetryParameters = telemetryParameters;
         }
 
@@ -48,10 +48,8 @@ namespace BuildingBlocks.Api.Logging
                 UserId = _user.Id.ToString(),
                 AccountId = _user.TeamId.ToString(),
                 UserAgent = _httpContextAccessor.HttpContext?.Request.Headers["User-Agent"] ?? new StringValues(),
-                RemoteIpAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString(),
                 Properties = properties,
-                SystemVersion = _telemetryParameters.SystemVersion(),
-                InstrumentationKey = _telemetryParameters.InstrumentationKey()
+                SystemVersion = _telemetryParameters.SystemVersion()
             };
 
             TelemetryHelper.Create(to).Initialize(telemetry);

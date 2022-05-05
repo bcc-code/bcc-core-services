@@ -1,0 +1,45 @@
+name: Docs App Dev Deployment 
+
+on:  
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and publish image
+    runs-on: ubuntu-latest
+    environment: prod
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build and publish
+      uses: ./.github/actions/build-and-publish-image
+      with:
+        projectId: ${{ secrets.GOOGLE_PROJECT_ID }}
+        googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+        buildContext: bcc-api-docs
+        dockerfilePath:  bcc-api-docs/Dockerfile
+        imageName: bcc-api-docs
+        registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
+        registryName: ${{secrets.REGISTRY_NAME}}
+
+  deploy:
+    needs: [build]
+    name: Deploy image to cloud run
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Deploy
+      uses: ./.github/actions/deploy-cloud-run-app
+      with:
+        projectId: ${{ secrets.GOOGLE_PROJECT_ID }}
+        googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+        imageName: bcc-api-docs
+        registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
+        registryName: ${{secrets.REGISTRY_NAME}}
+        serviceName: ${{secrets.DOCS_SERVICE_NAME}}
+        serviceRegion: ${{secrets.DOCS_SERVICE_REGION}}

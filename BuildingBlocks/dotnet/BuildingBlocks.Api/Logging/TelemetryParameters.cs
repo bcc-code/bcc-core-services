@@ -14,17 +14,7 @@ namespace BuildingBlocks.Api.Logging
 
         public string AppVersion()
         {
-            return Assembly.GetExecutingAssembly().FullName;
-        }
-
-        public string ClientName()
-        {
-            return string.Empty;
-        }
-
-        public string InstrumentationKey()
-        {
-            return _configuration.GetConnectionString("ApplicationInsights");
+            return Assembly.GetExecutingAssembly().FullName ?? string.Empty;
         }
 
         public string SystemVersion()

@@ -27,8 +27,6 @@ namespace BuildingBlocks.Api.Logging
 
             if (string.IsNullOrWhiteSpace(_to.UserAgent) == false) telemetry.Context.User.UserAgent = _to.UserAgent;
 
-            telemetry.Context.Location.Ip = _to.RemoteIpAddress;
-
             if (telemetry is ISupportProperties supportProperties)
                 foreach (var keyValuePair in _to.Properties)
                     supportProperties.Properties[keyValuePair.Key] = keyValuePair.Value;
@@ -36,8 +34,6 @@ namespace BuildingBlocks.Api.Logging
             if (string.IsNullOrEmpty(_to.SystemVersion) == false)
                 telemetry.Context.Component.Version = _to.SystemVersion;
 
-            if (string.IsNullOrEmpty(_to.InstrumentationKey) == false)
-                telemetry.Context.InstrumentationKey = _to.InstrumentationKey;
 
             var requestTelemetry = telemetry as RequestTelemetry;
             if (requestTelemetry == null) return;
