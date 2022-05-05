@@ -9,9 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title           BCC Orgs API
-// @version         1.0.0
-// @description     This is the Orgs API
+// @title        BCC Orgs API
+// @version      1.0.0
+// @description  This is the Orgs API
 
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
