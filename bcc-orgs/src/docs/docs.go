@@ -20,6 +20,93 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/orgs/": {
+            "get": {
+                "description": "Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orgs"
+                ],
+                "summary": "Find orgs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Org"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Org updating is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orgs"
+                ],
+                "summary": "Update org",
+                "parameters": [
+                    {
+                        "description": "Org create reuqest",
+                        "name": "org",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Org"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Org"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Org creation is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orgs"
+                ],
+                "summary": "Create org",
+                "parameters": [
+                    {
+                        "description": "Org create reuqest",
+                        "name": "org",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Org"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Org"
+                        }
+                    }
+                }
+            }
+        },
         "/orgs/{orgID}": {
             "get": {
                 "description": "Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.",
@@ -109,6 +196,17 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "ClientCredentials": {
+            "type": "oauth2",
+            "flow": "application",
+            "tokenUrl": "/docs/token",
+            "scopes": {
+                "read:org:": " read orgs",
+                "write:org:": " modify orgs"
+            }
+        }
     }
 }`
 
@@ -116,7 +214,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:4000",
-	BasePath:         "/api/v1",
+	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "BCC Orgs API",
 	Description:      "This is the Orgs API",

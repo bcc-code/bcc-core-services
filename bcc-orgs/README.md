@@ -14,17 +14,21 @@ Copy ```.env.example``` to ```.env``` and fill in the values.
 
 ### Run locally
 
+1. Make sure there is an active Postgres DB instance availible on the right port
+
 #### Without live-reload
 
-1. Install [go](https://go.dev/doc/install)
-2. From application root directory run
+2. Install [go](https://go.dev/doc/install)
+3. Install [swaggo](https://github.com/swaggo/swag)
+4. From application root directory run
    ```go run src/main.go```
 
 #### With live-reload
 
-1. Install [go](https://go.dev/doc/install)
-2. Install [air](https://github.com/cosmtrek/air)
-3. From application root directory run
+2. Install [go](https://go.dev/doc/install)
+3. Install [air](https://github.com/cosmtrek/air)
+4. Install [swaggo](https://github.com/swaggo/swag)
+5. From application root directory run
    ```air```
 
 ### Run in docker
@@ -41,7 +45,12 @@ Copy ```.env.example``` to ```.env``` and fill in the values.
 
 ## Develop application
 
-The only officially supported development environment is VS Code. A Database management tool is included in the docker compose setup. Go to localhost:8080 and login with the settings in the .env to make use of this tool.
+1. The only officially supported development environment is VS Code. 
+2. A Database management tool is included in the docker compose setup. Go to localhost:8080 and login with the settings in the .env to make use of this tool.
+3. Documentation is created from the code using [swaggo/swag](https://github.com/swaggo/swag)
+   1. UI is created in the docker compose setup. Go to localhost:4001 to view it
+   2. Application exposes it's documentation on /swagger.json
+   3. Documentation is automatically updated on code changes
 
 ### Testing
 

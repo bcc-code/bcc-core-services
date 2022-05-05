@@ -5,10 +5,8 @@ import (
 
 	"bcc-orgs/src/utils"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-
-	_ "github.com/swaggo/files"
-	_ "github.com/swaggo/gin-swagger"
 )
 
 // @title           BCC Orgs API
@@ -19,7 +17,11 @@ import (
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host      localhost:4000
-// @BasePath  /api/v1
+// @BasePath  /
+// @securityDefinitions.oauth2.application ClientCredentials
+// @tokenUrl /docs/token
+// @scope.write:org: modify orgs
+// @scope.read:org: read orgs
 
 func main() {
 	utils.InitEnv()
@@ -30,6 +32,10 @@ func main() {
 	}
 
 	r := gin.Default()
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowAllOrigins = true
+	r.Use(cors.New(corsConfig))
 	router.LoadRoutes(r)
 
 	r.Run()

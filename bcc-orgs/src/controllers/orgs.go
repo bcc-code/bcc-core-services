@@ -38,6 +38,12 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 	}
 }
 
+// @Summary      Find orgs
+// @Description  Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
+// @Tags         orgs
+// @Produce      json
+// @Success      200  {array}  models.Org
+// @Router       /orgs/ [get]
 func (ctrl OrgsController) Find(c *gin.Context) {
 	orgs, err := services.FindOrgs()
 	if err != nil {
@@ -48,6 +54,14 @@ func (ctrl OrgsController) Find(c *gin.Context) {
 	}
 }
 
+// @Summary      Create org
+// @Description  Org creation is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
+// @Tags         orgs
+// @Accept       json
+// @Produce      json
+// @Param        org body models.Org true "Org create reuqest"
+// @Success      200  {object}  models.Org
+// @Router       /orgs/ [post]
 func (ctrl OrgsController) Create(c *gin.Context) {
 	var org models.Org
 	err := c.BindJSON(&org)
@@ -63,6 +77,14 @@ func (ctrl OrgsController) Create(c *gin.Context) {
 	}
 }
 
+// @Summary      Update org
+// @Description  Org updating is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
+// @Tags         orgs
+// @Accept       json
+// @Produce      json
+// @Param        org body models.Org true "Org create reuqest"
+// @Success      200  {object}  models.Org
+// @Router       /orgs/ [put]
 func (ctrl OrgsController) Update(c *gin.Context) {
 	idString := c.Param("id")
 	orgID, _ := strconv.Atoi(idString)
