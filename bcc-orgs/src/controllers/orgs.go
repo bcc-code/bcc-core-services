@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strconv"
 
 	"bcc-orgs/src/models"
 	"bcc-orgs/src/services"
+	"bcc-orgs/src/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +31,8 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": "Invalid orgID was used."})
 	}
 
-	org, err := services.GetOrg(orgID)
+	dbOrg, err := utils.SqlcDb.GetOrg(context.Background(), int32(orgID))
+	org := models.DbOrgToOrg(dbOrg)
 
 	if err != nil {
 		notFound := fmt.Sprintf("Organization could not be found for orgID %v", orgID)

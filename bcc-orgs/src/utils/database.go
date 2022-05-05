@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bcc-orgs/src/sqlc"
 	"fmt"
 	"os"
 
@@ -9,6 +10,7 @@ import (
 )
 
 var Db *sqlx.DB
+var SqlcDb *sqlc.Queries
 
 func OpenDb() error {
 
@@ -25,6 +27,7 @@ func OpenDb() error {
 		host, port, user, password, dbname)
 
 	db, err := sqlx.Open("postgres", psqlInfo)
+	SqlcDb = sqlc.New(db)
 
 	if err == nil {
 		err = db.Ping()

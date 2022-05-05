@@ -1,0 +1,19 @@
+version: "1"
+packages:
+  - name: "sqlc"
+    path: "src/sqlc"
+    queries: "./db/queries/"
+    schema: "./db/migrations/"
+    engine: "postgresql"
+    emit_db_tags: true
+overrides:
+  - go_type:
+      import: "gopkg.in/guregu/null.v4"
+      type: "String"
+    nullable: true
+    db_type: "varchar"
+  - go_type:
+      import: "gopkg.in/guregu/null.v4"
+      type: "String"
+    nullable: true
+    db_type: "pg_catalog.varchar"
