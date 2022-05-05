@@ -1,7 +1,11 @@
 name: Docs App Prod Deployment 
 
 on:  
-  workflow_dispatch:
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - bcc-orgs/**
 
 jobs:
   build:
