@@ -6,26 +6,24 @@ package sqlc
 
 import (
 	"database/sql"
-
-	null_v4 "gopkg.in/guregu/null.v4"
 )
 
 type Address struct {
 	AddressID         int32          `db:"address_id"`
-	Street1           null_v4.String `db:"street_1"`
-	Street2           null_v4.String `db:"street_2"`
-	City              null_v4.String `db:"city"`
-	Region            null_v4.String `db:"region"`
-	CountryIso2Code   null_v4.String `db:"country_iso_2_code"`
-	PostalCode        null_v4.String `db:"postal_code"`
-	CountryName       null_v4.String `db:"country_name"`
-	CountryNameNative null_v4.String `db:"country_name_native"`
+	Street1           sql.NullString `db:"street_1"`
+	Street2           sql.NullString `db:"street_2"`
+	City              sql.NullString `db:"city"`
+	Region            sql.NullString `db:"region"`
+	CountryIso2Code   sql.NullString `db:"country_iso_2_code"`
+	PostalCode        sql.NullString `db:"postal_code"`
+	CountryName       sql.NullString `db:"country_name"`
+	CountryNameNative sql.NullString `db:"country_name_native"`
 }
 
 type Org struct {
 	OrgID               int32          `db:"org_id"`
 	Name                string         `db:"name"`
-	LegalName           null_v4.String `db:"legal_name"`
+	LegalName           sql.NullString `db:"legal_name"`
 	Type                string         `db:"type"`
 	FkVisitingAddressID sql.NullInt32  `db:"fk_visiting_address_id"`
 	FkPostalAddressID   sql.NullInt32  `db:"fk_postal_address_id"`

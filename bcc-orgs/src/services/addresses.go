@@ -1,113 +1,74 @@
 package services
 
-import (
-	"bcc-orgs/src/models"
-	"bcc-orgs/src/utils"
-	"fmt"
-)
+// import (
+// 	"bcc-orgs/src/conversions"
+// 	"bcc-orgs/src/models"
+// 	"bcc-orgs/src/sqlc"
+// 	"bcc-orgs/src/utils"
+// 	"context"
+// 	"database/sql"
+// )
 
-func CreateAddress(address models.Address) (*models.Address, error) {
-	var result models.Address
-	err := utils.Db.QueryRow(`
-		INSERT INTO address (
-			street_1,
-			street_2,
-			city,
-			region, 
-			country_iso_2_code,
-			postal_code,
-			country_name,
-			country_name_native
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-		RETURNING *`,
-		address.Street1,
-		address.Street2,
-		address.City,
-		address.Region,
-		address.CountryIso2Code,
-		address.PostalCode,
-		address.CountryName,
-		address.CountryNameNative,
-	).Scan(
-		&result.AddressID,
-		&result.Street1,
-		&result.Street2,
-		&result.City,
-		&result.Region,
-		&result.CountryIso2Code,
-		&result.PostalCode,
-		&result.CountryName,
-		&result.CountryNameNative)
+// type AddressType int
 
-	return &result, err
-}
+// const (
+// 	VISITING_ADDRESS AddressType = iota
+// 	POSTAL_ADDRESS
+// 	BILLING_ADDRESS
+// )
 
-func UpdateAddress(addressID int, address models.Address) (*models.Address, error) {
-	var result models.Address
-	err := utils.Db.QueryRow(`
-		UPDATE address
-			SET street_1 = $2, street_2 = $3, city = $4, region = $5, country_iso_2_code = $6, postal_code = $7, country_name = $8, country_name_native = $9
-		WHERE address_id = $1
-		RETURNING *`,
-		addressID,
-		address.Street1,
-		address.Street2,
-		address.City,
-		address.Region,
-		address.CountryIso2Code,
-		address.PostalCode,
-		address.CountryName,
-		address.CountryNameNative,
-	).Scan(
-		&result.AddressID,
-		&result.Street1,
-		&result.Street2,
-		&result.City,
-		&result.Region,
-		&result.CountryIso2Code,
-		&result.PostalCode,
-		&result.CountryName,
-		&result.CountryNameNative)
+// func GetAddressesFromOrg(org models.Org) [3]models.Address {
+// 	var addresses [3]models.Address
+// 	addresses[VISITING_ADDRESS] = org.VisitingAddress
+// 	addresses[POSTAL_ADDRESS] = org.PostalAddress
+// 	addresses[BILLING_ADDRESS] = org.BillingAddress
+// 	return addresses
+// }
+// func AddAddressIdsToCreateOrg(org *sqlc.CreateOrgParams, addressIds [3]int32) {
+// 	org.FkVisitingAddressID = sql.NullInt32{Int32: addressIds[VISITING_ADDRESS], Valid: true}
+// 	org.FkPostalAddressID = sql.NullInt32{Int32: addressIds[POSTAL_ADDRESS], Valid: true}
+// 	org.FkBillingAddressID = sql.NullInt32{Int32: addressIds[BILLING_ADDRESS], Valid: true}
+// }
+// func GetAddressIdsFromDbOrg(org sqlc.Org) [3]int32 {
+// 	var ids [3]int32
+// 	ids[VISITING_ADDRESS] = org.FkVisitingAddressID.Int32
+// 	ids[POSTAL_ADDRESS] = org.FkPostalAddressID.Int32
+// 	ids[BILLING_ADDRESS] = org.FkBillingAddressID.Int32
+// 	return ids
+// }
 
-	return &result, err
-}
+// func CreateOrgAddresses(org models.Org) ([3]int32, error) {
+// 	addresses := GetAddressesFromOrg(org)
+// 	createdAddresses := [3]int32{}
+// 	for i := AddressType(0); i < 3; i++ {
+// 		addressCreate := conversions.ApiAddressToDbAddress[sqlc.CreateAddressParams](addresses[i])
+// 		created, err := utils.SqlcDb.CreateAddress(context.Background(), addressCreate)
+// 		createdAddresses[i] = created
+// 		if err != nil {
+// 			return createdAddresses, err
+// 		}
+// 	}
+// 	return createdAddresses, nil
+// }
 
-func CreateOrUpdateOrgAddresses(changedOrg models.Org, current models.Org) (*models.Address, *models.Address, *models.Address, error) {
-	visitingAddress, err := checkAndSaveAddress(changedOrg.VisitingAddress, current.VisitingAddress)
-	if err != nil {
-		return nil, nil, nil, err
-	}
-	postalAddress, err := checkAndSaveAddress(changedOrg.PostalAddress, current.PostalAddress)
-	if err != nil {
-		return nil, nil, nil, err
-	}
-	billingAddress, err := checkAndSaveAddress(changedOrg.BillingAddress, current.BillingAddress)
-	if err != nil {
-		return nil, nil, nil, err
-	}
+// func UpdateOrgAddresses(org sqlc.Org, updateOrg models.Org) ([3]int32, error) {
+// 	addressIds := GetAddressIdsFromDbOrg(org)
+// 	updatedAddresses := GetAddressesFromOrg(updateOrg)
+// 	var newAddressIds [3]int32
+// 	for i := 0; i < 3; i++ {
+// 		createdID, err := UpdateAddress(addressIds[i], updatedAddresses[i])
+// 		newAddressIds[i] = createdID
+// 		if err != nil {
+// 			return newAddressIds, err
+// 		}
+// 	}
+// 	return newAddressIds, nil
+// }
 
-	return visitingAddress, postalAddress, billingAddress, nil
-}
-
-func checkAndSaveAddress(changedAddress models.Address, currentAddress models.Address) (*models.Address, error) {
-	var err error
-	var address *models.Address = &currentAddress
-
-	if addressEntered(changedAddress) == false {
-		return address, nil
-	}
-
-	existingAddressID := currentAddress.AddressID
-
-	if existingAddressID == nil {
-		address, err = CreateAddress(changedAddress)
-		fmt.Printf("%+v\n", *address)
-	} else {
-		address, err = UpdateAddress(*existingAddressID, changedAddress)
-	}
-	return address, err
-}
-
-func addressEntered(address models.Address) bool {
-	return (models.Address{}) != address
-}
+// func UpdateAddress(addressID int32, address models.Address) (int32, error) {
+// 	if addressID == 0 {
+// 		return 0, nil
+// 	}
+// 	addressUpdate := conversions.ApiAddressToDbAddress[sqlc.UpdateAddressParams](address)
+// 	return utils.SqlcDb.UpdateAddress(context.Background(), addressUpdate)
+// }

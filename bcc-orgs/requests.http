@@ -20,7 +20,7 @@ content-type: application/json
 @token = Bearer {{getCredentials.response.body.access_token}}
 
 # @name getOrg
-GET {{localHost}}/orgs/1 HTTP/1.1
+GET {{localHost}}/orgs/69 HTTP/1.1
 Authorization: {{token}}
 
 ###
@@ -37,7 +37,10 @@ Authorization: {{token}}
 
 {
     "name": "Terwolde",
-    "type": "Church"
+    "type": "Church",
+    "visitingAddress": {
+        "street1": "Terwolde"
+    }
 }
 
 ###

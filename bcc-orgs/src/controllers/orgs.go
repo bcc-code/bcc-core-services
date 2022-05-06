@@ -1,14 +1,9 @@
 package controllers
 
 import (
-	"context"
-	"fmt"
 	"net/http"
-	"strconv"
 
-	"bcc-orgs/src/models"
 	"bcc-orgs/src/services"
-	"bcc-orgs/src/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,23 +19,23 @@ type OrgsController struct{}
 // @Param        orgID  path      int  true  "orgID"
 // @Success      200    {object}  models.Org
 // @Router       /orgs/{orgID} [get]
-func (ctrl OrgsController) Get(c *gin.Context) {
-	idString := c.Param("orgID")
-	orgID, convError := strconv.Atoi(idString)
-	if convError != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": "Invalid orgID was used."})
-	}
 
-	dbOrg, err := utils.SqlcDb.GetOrg(context.Background(), int32(orgID))
-	org := models.DbOrgToOrg(dbOrg)
+// func (ctrl OrgsController) Get(c *gin.Context) {
+// 	idString := c.Param("orgID")
+// 	orgID, convError := strconv.Atoi(idString)
+// 	if convError != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": "Invalid orgID was used."})
+// 	}
 
-	if err != nil {
-		notFound := fmt.Sprintf("Organization could not be found for orgID %v", orgID)
-		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": notFound})
-	} else {
-		c.JSON(http.StatusOK, org)
-	}
-}
+// 	org, err := services.GetOrg(orgID)
+
+// 	if err != nil {
+// 		notFound := fmt.Sprintf("Organization could not be found for orgID %v", orgID)
+// 		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": notFound})
+// 	} else {
+// 		c.JSON(http.StatusOK, org)
+// 	}
+// }
 
 // @Summary      Find orgs
 // @Description  Org retrieval is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
@@ -49,6 +44,7 @@ func (ctrl OrgsController) Get(c *gin.Context) {
 // @Produce      json
 // @Success      200  {array}  models.Org
 // @Router       /orgs/ [get]
+
 func (ctrl OrgsController) Find(c *gin.Context) {
 	orgs, err := services.FindOrgs()
 	if err != nil {
@@ -68,20 +64,21 @@ func (ctrl OrgsController) Find(c *gin.Context) {
 // @Param        org  body      models.Org  true  "Org create reuqest"
 // @Success      200  {object}  models.Org
 // @Router       /orgs/ [post]
-func (ctrl OrgsController) Create(c *gin.Context) {
-	var org models.Org
-	err := c.BindJSON(&org)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": err.Error()})
-	}
 
-	org, creationErr := services.CreateOrg(org)
-	if creationErr != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
-	} else {
-		c.JSON(http.StatusOK, org)
-	}
-}
+// func (ctrl OrgsController) Create(c *gin.Context) {
+// 	var org models.Org
+// 	err := c.BindJSON(&org)
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": true, "message": err.Error()})
+// 	}
+
+// 	org, creationErr := services.CreateOrg(org)
+// 	if creationErr != nil {
+// 		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "message": err.Error()})
+// 	} else {
+// 		c.JSON(http.StatusOK, org)
+// 	}
+// }
 
 // @Summary      Update org
 // @Description  Org updating is permitted through the use of scopes. For scope definitions go to https://bcc-code.github.io/projects/bcc-membership-docs/data-structures-and-scopes.
@@ -92,17 +89,18 @@ func (ctrl OrgsController) Create(c *gin.Context) {
 // @Param        org  body      models.Org  true  "Org create reuqest"
 // @Success      200  {object}  models.Org
 // @Router       /orgs/ [put]
-func (ctrl OrgsController) Update(c *gin.Context) {
-	idString := c.Param("id")
-	orgID, _ := strconv.Atoi(idString)
 
-	var org models.Org
-	err := c.BindJSON(&org)
-	updatedOrg, err := services.UpdateOrg(orgID, org)
+// func (ctrl OrgsController) Update(c *gin.Context) {
+// 	idString := c.Param("id")
+// 	orgID, _ := strconv.Atoi(idString)
 
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": err.Error()})
-	} else {
-		c.JSON(http.StatusOK, updatedOrg)
-	}
-}
+// 	var org models.Org
+// 	err := c.BindJSON(&org)
+// 	updatedOrg, err := services.UpdateOrg(orgID, org)
+
+// 	if err != nil {
+// 		c.JSON(http.StatusNotFound, gin.H{"error": true, "message": err.Error()})
+// 	} else {
+// 		c.JSON(http.StatusOK, updatedOrg)
+// 	}
+// }
