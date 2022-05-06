@@ -65,7 +65,9 @@ jobs:
       
       - name: Cloud run deploy
         run: |
-          gcloud iam list-testable-permissions
+          gcloud projects list
+          gcloud config get-value project
+          gcloud iam list-testable-permissions https://www.googleapis.com/compute/v1/projects/tenants-api-dev
           gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.GOOGLE_PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
           --region=europe-west1 --project=${{secrets.GOOGLE_PROJECT_ID}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT }}
 
