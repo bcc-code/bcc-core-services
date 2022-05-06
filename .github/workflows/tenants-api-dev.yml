@@ -7,7 +7,6 @@ on:
     paths:
       - "bcc-tenants/**"
       - ".github/workflows/tenants-api-dev.yml"
-      
   workflow_dispatch:
 
 env:
@@ -15,11 +14,11 @@ env:
   APP_DOCKERFILE: bcc-tenants/Bcc.Tenants.Api/Dockerfile
   APPLICATION_NAME: tenants-api-dev
   PORT: 5174
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: dev
 
     steps:
       - name: Checkout
@@ -33,12 +32,13 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.6.0
-        
+
       - run: gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_BASE_URL }}
-      
+
       - run: |
           gcloud auth list
           gcloud projects list
+          gcloud config get-value project
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
@@ -48,16 +48,16 @@ jobs:
           context: ${{env.APP_BUILD_CONTEXT}}
           file: ${{env.APP_DOCKERFILE}}
           build-args: ASPNETCORE_ENVIRONMENT=Staging
-          
+
   deploy:
     runs-on: ubuntu-latest
-    needs: build      
-    environment: staging
+    needs: build
+    environment: dev
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Google Auth SDK
         uses: google-github-actions/auth@v0
         with:
@@ -66,16 +66,14 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.6.0
-      
+
       - name: Cloud run deploy
         run: |
           gcloud auth list
           gcloud projects list
           gcloud config get-value project
-          gcloud iam list-testable-permissions https://www.googleapis.com/compute/v1/projects/tenants-api-dev
           gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.GOOGLE_PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
           --region=europe-west1 --project=${{secrets.GOOGLE_PROJECT_ID}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT }}
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic ${{ env.APPLICATION_NAME }} --to-latest --platform=managed --region=europe-west1
-    
