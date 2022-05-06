@@ -19,7 +19,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: staging
 
     steps:
       - name: Checkout
@@ -36,7 +36,9 @@ jobs:
         
       - run: gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_BASE_URL }}
       
-      - run: gcloud auth list
+      - run: |
+          gcloud auth list
+          gcloud projects list
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
@@ -50,7 +52,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build      
-    environment: dev
+    environment: staging
 
     steps:
       - name: Checkout
