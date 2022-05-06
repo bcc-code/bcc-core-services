@@ -14,7 +14,6 @@ env:
   APP_BUILD_CONTEXT: bcc-tenants
   APP_DOCKERFILE: bcc-tenants/Bcc.Tenants.Api/Dockerfile
   APPLICATION_NAME: tenants-api-dev
-  ENVIRONMENT: Staging
   PORT: 5174
   
 jobs:
