@@ -34,7 +34,7 @@ public class TenantsDataService
                     var tenant = new Tenant
                     {
                         Name = fileLineParts[1],
-                        TenantKey = fileLineParts[3],
+                        TenantKey = fileLineParts[3].Replace("\r", ""),
                         Owners = new List<int> {int.Parse(fileLineParts[0])}
                     };
 
