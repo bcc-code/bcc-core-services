@@ -1,6 +1,11 @@
-name: Docs App Dev Deployment 
+name: Docs App Staging Deployment 
 
 on:  
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - bcc-orgs/**
   workflow_dispatch:
 
 jobs:

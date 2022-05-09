@@ -12,25 +12,6 @@ The application is responsible for the following core APIs
 
 Copy ```.env.example``` to ```.env``` and fill in the values.
 
-### Run locally
-
-1. Make sure there is an active Postgres DB instance availible on the right port
-
-#### Without live-reload
-
-2. Install [go](https://go.dev/doc/install)
-3. Install [swaggo](https://github.com/swaggo/swag)
-4. From application root directory run
-   ```go run src/main.go```
-
-#### With live-reload
-
-2. Install [go](https://go.dev/doc/install)
-3. Install [air](https://github.com/cosmtrek/air)
-4. Install [swaggo](https://github.com/swaggo/swag)
-5. From application root directory run
-   ```air```
-
 ### Run in docker
 
 1. Install [docker](https://docs.docker.com/get-docker/)
