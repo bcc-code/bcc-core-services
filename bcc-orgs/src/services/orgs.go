@@ -2,6 +2,9 @@ package services
 
 import (
 	"bcc-orgs/src/models"
+	"bcc-orgs/src/utils"
+	"context"
+	"fmt"
 )
 
 // const findOrgsQuery string = `
@@ -37,11 +40,22 @@ import (
 // 	LEFT JOIN address AS ba ON ba.address_id = o.fk_billing_address_id
 // 	`
 
+var ctx = context.Background()
+
 func FindOrgs() ([]models.Org, error) {
 	var orgs = []models.Org{}
+	query := "SELECT name, to_json(visiting_address) FROM new_org LIMIT 1;"
+	res := utils.Db.QueryRow(query)
+	fmt.Printf("%+v\n", *res)
+	var name string
+	var address models.Address
+	err := res.Scan(&name, &address)
+	fmt.Printf("%+v\n%+v\n", err, address)
+	// newOrgs, _ := utils.SqlcDb.GetOrgs(ctx)
+
 	// var dbOrgs []dbModels.Org
 	// err := utils.Db.Select(&dbOrgs, findOrgsQuery)
-	// fmt.Printf("dbOrg: %+v\n", dbOrgs)
+	// fmt.Printf("dbOrg: %+v\n", newOrgs)
 	// for _, dbOrg := range dbOrgs {
 	// 	orgs = append(orgs, conversions.DbOrgToApiOrg(dbOrg))
 	// }

@@ -20,6 +20,16 @@ type Address struct {
 	CountryNameNative sql.NullString `db:"country_name_native"`
 }
 
+type NewOrg struct {
+	OrgID           int32          `db:"org_id"`
+	Name            string         `db:"name"`
+	LegalName       sql.NullString `db:"legal_name"`
+	Type            string         `db:"type"`
+	VisitingAddress sql.NullString `db:"visiting_address"`
+	PostalAddress   sql.NullString `db:"postal_address"`
+	BillingAddress  sql.NullString `db:"billing_address"`
+}
+
 type Org struct {
 	OrgID               int32          `db:"org_id"`
 	Name                string         `db:"name"`

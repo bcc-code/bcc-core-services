@@ -1,17 +1,12 @@
 -- +goose Up
-INSERT INTO address (street_1, street_2, city, region, country_iso_2_code, postal_code, country_name, country_name_native)
+INSERT INTO new_org (org_id, name, type, visiting_address)
 VALUES 
-    ('Straat', 'Straat2', 'Apeldoorn', 'Gelderland', 'NL', '7322EE', 'Netherlands', 'Nederland'),
-    ('Veien', 'Veien2', 'Ski', 'Nordre Follo', 'NO', '6377NK', 'Norway', 'Norge');
+    (96, 'Terwolde', 'Church', ('Straat', NULL, 'Apeldoorn', 'Gelderland', 'NL', '7322EE', 'Netherlands', 'Nederland')),
+    (69, 'Oslo/Follo', 'Church', ('ABCD', 'Straat2', 'Apeldoorn', 'Gelderland', 'NL', 'ABCD', 'Netherlands', 'Nederland')),
+    (123, 'BCC Norway', 'Organisation', ('ABCDEF', 'Straat2', 'Apeldoorn', 'ABCD', 'NL', '7322EE', 'Netherlands', 'Nederland')),
+    (DEFAULT, 'Xercise', 'Organisation', ('Straat', 'ABCD', 'Apeldoorn', 'Gelderland', 'NL', '7322EE', 'Netherlands', 'Nederland'));
 
-INSERT INTO org (org_id, name, type, fk_visiting_address_id)
-VALUES 
-    (96, 'Terwolde', 'Church', 1),
-    (69, 'Oslo/Follo', 'Church', 2),
-    (123, 'BCC Norway', 'Organisation', 2),
-    (DEFAULT, 'Xercise', 'Organisation', 2);
-
-INSERT INTO org_association (fk_parent_id, fk_child_id)
-VALUES 
-    (123, 69),
-    (123, 96);
+-- INSERT INTO org_association (fk_parent_id, fk_child_id)
+-- VALUES 
+--     (123, 69),
+--     (123, 96);

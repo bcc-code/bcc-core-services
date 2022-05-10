@@ -6,4 +6,7 @@ packages:
     schema: "./db/migrations/"
     engine: "postgresql"
     emit_db_tags: true
+overrides:
+  - go_type: "github.com/gofrs/uuid.UUID"
+    db_type: varchar
 

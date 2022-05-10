@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 type Address struct {
 	Street1           *string `json:"street1" extensions:"x-order=1"`
 	Street2           *string `json:"street2" extensions:"x-order=2"`
@@ -10,3 +12,10 @@ type Address struct {
 	CountryName       *string `json:"countryName" extensions:"x-order=7"`
 	CountryNameNative *string `json:"countryNameNative" extensions:"x-order=8"`
 } //@name Address
+
+func (a *Address) Scan(src interface{}) error {
+	fmt.Printf("%+v\n", src)
+	str := string(src.([]byte))
+	fmt.Printf("%+v\n", str)
+	return nil
+}
