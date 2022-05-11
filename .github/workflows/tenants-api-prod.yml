@@ -59,6 +59,9 @@ jobs:
           project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.6.0
+        
       - name: Cloud run deploy
         run: |
           gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.GOOGLE_PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
