@@ -14,6 +14,7 @@ env:
   APP_DOCKERFILE: bcc-tenants/Bcc.Tenants.Api/Dockerfile
   APPLICATION_NAME: tenants-api-dev
   PORT: 5174
+  AllowedHosts: "https://myshare-admin-api-dev-gshbhxouha-ew.a.run.app"
 
 jobs:
   build:
@@ -32,6 +33,13 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.6.0
+        
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: "bcc-tenants/Bcc.Tenants.Api/appsettings.json"
+        env:
+          AllowedHosts: ${{ env.AllowedHosts }}
+
 
       - run: gcloud --quiet auth configure-docker ${{ secrets.REGISTRY_BASE_URL }}
 
