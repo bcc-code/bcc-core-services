@@ -27,7 +27,7 @@ jobs:
       - name: Google Auth SDK
         uses: google-github-actions/auth@v0
         with:
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Set up Cloud SDK
@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }}
+          tags: ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.GOOGLE_PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }}
           context: ${{env.APP_BUILD_CONTEXT}}
           file: ${{env.APP_DOCKERFILE}}
           build-args: ASPNETCORE_ENVIRONMENT=Staging
@@ -56,13 +56,16 @@ jobs:
       - name: Google Auth SDK
         uses: google-github-actions/auth@v0
         with:
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.6.0
+        
       - name: Cloud run deploy
         run: |
-          gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
-          --region=europe-west1 --project=${{secrets.PROJECT_ID}} --memory=1024M --min-instances=1 --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT }}
+          gcloud run deploy ${{ env.APPLICATION_NAME }} --image ${{ secrets.REGISTRY_BASE_URL }}/${{ secrets.GOOGLE_PROJECT_ID}}/${{secrets.REGISTRY_NAME}}/${{ env.APPLICATION_NAME }}:${{ github.sha }} \
+          --region=europe-west1 --project=${{secrets.GOOGLE_PROJECT_ID}} --memory=1024M --min-instances=1 --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT }}
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic ${{ env.APPLICATION_NAME }} --to-latest --platform=managed --region=europe-west1
