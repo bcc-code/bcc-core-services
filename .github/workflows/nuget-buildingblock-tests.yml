@@ -4,13 +4,13 @@ on:
   push:
     branches: [ master ]
     paths:
-      - "BuildingBlocks/dotnet/BuildingBlocks**"
+      - "BuildingBlocks/dotnet/BuildingBlocks/**"
       - ".github/workflows/nuget-buildingblock-tests.yml"
     
   pull_request:
     branches: [ master ]
     paths:
-      - "BuildingBlocks/dotnet/BuildingBlocks**"
+      - "BuildingBlocks/dotnet/BuildingBlocks/**"
       - ".github/workflows/nuget-buildingblock-tests.yml"
 
   workflow_dispatch:
