@@ -118,8 +118,8 @@ securityDefinitions:
     tokenUrl: /docs/token
     flow: application
     scopes:
-      write:org: modify orgs
-      read:org: read orgs
+      org#write: modify orgs
+      org#read: read orgs
 
 definitions:
   Address:

@@ -35,16 +35,16 @@ func TestJWTCheckInvalidAudience(t *testing.T) {
 }
 
 func TestJWTCheckMissingScope(t *testing.T) {
-	token, _ := GetToken(auth0Audience, "write:org")
-	r := getEndpointWithScopeCheck([]string{"read:org"})
+	token, _ := GetToken(auth0Audience, "org#write")
+	r := getEndpointWithScopeCheck([]string{"org#read"})
 	w := PerformRequest(r, "GET", "/", map[string]string{"Authorization": "Bearer " + token})
 	assert.Equal(t, http.StatusUnauthorized, w.Code)
 	assert.Equal(t, "Missing scopes", w.Body.String())
 }
 
 func TestJWTCheckValidToken(t *testing.T) {
-	token, _ := GetToken(auth0Audience, "read:org")
-	r := getEndpointWithScopeCheck([]string{"read:org"})
+	token, _ := GetToken(auth0Audience, "org#read")
+	r := getEndpointWithScopeCheck([]string{"org#read"})
 	w := PerformRequest(r, "GET", "/", map[string]string{"Authorization": "Bearer " + token})
 	assert.Equal(t, http.StatusOK, w.Code)
 }
