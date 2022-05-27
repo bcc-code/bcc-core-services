@@ -10,8 +10,8 @@ import (
 func LoadOrgsRoutes(r *gin.Engine) {
 	orgsSvc := r.Group("/orgs")
 	orgsController := controllers.OrgsController{}
-	orgsSvc.GET("/:orgID", auth.JWTCheckWithScopes([]string{"read:org"}), orgsController.Get)
-	orgsSvc.GET("/", auth.JWTCheckWithScopes([]string{"read:org"}), orgsController.Find)
-	orgsSvc.POST("/", auth.JWTCheckWithScopes([]string{"write:org"}), orgsController.Create)
-	orgsSvc.PUT("/:orgID", auth.JWTCheckWithScopes([]string{"write:org"}), orgsController.Update)
+	orgsSvc.GET("/:orgID", auth.JWTCheckWithScopes([]string{"org#read"}), orgsController.Get)
+	orgsSvc.GET("/", auth.JWTCheckWithScopes([]string{"org#read"}), orgsController.Find)
+	orgsSvc.POST("/", auth.JWTCheckWithScopes([]string{"org#write"}), orgsController.Create)
+	orgsSvc.PUT("/:orgID", auth.JWTCheckWithScopes([]string{"org#write"}), orgsController.Update)
 }

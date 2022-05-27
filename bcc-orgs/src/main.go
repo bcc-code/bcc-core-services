@@ -18,8 +18,8 @@ import (
 
 // @securityDefinitions.oauth2.application ClientCredentials
 // @tokenUrl /docs/token
-// @scope.write:org modify orgs
-// @scope.read:org read orgs
+// @scope.org#write modify orgs
+// @scope.org#read read orgs
 
 // @Security ClientCredentials
 
