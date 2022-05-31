@@ -1,4 +1,4 @@
-name: Docs App Staging Deployment 
+name: Docs App Sandbox Deployment 
 
 on:  
   push:
@@ -12,7 +12,7 @@ jobs:
   build:
     name: Build and publish image
     runs-on: ubuntu-latest
-    environment: staging
+    environment: sandbox
 
     steps:
     - name: Checkout
@@ -33,7 +33,7 @@ jobs:
     needs: [build]
     name: Deploy image to cloud run
     runs-on: ubuntu-latest
-    environment: staging
+    environment: sandbox
     steps:
     - name: Checkout
       uses: actions/checkout@v2
