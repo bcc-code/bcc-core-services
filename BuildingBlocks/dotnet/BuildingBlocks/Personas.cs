@@ -22,31 +22,31 @@ namespace BuildingBlocks
             {
                 Id = GenerateUniquePersonId(), FirstName = "Sherlock", LastName = "Holmes",
                 BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-30),
-                Gender = "M"
+                Gender = "M", SourceOrganizationId = 69
             };
             AnneShakespeare = new AnneShakespeare()
             {
                 Id = GenerateUniquePersonId(), FirstName = "Anne", LastName = "Shakespeare",
                 BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-28),
-                Gender = "K"
+                Gender = "K", SourceOrganizationId = 69
             };
             Personas.WilliamShakespeare = new WilliamShakespeare()
             {
                 Id = GenerateUniquePersonId(), FirstName = "William", LastName = "Shakespeare",
                 BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-50),
-                Gender = "M"
+                Gender = "M", SourceOrganizationId = 69
             };
             Personas.WinstonChurchill = new WinstonChurchill()
             {
                 Id = GenerateUniquePersonId(), FirstName = "Winston", LastName = "Churchill",
                 BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-40),
-                Gender = "M"
+                Gender = "M", SourceOrganizationId = 69
             };
             Personas.IsaacNewton = new IsaacNewton()
             {
                 Id = GenerateUniquePersonId(), FirstName = "Isaac", LastName = "Newton",
                 BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-60),
-                Gender = "M"
+                Gender = "M", SourceOrganizationId = 69
             };
 
             Personas.WilliamShakespeare.SpouseId = Personas.AnneShakespeare.Id;
