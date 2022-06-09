@@ -3,14 +3,14 @@ namespace BuildingBlocks
 
     public class Personas
     {
-        public static SherlockHolmes SherlockHolmes { get; set; } = new() {Id = 1};
-        public static WilliamShakespeare WilliamShakespeare { get; set; } = new() {Id = 2};
-        public static AnneShakespeare AnneShakespeare { get; set; } = new() {Id = 3};
-        public static WinstonChurchill WinstonChurchill { get; set; } = new() {Id = 4};
-        public static IsaacNewton IsaacNewton { get; set; } = new() {Id = 5};
-        public static SusannaHall SusannaHall { get; set; } = new() {Id = 6};
-        public static HamnetShakespeare HamnetShakespeare { get; set; } = new() {Id = 7};
-        public static JudithQuiney JudithQuiney { get; set; } = new() {Id = 8};
+        public static SherlockHolmes SherlockHolmes { get; set; } = new();
+        public static WilliamShakespeare WilliamShakespeare { get; set; } = new();
+        public static AnneShakespeare AnneShakespeare { get; set; } = new();
+        public static WinstonChurchill WinstonChurchill { get; set; } = new();
+        public static IsaacNewton IsaacNewton { get; set; } = new();
+        public static SusannaHall SusannaHall { get; set; } = new();
+        public static HamnetShakespeare HamnetShakespeare { get; set; } = new();
+        public static JudithQuiney JudithQuiney { get; set; } = new();
 
         //static in case of unit tests running in parallel and multiple instances of CustomWebApplicationFactory
         private static HashSet<int> _personasIdsInDatabase = new HashSet<int>();
@@ -65,6 +65,21 @@ namespace BuildingBlocks
             _personasIdsInDatabase.Add(personId);
             
             return personId;
+        }
+
+        public static IPersonas[] GetAllPersona()
+        {
+            return new IPersonas[]
+            {
+                WilliamShakespeare,
+                AnneShakespeare,
+                SherlockHolmes,
+                IsaacNewton,
+                WinstonChurchill,
+                HamnetShakespeare,
+                JudithQuiney,
+                SusannaHall
+            };
         }
     }
 

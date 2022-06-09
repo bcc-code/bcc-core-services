@@ -24,20 +24,10 @@ namespace IntegrationTests
         [Test]
         public void Unique_Ids()
         {
-            var ids = new[]
-            {
-                Personas.WilliamShakespeare.Id,
-                Personas.AnneShakespeare.Id,
-                Personas.SusannaHall.Id,
-                Personas.HamnetShakespeare.Id,
-                Personas.IsaacNewton.Id,
-                Personas.JudithQuiney.Id,
-                Personas.WinstonChurchill.Id,
-                Personas.SherlockHolmes.Id
-            };
+            var ids = Personas.GetAllPersona().Select(x => x.Id).ToList();
             
             Assert.IsTrue(ids.All(x => x > 0));
-            Assert.AreEqual(ids.Length, ids.Distinct().Count());
+            Assert.AreEqual(ids.Count(), ids.Distinct().Count());
         }
         
     }
