@@ -1,11 +1,10 @@
 using BuildingBlocks.Api.Authentication;
 using BuildingBlocks.Api.Extensions;
-using BuildingBlocks.Api.OpenApi;
-using BuildingBlocks.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebApi.Middlewares;
 
 namespace WebApi
 {
@@ -34,7 +33,7 @@ namespace WebApi
             app.ConfigureBlocks(Configuration, Environment);
 
             app.UseAuthentication();
-            
+            app.UseMiddleware<AddingCustomClaimsMiddleware>();
             app.UseAuthorization();
             
             app.UseEndpoints(endpoints =>

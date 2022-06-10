@@ -29,3 +29,7 @@ The optional PRERELEASE and BUILDNUMBER parts are never part of supported releas
   - Support for a newer platform is added.
   - A newer PATCH version of an existing dependency is adopted.
   - Any other change doesn't fit one of the previous cases.
+
+
+## Updating NuGet package version
+In order to update version for nuget packages please change `BUILDING_BLOCKS_VERSION_MAIN` in `.github/variables/version.env` [link](https://github.com/bcc-code/bcc-core-services/blob/master/.github/variables/version.env)
