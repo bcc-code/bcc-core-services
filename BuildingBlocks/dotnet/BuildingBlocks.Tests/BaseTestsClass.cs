@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using BuildingBlocks.Api.Authentication;
+using Dapper;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,6 +83,37 @@ namespace BuildingBlocks.Tests
         {
             var mediator = Factory.ServiceProvier.GetRequiredService<IMediator>();
             return await mediator.Send(request);
+        }
+        
+        
+        private async Task GeneratePersonas()
+        {
+            Personas.Generate();
+            
+            var memberQuery =  $@"BEGIN
+               IF NOT EXISTS (SELECT * FROM Users 
+                               WHERE UserId = @userId)
+               BEGIN
+                  INSERT INTO Users (UserId, SpouseId, FirstName, LastName, SourceOrganizationId, DisplayName, BirthDate, Gender)
+                  VALUES(@UserId, @{nameof(Persona.SpouseId)}, @{nameof(Persona.FirstName)}, 
+                    @{nameof(Persona.LastName)}, @{nameof(Persona.SourceOrganizationId)}, @{nameof(Persona.DisplayName)}, @{nameof(Persona.BirthDate)}, @{nameof(Persona.Gender)})
+               END
+            END";
+            
+            foreach (var persona in Personas.GetAllPersonas())
+            {
+                await Factory.SqlConnection.ExecuteAsync(memberQuery, new 
+                {
+                    UserId = persona.Id,
+                    FirstName = persona.FirstName,
+                    LastName = persona.LastName,
+                    SourceOrganizationId = persona.SourceOrganizationId,
+                    SpouseId = persona.SpouseId,
+                    DisplayName = $"{persona.FirstName} {persona.LastName}",
+                    BirthDate = persona.BirthDate,
+                    Gender = persona.Gender
+                });
+            }
         }
     }
 }
