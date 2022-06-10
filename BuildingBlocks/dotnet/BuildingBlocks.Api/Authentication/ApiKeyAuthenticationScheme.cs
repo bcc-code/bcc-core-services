@@ -1,4 +1,4 @@
-namespace Core.Api.Authentication
+namespace BuildingBlocks.Api.Authentication
 {
     public static class ApiKeyAuthenticationScheme
     {

@@ -1,8 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using BuildingBlocks.Api.Authentication;
-using Core.Api.Authentication;
-using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +29,10 @@ namespace BuildingBlocks.Api.OpenApi
             if (string.IsNullOrEmpty(authOptions.Authority))
             {
                 throw new ArgumentNullException(nameof(authOptions.Authority));
+            }
+            if (authOptions.Authority.StartsWith("http"))
+            {
+                throw new ArgumentException("Authority shouldn't contain https://");
             }
             services.AddSingleton(s => authOptions);
 
