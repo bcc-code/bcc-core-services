@@ -48,6 +48,24 @@ namespace BuildingBlocks
                 BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-60),
                 Gender = "M", SourceOrganizationId = 69
             };
+            Personas.JudithQuiney = new JudithQuiney()
+            {
+                Id = GenerateUniquePersonId(), FirstName = "Judith", LastName = "Quiney",
+                BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-17),
+                Gender = "K", SourceOrganizationId = 69
+            };
+            Personas.SusannaHall = new SusannaHall()
+            {
+                Id = GenerateUniquePersonId(), FirstName = "Susanna", LastName = "Hall",
+                BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-24),
+                Gender = "M", SourceOrganizationId = 69
+            };
+            Personas.HamnetShakespeare = new HamnetShakespeare()
+            {
+                Id = GenerateUniquePersonId(), FirstName = "Hamnet", LastName = "Shakespeare",
+                BirthDate = new DateTime(utcNow.Year, utcNow.Month, utcNow.Day).AddYears(-20),
+                Gender = "M", SourceOrganizationId = 69
+            };
 
             Personas.WilliamShakespeare.SpouseId = Personas.AnneShakespeare.Id;
             Personas.AnneShakespeare.SpouseId = Personas.WilliamShakespeare.Id;
