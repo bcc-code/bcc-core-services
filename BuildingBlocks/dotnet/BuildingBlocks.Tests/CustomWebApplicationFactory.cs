@@ -86,40 +86,10 @@ namespace BuildingBlocks.Tests
             }
 
             await _checkpoint.Reset(connectionString);
-            await GeneratePersonas();
 
             _initialized = true;
         }
 
-        private async Task GeneratePersonas()
-        {
-            Personas.Generate();
-            
-            var memberQuery =  $@"BEGIN
-               IF NOT EXISTS (SELECT * FROM Users 
-                               WHERE UserId = @userId)
-               BEGIN
-                  INSERT INTO Users (UserId, SpouseId, FirstName, LastName, SourceOrganizationId, DisplayName, BirthDate, Gender)
-                  VALUES(@UserId, @{nameof(Persona.SpouseId)}, @{nameof(Persona.FirstName)}, 
-                    @{nameof(Persona.LastName)}, @{nameof(Persona.SourceOrganizationId)}, @{nameof(Persona.DisplayName)}, @{nameof(Persona.BirthDate)}, @{nameof(Persona.Gender)})
-               END
-            END";
-            
-            foreach (var persona in new IPersonas[]{Personas.SherlockHolmes, Personas.AnneShakespeare, Personas.WilliamShakespeare, Personas.WinstonChurchill, Personas.IsaacNewton})
-            {
-                await SqlConnection.ExecuteAsync(memberQuery, new 
-                {
-                    UserId = persona.Id,
-                    FirstName = persona.FirstName,
-                    LastName = persona.LastName,
-                    SourceOrganizationId = persona.SourceOrganizationId,
-                    SpouseId = persona.SpouseId,
-                    DisplayName = $"{persona.FirstName} {persona.LastName}",
-                    BirthDate = persona.BirthDate,
-                    Gender = persona.Gender
-                });
-            }
-        }
 
         public void SeedDatabase(Action<SqlConnection> callback)
         {   
