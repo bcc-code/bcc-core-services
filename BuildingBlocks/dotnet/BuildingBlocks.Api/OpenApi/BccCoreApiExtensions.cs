@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using BuildingBlocks.Api.Authentication;
-using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +29,10 @@ namespace BuildingBlocks.Api.OpenApi
             if (string.IsNullOrEmpty(authOptions.Authority))
             {
                 throw new ArgumentNullException(nameof(authOptions.Authority));
+            }
+            if (authOptions.Authority.StartsWith("http"))
+            {
+                throw new ArgumentException("Authority shouldn't contain https://");
             }
             services.AddSingleton(s => authOptions);
 
@@ -71,19 +74,21 @@ namespace BuildingBlocks.Api.OpenApi
                                     var accessToken = o.SecurityToken as JwtSecurityToken;
                                     var message = new HttpRequestMessage
                                     {
-                                        RequestUri = new Uri("https://login.bcc.no/userinfo"),
+                                        RequestUri = new Uri($"https://{authOptions.Authority.TrimEnd('/')}/userinfo"),
                                         Method = HttpMethod.Post,
-
                                     };
-                                    message.Headers.Add("Authorization", "Bearer " + accessToken?.RawData);
+                                    if (accessToken != null)
+                                    {
+                                        message.Headers.Add("Authorization", "Bearer " + accessToken.RawData);
+                                    }
                                     var test = (await httpClient.SendAsync(message));
                                     var result = await test.Content.ReadAsStringAsync();
-
+                                   
                                     var x = JsonConvert.DeserializeObject<JObject>(result);
 
                                     c.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(6);
 
-                                    var churchId = x.GetValue("https://login.bcc.no/claims/churchId")?.ToString() ??
+                                    var churchId = x.GetValue(Claims.Church)?.ToString() ??
                                                    "0";
                                     if (churchId == "452" || churchId == "459")
                                     {
@@ -92,14 +97,16 @@ namespace BuildingBlocks.Api.OpenApi
 
                                     return churchId;
                                 });
-
+                                
                                 o.Principal?.AddIdentity(new ClaimsIdentity(new List<Claim>
                                 {
-                                    new Claim("https://login.bcc.no/claims/churchId", userChurchId)
+                                    new Claim(Claims.Church, userChurchId)
                                 }));
                             }
                         };
-                    });
+                    })                
+                    .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationScheme.AuthenticationScheme, o => { });
+                ;
             }
         }
 

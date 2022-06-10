@@ -6,16 +6,17 @@
       <Description>A package with common resources for composing another BuildingBlocks projects.</Description>
       <RepositoryUrl>https://github.com/bcc-code/bcc-core-services</RepositoryUrl>
       <PackageId>BccCode.BuildingBlocks.Common</PackageId>
+      <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.0.123" />
       <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
       <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-      <PackageReference Include="MongoDB.Driver" Version="2.15.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.16.0" />
     </ItemGroup>
 
 </Project>
