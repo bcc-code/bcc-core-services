@@ -24,7 +24,7 @@ namespace IntegrationTests
         [Test]
         public void Unique_Ids()
         {
-            var ids = Personas.GetAllPersona().Select(x => x.Id).ToList();
+            var ids = Personas.GetAllPersonas().Select(x => x.Id).ToList();
             
             Assert.IsTrue(ids.All(x => x > 0));
             Assert.AreEqual(ids.Count(), ids.Distinct().Count());

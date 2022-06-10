@@ -55,26 +55,26 @@ namespace BuildingBlocks.Tests
 
         public ServiceProvider ServiceProvier { get; set; }
 
-        protected override async void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                var connectionString = Configuration.GetConnectionString("IntegrationTestsContext");
-                if (string.IsNullOrEmpty(connectionString) == false)
-                {
-                    await _checkpoint.Reset(connectionString);
-                }
-            }
-
-            base.Dispose(disposing);
-        }
+        // protected override async void Dispose(bool disposing)
+        // {
+        //     if (disposing)
+        //     {
+        //         var connectionString = Configuration.GetConnectionString("IntegrationTestsContext");
+        //         if (string.IsNullOrEmpty(connectionString) == false)
+        //         {
+        //             await _checkpoint.Reset(connectionString);
+        //         }
+        //     }
+        //
+        //     base.Dispose(disposing);
+        // }
 
         private bool _initialized;
         public async Task InitSeed()
         {
             if (_initialized)
             {
-                return;
+                return;  
             }
             
             SqlConnection = await SqlConnectionService.GetAsync();

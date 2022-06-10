@@ -67,7 +67,7 @@ namespace BuildingBlocks
             return personId;
         }
 
-        public static IPersonas[] GetAllPersona()
+        public static IPersonas[] GetAllPersonas()
         {
             return new IPersonas[]
             {
