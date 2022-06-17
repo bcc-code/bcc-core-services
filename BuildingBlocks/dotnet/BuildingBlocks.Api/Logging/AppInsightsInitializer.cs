@@ -28,9 +28,9 @@ namespace BuildingBlocks.Api.Logging
                 {"AppVersion", _telemetryParameters.AppVersion()}
             };
 
-            if (string.IsNullOrEmpty(_user.GetClaimsIdentity(Claims.Church)) == false)
+            if (string.IsNullOrEmpty(_user.GetClaimsIdentity(Claims.OrganizationId)) == false)
             {
-                properties.Add("Church", _user.GetClaimsIdentity(Claims.Church));
+                properties.Add("OrganizationId", _user.GetClaimsIdentity(Claims.OrganizationId));
             }
 
             if (string.IsNullOrEmpty(_user.GetClaimsIdentity(Claims.Age)) == false)
@@ -46,7 +46,7 @@ namespace BuildingBlocks.Api.Logging
             var to = new TelemetryObject
             {
                 UserId = _user.Id.ToString(),
-                AccountId = _user.TeamId.ToString(),
+                AccountId = _user.OrganizationId.ToString(),
                 UserAgent = _httpContextAccessor.HttpContext?.Request.Headers["User-Agent"] ?? new StringValues(),
                 Properties = properties,
                 SystemVersion = _telemetryParameters.SystemVersion()

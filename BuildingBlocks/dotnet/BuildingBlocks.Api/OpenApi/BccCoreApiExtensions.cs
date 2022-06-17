@@ -88,7 +88,7 @@ namespace BuildingBlocks.Api.OpenApi
 
                                     c.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(6);
 
-                                    var churchId = x.GetValue(Claims.Church)?.ToString() ??
+                                    var churchId = x.GetValue(Claims.OrganizationId)?.ToString() ??
                                                    "0";
                                     if (churchId == "452" || churchId == "459")
                                     {
@@ -100,7 +100,7 @@ namespace BuildingBlocks.Api.OpenApi
                                 
                                 o.Principal?.AddIdentity(new ClaimsIdentity(new List<Claim>
                                 {
-                                    new Claim(Claims.Church, userChurchId)
+                                    new Claim(Claims.OrganizationId, userChurchId)
                                 }));
                             }
                         };

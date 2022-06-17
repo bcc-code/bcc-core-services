@@ -51,11 +51,11 @@ namespace BuildingBlocks.Api.Authentication
             var claims = new List<Claim>();
             if (personId > 0)
             {
-                claims.Add(new Claim(Claims.UserId, personId.ToString())); 
+                claims.Add(new Claim(Claims.PersonId, personId.ToString())); 
             }
             if (userChurchId > 0)
             {
-                claims.Add(new Claim(Claims.Church, userChurchId.ToString())); 
+                claims.Add(new Claim(Claims.OrganizationId, userChurchId.ToString())); 
             }
 
             if (userSpouseId > 0)

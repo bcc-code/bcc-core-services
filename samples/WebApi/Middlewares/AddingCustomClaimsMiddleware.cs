@@ -20,8 +20,8 @@ public class AddingCustomClaimsMiddleware
     {
         var claims = new List<Claim>();
 
-        var userMetaDataClaim = httpContext.User?.Claims.SingleOrDefault(c => c.Type == Claims.UserId);
-        var churchMetaDataClaim = httpContext.User?.Claims.SingleOrDefault(c => c.Type == Claims.Church);
+        var userMetaDataClaim = httpContext.User?.Claims.SingleOrDefault(c => c.Type == Claims.PersonId);
+        var churchMetaDataClaim = httpContext.User?.Claims.SingleOrDefault(c => c.Type == Claims.OrganizationId);
 
         await _next(httpContext);
     }
