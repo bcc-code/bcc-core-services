@@ -71,10 +71,10 @@ namespace BuildingBlocks
             Personas.AnneShakespeare.SpouseId = Personas.WilliamShakespeare.Id;
         }
 
-        private static int GenerateUniquePersonId()
+        public static int GenerateUniquePersonId()
         {
             var exclude = _personasIdsInDatabase;
-            var availableIds = Enumerable.Range(1, 10000).Where(i => !exclude.Contains(i));
+            var availableIds = Enumerable.Range(10000, 99999).Where(i => !exclude.Contains(i));
 
             var rand = new Random();
             int index = rand.Next(0, 10000 - exclude.Count);
