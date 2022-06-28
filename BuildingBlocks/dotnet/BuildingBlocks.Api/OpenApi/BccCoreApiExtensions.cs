@@ -167,7 +167,7 @@ namespace BuildingBlocks.Api.OpenApi
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.Title} {options.Version}"); });
         }
 
-        private static OpenApiOptions ValidateOpenApiOptions(IConfiguration configuration)
+        public static OpenApiOptions ValidateOpenApiOptions(IConfiguration configuration)
         {
             var options = configuration.GetSection("Api").Get<OpenApiOptions>();
             if (options == null)
