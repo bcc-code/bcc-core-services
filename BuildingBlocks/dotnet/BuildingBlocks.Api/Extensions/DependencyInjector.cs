@@ -28,7 +28,7 @@ namespace BuildingBlocks.Api.Extensions
                
             if (environment.IsProduction() == false)
             {
-                services.AddBccSwagger(configuration);
+                // services.AddBccSwagger(configuration);
             }
 
             services.AddBccLogging();
