@@ -119,6 +119,8 @@ namespace BuildingBlocks.Api.OpenApi
             {
                 c.SwaggerDoc(options.Version,
                     new OpenApiInfo {Title = options.Title, Version = options.Version});
+                
+                c.OperationFilter<QueryableParameters>();
 
                 switch (options.AuthenticationType)
                 {
