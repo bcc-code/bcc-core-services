@@ -23,10 +23,6 @@ namespace BuildingBlocks.Api.Extensions
             services.AddMemoryCache();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
-            services.AddTransient<ITelemetryInitializer, AppInsightsInitializer>();
-            services.AddTransient<ITelemetryParameters, TelemetryParameters>();
-            services.AddTransient<ILogService, LogService>();
-            
             var connectionString = configuration.GetConnectionString("SqlDataContext");
             services.InitializeDapper(connectionString);
                
@@ -35,7 +31,7 @@ namespace BuildingBlocks.Api.Extensions
                 services.AddBccSwagger(configuration);
             }
 
-            services.AddApplicationInsightsTelemetry();
+            services.AddBccLogging();
             
             services.RegisterCors(configuration);
         }

@@ -3,10 +3,12 @@ using Microsoft.Data.SqlClient;
 
 namespace BuildingBlocks.Sql
 {
+    [Obsolete("Please copy this service to your project instead of")]
     public interface ISqlConnectionService
     {
         Task<SqlConnection?> GetAsync();
     }
+    [Obsolete("Please copy this service to your project instead of")]
     public class SqlConnectionService : ISqlConnectionService, IDisposable
     {
         private readonly string _connectionString;
