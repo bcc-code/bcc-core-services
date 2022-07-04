@@ -2,13 +2,13 @@ using System.Net;
 
 namespace BuildingBlocks.Api.Models.CommonResponse
 {
-    public class ApiCommonResponse<T> where T: class
+    public class ApiCommonResponse
     {
-        private ApiCommonResponse()
+        protected ApiCommonResponse()
         {
         }
 
-        public T Data { get; internal set; }
+        public object Data { get; internal set; }
 
         public bool HasErrors => Messages.Any(x => x.Type == ApiCommonResponseMessageType.Error);
 
@@ -20,8 +20,19 @@ namespace BuildingBlocks.Api.Models.CommonResponse
 
         public static IApiCommonResponseBuilderWithStatus Create()
         {
-            var builder = new ApiCommonResponseBuilder(new ApiCommonResponse<T>());
+            var builder = new ApiCommonResponseBuilder(new ApiCommonResponse());
             return builder;
         }
+    }
+    // Used for SwaggerGen
+    public class ApiCommonResponse<T> : ApiCommonResponse
+    {
+        public new T Data { get; }
+
+        public ApiCommonResponse(T data)
+        {
+            Data = data;
+        }
+        
     }
 }
