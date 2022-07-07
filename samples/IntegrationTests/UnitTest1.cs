@@ -1,6 +1,5 @@
 using System.Net;
 using System.Threading.Tasks;
-using BuildingBlocks.Tests;
 using NUnit.Framework;
 using WebApi;
 

@@ -1,5 +1,7 @@
-﻿using BuildingBlocks.Sql;
-using Dapper;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using BuildingBlocks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
@@ -8,8 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Respawn;
+using WebApi.Services;
 
-namespace BuildingBlocks.Tests
+namespace IntegrationTests
 {
     public class CustomWebApplicationFactory<TEntryPoint>
         : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
