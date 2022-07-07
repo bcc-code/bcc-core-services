@@ -1,5 +1,6 @@
 using BuildingBlocks.Api.Authentication;
 using BuildingBlocks.Api.Extensions;
+using BuildingBlocks.Api.OpenApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,9 @@ namespace WebApi
             services.AddTransient<IUser, TestUser>();
             
             services.ConfigureBlocks(Configuration, Environment);
-
+            services.AddBccSwagger(Configuration);
+            services.AddBccAuthentication(Configuration);
+            
             services.AddControllers();
         }
 
