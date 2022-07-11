@@ -1,7 +1,10 @@
+using System;
+using System.Linq;
+using BuildingBlocks;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-namespace BuildingBlocks.Tests
+namespace IntegrationTests
 {
     public static class Seeder
     {

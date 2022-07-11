@@ -1,4 +1,8 @@
+using System;
+using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
+using BuildingBlocks;
 using BuildingBlocks.Api.Authentication;
 using Dapper;
 using MediatR;
@@ -6,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace BuildingBlocks.Tests
+namespace IntegrationTests
 {
     [TestFixture]
     public abstract class BaseTestsClass<TStartup> where TStartup : class

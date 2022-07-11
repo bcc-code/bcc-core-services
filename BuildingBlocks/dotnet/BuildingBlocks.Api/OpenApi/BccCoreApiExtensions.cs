@@ -1,15 +1,10 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using BuildingBlocks.Api.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace BuildingBlocks.Api.OpenApi
 {
@@ -60,50 +55,6 @@ namespace BuildingBlocks.Api.OpenApi
                     {
                         options.Authority = $"https://{authOptions.Authority}";
                         options.Audience = authOptions.Audience;
-                        options.Events = new JwtBearerEvents
-                        {
-                            OnTokenValidated = async (o) =>
-                            {
-                                var id = o.Principal?.FindFirst(c => c.Type == ClaimTypes.NameIdentifier);
-                                var memoryCache = o.HttpContext.RequestServices.GetRequiredService<IMemoryCache>();
-
-                                var userChurchId = await memoryCache.GetOrCreateAsync($"USER_{id}", async c =>
-                                {
-                                    var httpClient = o.HttpContext.RequestServices
-                                        .GetRequiredService<IHttpClientFactory>().CreateClient();
-                                    var accessToken = o.SecurityToken as JwtSecurityToken;
-                                    var message = new HttpRequestMessage
-                                    {
-                                        RequestUri = new Uri($"https://{authOptions.Authority.TrimEnd('/')}/userinfo"),
-                                        Method = HttpMethod.Post,
-                                    };
-                                    if (accessToken != null)
-                                    {
-                                        message.Headers.Add("Authorization", "Bearer " + accessToken.RawData);
-                                    }
-                                    var test = (await httpClient.SendAsync(message));
-                                    var result = await test.Content.ReadAsStringAsync();
-                                   
-                                    var x = JsonConvert.DeserializeObject<JObject>(result);
-
-                                    c.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(6);
-
-                                    var churchId = x.GetValue(Claims.OrganizationId)?.ToString() ??
-                                                   "0";
-                                    if (churchId == "452" || churchId == "459")
-                                    {
-                                        churchId = "287";
-                                    }
-
-                                    return churchId;
-                                });
-                                
-                                o.Principal?.AddIdentity(new ClaimsIdentity(new List<Claim>
-                                {
-                                    new Claim(Claims.OrganizationId, userChurchId)
-                                }));
-                            }
-                        };
                     })                
                     .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationScheme.AuthenticationScheme, o => { });
                 ;
@@ -119,6 +70,8 @@ namespace BuildingBlocks.Api.OpenApi
             {
                 c.SwaggerDoc(options.Version,
                     new OpenApiInfo {Title = options.Title, Version = options.Version});
+                
+                c.OperationFilter<QueryableParameters>();
 
                 switch (options.AuthenticationType)
                 {

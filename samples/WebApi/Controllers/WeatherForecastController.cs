@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         [HttpGet("/Authenticated")]
         public ActionResult Authenticated()
         {
-            return Ok();
+            return Content("User authenticated");
         }
     }
 }

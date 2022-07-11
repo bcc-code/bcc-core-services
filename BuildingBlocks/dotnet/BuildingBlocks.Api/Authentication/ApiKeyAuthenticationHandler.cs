@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace BuildingBlocks.Api.Authentication
 {
+    [Obsolete("Please copy this handler to your project instead of")]
     public class ApiKeyAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IConfiguration _configuration;
