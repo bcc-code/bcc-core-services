@@ -17,22 +17,26 @@ namespace BuildingBlocks.Api.OpenApi
             {
                 throw new ArgumentNullException(nameof(AuthOptions));
             }
+
             if (string.IsNullOrEmpty(authOptions.Audience))
             {
                 throw new ArgumentNullException(nameof(authOptions.Audience));
-            }   
+            }
+
             if (string.IsNullOrEmpty(authOptions.Authority))
             {
                 throw new ArgumentNullException(nameof(authOptions.Authority));
             }
+
             if (authOptions.Authority.StartsWith("http"))
             {
                 throw new ArgumentException("Authority shouldn't contain https://");
             }
+
             services.AddSingleton(s => authOptions);
 
             var openApiOptions = ValidateOpenApiOptions(configuration);
-            
+
             if (openApiOptions.AuthenticationType is WebAuthenticationType.Test or WebAuthenticationType.LoadTest)
             {
                 services.AddAuthentication(o =>
@@ -55,9 +59,9 @@ namespace BuildingBlocks.Api.OpenApi
                     {
                         options.Authority = $"https://{authOptions.Authority}";
                         options.Audience = authOptions.Audience;
-                    })                
-                    .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationScheme.AuthenticationScheme, o => { });
-                ;
+                    })
+                    .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(
+                        ApiKeyAuthenticationScheme.AuthenticationScheme, o => { });
             }
         }
 
@@ -71,44 +75,29 @@ namespace BuildingBlocks.Api.OpenApi
                 c.SwaggerDoc(options.Version,
                     new OpenApiInfo {Title = options.Title, Version = options.Version});
                 
-                c.OperationFilter<QueryableParameters>();
-
-                switch (options.AuthenticationType)
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    case WebAuthenticationType.Test:
-                    {
-                        c.OperationFilter<TestHeaderFilter>();
-                        break;
-                    }
-                    
-                    default:
-                    {
-                        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                        {
-                            Description =
-                                "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                            Name = "Authorization",
-                            In = ParameterLocation.Header,
-                            Type = SecuritySchemeType.ApiKey
-                        });
+                    Description =
+                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
 
-                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
                         {
+                            Reference = new OpenApiReference
                             {
-                                new OpenApiSecurityScheme
-                                {
-                                    Reference = new OpenApiReference
-                                    {
-                                        Type = ReferenceType.SecurityScheme,
-                                        Id = "Bearer"
-                                    }
-                                },
-                                new string[] { }
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
                             }
-                        });
-                        break;
+                        },
+                        new string[] { }
                     }
-                }
+                });
             });
         }
 
