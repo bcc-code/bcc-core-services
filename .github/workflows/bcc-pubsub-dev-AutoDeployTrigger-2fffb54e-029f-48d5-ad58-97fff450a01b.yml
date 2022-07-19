@@ -1,0 +1,60 @@
+name: Trigger auto deployment for bcc-pubsub-dev
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ 58-core-pubsub-api ]
+    paths:
+    - 'bcc-pubsub/api/BccCode.PubSub.Api/**'
+    - '.github/workflows/bcc-pubsub-dev-AutoDeployTrigger-2fffb54e-029f-48d5-ad58-97fff450a01b.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: bccplatform.azurecr.io
+          username: ${{ secrets.BCCPUBSUBDEV_REGISTRY_USERNAME }}
+          password: ${{ secrets.BCCPUBSUBDEV_REGISTRY_PASSWORD }}
+
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: bccplatform.azurecr.io/bcc-pubsub-dev:${{ github.sha }}
+          file: bcc-pubsub/api/BccCode.PubSub.Api/Dockerfile
+          context: bcc-pubsub/api/BccCode.PubSub.Api/
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.BCCPUBSUBDEV_AZURE_CREDENTIALS }}
+
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n bcc-pubsub-dev -g BCC-PubSub-dev --server bccplatform.azurecr.io --username  ${{ secrets.BCCPUBSUBDEV_REGISTRY_USERNAME }} --password ${{ secrets.BCCPUBSUBDEV_REGISTRY_PASSWORD }}
+            az containerapp update -n bcc-pubsub-dev -g BCC-PubSub-dev --image bccplatform.azurecr.io/bcc-pubsub-dev:${{ github.sha }}
