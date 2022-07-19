@@ -52,3 +52,6 @@ dlldata.c
 *.min.js
 *.min.css
 **/.idea
+/bcc-pubsub/terraform/.terraform.lock.hcl
+/bcc-pubsub/terraform/main-dev.tfplan
+/bcc-pubsub/terraform/.terraform
