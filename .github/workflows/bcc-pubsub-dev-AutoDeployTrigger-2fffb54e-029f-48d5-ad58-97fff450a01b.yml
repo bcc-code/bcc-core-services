@@ -37,7 +37,7 @@ jobs:
           push: true
           tags: bccplatform.azurecr.io/bcc-pubsub-dev:${{ github.sha }}
           file: bcc-pubsub/api/BccCode.PubSub.Api/Dockerfile
-          context: bcc-pubsub/api/BccCode.PubSub.Api/
+          context: bcc-pubsub/api/
 
 
   deploy:

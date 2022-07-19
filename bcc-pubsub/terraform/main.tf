@@ -43,7 +43,7 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = "BCC-Platform"
   location            = var.location
   sku                 = "Basic"
-  admin_enabled       = false
+  admin_enabled       = true
 }
 
 resource "azurerm_resource_group" "rg" {
