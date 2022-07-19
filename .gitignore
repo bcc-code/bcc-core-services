@@ -55,3 +55,6 @@ dlldata.c
 /bcc-pubsub/terraform/.terraform.lock.hcl
 /bcc-pubsub/terraform/main-dev.tfplan
 /bcc-pubsub/terraform/.terraform
+/bcc-pubsub/terraform/solutions/bcc-pubsub/.terraform
+/bcc-pubsub/terraform/solutions/bcc-pubsub/.terraform.lock.hcl
+*.tfplan

@@ -76,4 +76,5 @@ variable "dapr_components" {
     })))
     scopes         = optional(list(string))
   }))
+  default          = []
 }
