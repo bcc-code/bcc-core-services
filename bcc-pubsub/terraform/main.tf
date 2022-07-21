@@ -16,7 +16,7 @@ terraform {
     resource_group_name  = "BCC-Platform"
     storage_account_name = "bccplatformtfstate"
     container_name       = "tfstate"
-    key                  = "bcc-pubsub.terraform.tfstate"
+    key                  = "bcc-platform.terraform.tfstate"
   }
 }
 
@@ -34,9 +34,12 @@ resource "random_string" "resource_prefix" {
   numeric  = false
 }
 
+
+
 locals {
   resource_prefix = lower("${var.resource_group_name}-${terraform.workspace}")
 }
+
 
 resource "azurerm_container_registry" "acr" {
   name                = "bccplatform"
@@ -58,6 +61,15 @@ module "log_analytics_workspace" {
   location                         = var.location
   resource_group_name              = azurerm_resource_group.rg.name
   tags                             = var.tags
+}
+
+module "front_door" {
+  source                           = "./modules/front_door"
+  name                             = "${local.resource_prefix}-frontdoor"
+  location                         = var.location
+  resource_group_id                = azurerm_resource_group.rg.id
+  tags                             = var.tags
+  endpoint_domain_name             = "az-api-${terraform.workspace}.bcc.no"
 }
 
 module "application_insights" {
@@ -102,39 +114,39 @@ module "container_apps_env"  {
 }
 
 
-module "container_apps" {
-  source                           = "./modules/container_apps"
-  managed_environment_id           = module.container_apps_env.id
-  location                         = var.location
-  resource_group_id                = azurerm_resource_group.rg.id
-  tags                             = var.tags
-  dapr_components                  = [{
-                                      name            = var.dapr_component_name
-                                      componentType   = var.dapr_component_type
-                                      version         = var.dapr_component_version
-                                      ignoreErrors    = var.dapr_ignore_errors
-                                      initTimeout     = var.dapr_component_init_timeout
-                                      secrets         = [
-                                        {
-                                          name        = "storageaccountkey"
-                                          value       = module.storage_account.primary_access_key
-                                        }
-                                      ]
-                                      metadata: [
-                                        {
-                                          name        = "accountName"
-                                          value       = module.storage_account.name
-                                        },
-                                        {
-                                          name        = "containerName"
-                                          value       = var.container_name
-                                        },
-                                        {
-                                          name        = "accountKey"
-                                          secretRef   = "storageaccountkey"
-                                        }
-                                      ]
-                                      scopes          = var.dapr_component_scopes
-                                     }]
-  container_apps                   = var.container_apps
-}
+# module "container_apps" {
+#   source                           = "./modules/container_app"
+#   managed_environment_id           = module.container_apps_env.id
+#   location                         = var.location
+#   resource_group_id                = azurerm_resource_group.rg.id
+#   tags                             = var.tags
+#   dapr_components                  = [{
+#                                       name            = var.dapr_component_name
+#                                       componentType   = var.dapr_component_type
+#                                       version         = var.dapr_component_version
+#                                       ignoreErrors    = var.dapr_ignore_errors
+#                                       initTimeout     = var.dapr_component_init_timeout
+#                                       secrets         = [
+#                                         {
+#                                           name        = "storageaccountkey"
+#                                           value       = module.storage_account.primary_access_key
+#                                         }
+#                                       ]
+#                                       metadata: [
+#                                         {
+#                                           name        = "accountName"
+#                                           value       = module.storage_account.name
+#                                         },
+#                                         {
+#                                           name        = "containerName"
+#                                           value       = var.container_name
+#                                         },
+#                                         {
+#                                           name        = "accountKey"
+#                                           secretRef   = "storageaccountkey"
+#                                         }
+#                                       ]
+#                                       scopes          = var.dapr_component_scopes
+#                                      }]
+#   container_apps                   = var.container_apps
+# }

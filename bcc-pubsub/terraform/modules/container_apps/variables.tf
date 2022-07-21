@@ -20,9 +20,9 @@ variable "location" {
   type        = string
 }
 
-variable "container_apps" {
+variable "container_app" {
   description = "Specifies the container apps in the managed environment."
-  type = list(object({
+  type = object({
     name                = string
     configuration       = object({
       ingress           = optional(object({
@@ -54,7 +54,7 @@ variable "container_apps" {
         maxReplicas    = optional(number)
       }))
     })
-  }))
+  })
 }
 
 variable "dapr_components" {

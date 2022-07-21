@@ -1,6 +1,6 @@
 #!/bin/bash
 
-env_name="dev"
+env_name=dev
 
 # Select dev workspace
 terraform workspace select $env_name || terraform workspace new $env_name
@@ -16,3 +16,6 @@ terraform plan -compact-warnings -var-file=deploy-$env_name.tfvars -out=main-$en
 
 # Terraform apply
 terraform apply -compact-warnings -auto-approve main-$env_name.tfplan
+
+# Remove plan file
+rm main-$env_name.tfplan

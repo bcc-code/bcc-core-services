@@ -42,17 +42,17 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-module "container_apps" {
+module "container_app" {
   source                           = "../../modules/container_apps"
   managed_environment_id           = data.azapi_resource.env.id
   location                         = var.location
   resource_group_id                = azurerm_resource_group.rg.id
   tags                             = var.tags
-  container_apps                   = [{
+  container_app                   = {
     name              = "bcc-pubsub-${terraform.workspace}"
     configuration      = {
       ingress          = {
-        external       = false
+        external       = true
         targetPort     = 80
       }
       dapr             = {
@@ -64,8 +64,8 @@ module "container_apps" {
     }
     template          = {
       containers      = [{
-        image         = "dapriosamples/hello-k8s-node:latest"
-        name          = "hello-k8s-node"
+        image         = "hello-world:latest"
+        name          = "bcc-pubsub-dev"
         env           = [{
           name        = "APP_PORT"
           value       = 80
@@ -80,5 +80,17 @@ module "container_apps" {
         maxReplicas   = 1
       }
     }
-  }]
+  }
+}
+
+module "front_door_route" {
+  name                 = "pubsub"
+  source               = "../../modules/front_door_route"
+  resource_group_id    = data.azurerm_resource_group.envrg.id
+  origin_host          = module.container_app.domain_name   
+  front_door_name      = "bcc-platform-${terraform.workspace}-frontdoor"
+  endpoint_domain_name = "az-api-${terraform.workspace}.bcc.no"
+  depends_on = [
+    module.container_app
+  ]
 }

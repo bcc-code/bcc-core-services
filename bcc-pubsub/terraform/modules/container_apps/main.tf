@@ -40,29 +40,46 @@ resource "azapi_resource" "daprComponents" {
   })
 }
 
-resource "azapi_resource" "container_app" {
-  for_each  = {for app in var.container_apps: app.name => app}
+resource "random_string" "acr_secret_ref" {
+  length  = 12
+  special = false
+  upper   = false
+  numeric  = true
+}
 
-  name      = each.key
+data "azurerm_container_registry" "acr" {
+  name                = "bccplatform"
+  resource_group_name = "BCC-Platform"
+}
+
+resource "azapi_resource" "container_app" {
+  # for_each  = {for app in var.container_apps: app.name => app}
+
+  name      = var.container_app.name
   location  = var.location
   parent_id = var.resource_group_id
   type      = "Microsoft.App/containerApps@2022-03-01"
-  tags      = local.tags
 
   body = jsonencode({
     properties: {
       managedEnvironmentId  = var.managed_environment_id
       configuration         = {
-        ingress             = try(each.value.configuration.ingress, null)
-        dapr                = try(each.value.configuration.dapr, null)
+        registries = [{
+          server = data.azurerm_container_registry.acr.login_server
+          username = data.azurerm_container_registry.acr.admin_username
+          passwordSecretRef = "acr-pw-${random_string.acr_secret_ref.result}"
+        }]
+        secrets = [{
+          name = "acr-pw-${random_string.acr_secret_ref.result}"
+          value = data.azurerm_container_registry.acr.admin_password
+        }]
+        ingress             = try(var.container_app.configuration.ingress, null)
+        dapr                = try(var.container_app.configuration.dapr, null)
       }
-      template              = each.value.template
+      template              = var.container_app.template
     }
   })
+  
+  response_export_values = ["properties.configuration.ingress.fqdn"]
 
-  lifecycle {
-    ignore_changes = [
-        tags
-    ]
-  }
 }

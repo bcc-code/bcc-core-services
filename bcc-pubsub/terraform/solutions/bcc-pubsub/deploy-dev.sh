@@ -12,7 +12,10 @@ terraform init
 terraform validate -compact-warnings
 
 # Terraform plan
-terraform plan -compact-warnings -var-file=deploy-$env_name.tfvars -out=main-$env_name.tfplan 
+terraform plan -var-file=deploy-$env_name.tfvars -out=main-$env_name.tfplan 
 
 # Terraform apply
 terraform apply -compact-warnings -auto-approve main-$env_name.tfplan
+
+#
+terraform untaint module.front_door_route.azapi_resource.route
