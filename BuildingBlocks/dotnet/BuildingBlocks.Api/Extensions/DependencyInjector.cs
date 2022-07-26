@@ -24,12 +24,12 @@ namespace BuildingBlocks.Api.Extensions
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             var connectionString = configuration.GetConnectionString("SqlDataContext");
-            services.InitializeDapper(connectionString);
-               
-            if (environment.IsProduction() == false)
+            if (string.IsNullOrEmpty(connectionString) == false)
             {
-                services.AddBccSwagger(configuration);
+                services.InitializeDapper(connectionString);    
             }
+            
+            services.AddBccSwagger(configuration);
 
             services.AddBccLogging();
             
@@ -67,9 +67,8 @@ namespace BuildingBlocks.Api.Extensions
             if (environment.IsProduction() == false)
             {
                 app.UseDeveloperExceptionPage();
-                
-                app.UseBccSwagger(configuration);
             }
+            app.UseBccSwagger(configuration);
 
             app.UseHttpsRedirection();
             

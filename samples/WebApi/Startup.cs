@@ -25,7 +25,6 @@ namespace WebApi
             services.AddTransient<IUser, TestUser>();
             
             services.ConfigureBlocks(Configuration, Environment);
-            services.AddBccSwagger(Configuration);
             services.AddBccAuthentication(Configuration);
             
             services.AddControllers();
