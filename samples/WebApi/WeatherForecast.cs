@@ -13,4 +13,12 @@ namespace WebApi
 
         public string Summary { get; set; }
     }
+
+    public class WeatherRequest
+    {
+        /// <summary>
+        /// Provide Location
+        /// </summary>
+        public string Location { get; set; }
+    }
 }

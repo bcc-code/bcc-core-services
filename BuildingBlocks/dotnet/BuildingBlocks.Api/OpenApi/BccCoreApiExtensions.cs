@@ -1,3 +1,4 @@
+using System.Reflection;
 using BuildingBlocks.Api.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -98,6 +99,9 @@ namespace BuildingBlocks.Api.OpenApi
                         new string[] { }
                     }
                 });
+                var assembly = Assembly.GetEntryAssembly();
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{assembly?.GetName().Name}.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
@@ -106,7 +110,10 @@ namespace BuildingBlocks.Api.OpenApi
             var options = ValidateOpenApiOptions(configuration);
             
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.Title} {options.Version}"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.Title} {options.Version}");
+            });
         }
 
         public static OpenApiOptions ValidateOpenApiOptions(IConfiguration configuration)
