@@ -100,8 +100,17 @@ namespace BuildingBlocks.Api.OpenApi
                     }
                 });
                 var assembly = Assembly.GetEntryAssembly();
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{assembly?.GetName().Name}.xml");
-                c.IncludeXmlComments(filePath);
+
+                try
+                {
+                    var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{assembly?.GetName().Name}.xml");
+                    c.IncludeXmlComments(filePath);
+                }
+                catch (Exception ex)
+                {
+                    //File won't be found for integration tests where Entry Assembly is ReSharperTestRunner
+                }
+                
             });
         }
 
