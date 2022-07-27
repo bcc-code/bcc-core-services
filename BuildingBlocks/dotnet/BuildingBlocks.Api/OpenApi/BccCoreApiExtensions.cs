@@ -118,7 +118,10 @@ namespace BuildingBlocks.Api.OpenApi
         {
             var options = ValidateOpenApiOptions(configuration);
             
-            app.UseSwagger();
+            app.UseSwagger(o =>
+            {
+                o.SerializeAsV2 = true;
+            });
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.Title} {options.Version}");
