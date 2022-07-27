@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Reflection.Emit;
 using BuildingBlocks.Api.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -84,7 +85,24 @@ namespace BuildingBlocks.Api.OpenApi
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey
                 });
+                
+                c.AddSecurityDefinition("ClientCredentials", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Description = null,
+                    In = ParameterLocation.Header,
+                    OpenIdConnectUrl = new Uri("/docs/token"),
+                    Flows = new()
+                    {
+                        ClientCredentials = new()
+                        {
+                                TokenUrl = new Uri("/docs/token", UriKind.Relative),
+                            Scopes = options.Scopes
+                        },
+                    }
+                });
 
+                // JWT Authentication
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -99,8 +117,14 @@ namespace BuildingBlocks.Api.OpenApi
                         new string[] { }
                     }
                 });
-                var assembly = Assembly.GetEntryAssembly();
+                
+                // Client Credentials Flow 
+                // @see https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow
 
+                
+                // including comments from classes/contracts available for API 
+                // @see https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments
+                var assembly = Assembly.GetEntryAssembly();
                 try
                 {
                     var filePath = Path.Combine(System.AppContext.BaseDirectory, $"{assembly?.GetName().Name}.xml");
@@ -110,7 +134,6 @@ namespace BuildingBlocks.Api.OpenApi
                 {
                     //File won't be found for integration tests where Entry Assembly is ReSharperTestRunner
                 }
-                
             });
         }
 
