@@ -39,7 +39,7 @@ jobs:
 
       - uses: microsoft/variable-substitution@v1
         with:
-          files: "MyShare.Activities/Bcc.Activities.Api/appsettings.json"
+          files: "bcc-activities/Bcc.Activities.Api/appsettings.json"
         env:
           origins: ${{ env.ORIGINS }}
           MongoDb.ConnectionString: ${{ env.DB_CONNECTION_STRING }}
@@ -49,17 +49,17 @@ jobs:
           Auth.Authority: ${{ env.AUTH_AUTHORITY }}
       
       - name: Read MyShare.Activities.Api -> appsettings.json
-        run: "cat MyShare.Activities/Bcc.Activities.Api/appsettings.json"
+        run: "cat bcc-activities/Bcc.Activities.Api/appsettings.json"
 
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: "6.0.x"
 
       - name: Test Bcc.Activities
-        run: dotnet test MyShare.Activities/Bcc.Activities.Tests
+        run: dotnet test bcc-activities/Bcc.Activities.Tests
 
       - name: Build the Docker image
-        run: docker build -f MyShare.Activities/Bcc.Activities.Api/Dockerfile -t eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} . --build-arg ASPNETCORE_ENVIRONMENT=${{ env.ENVIRONMENT}}
+        run: docker build -f bcc-activities/Bcc.Activities.Api/Dockerfile -t eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} . --build-arg ASPNETCORE_ENVIRONMENT=${{ env.ENVIRONMENT}}
 
       - name: Configure Docker to use Google Cloud Platform
         run: gcloud auth configure-docker --quiet --project ${{ env.GCP_PROJECT }}
