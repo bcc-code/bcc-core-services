@@ -58,14 +58,25 @@ jobs:
       - name: Test Bcc.Activities
         run: dotnet test bcc-activities/Bcc.Activities.Tests
 
-      - name: Build the Docker image
-        run: docker build -f bcc-activities/Bcc.Activities.Api/Dockerfile -t eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} . --build-arg ASPNETCORE_ENVIRONMENT=${{ env.ENVIRONMENT}}
+      - name: Build and publish
+        uses: ./.github/actions/build-and-publish-image
+        with:
+          projectId: ${{ secrets.GOOGLE_PROJECT_ID }}
+          googleCredentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+          buildContext: bcc-activities
+          dockerfilePath:  bcc-activities/Bcc.Activities.Api/Dockerfile
+          imageName: bcc-activities-api
+          registryBaseUrl: ${{secrets.REGISTRY_BASE_URL}}
+          registryName: ${{secrets.REGISTRY_NAME}}
 
-      - name: Configure Docker to use Google Cloud Platform
-        run: gcloud auth configure-docker --quiet --project ${{ env.GCP_PROJECT }}
-
-      - name: Docker push image
-        run: docker push eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }}
+#      - name: Build the Docker image
+#        run: docker build -f bcc-activities/Bcc.Activities.Api/Dockerfile -t eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} . --build-arg ASPNETCORE_ENVIRONMENT=${{ env.ENVIRONMENT}}
+#
+#      - name: Configure Docker to use Google Cloud Platform
+#        run: gcloud auth configure-docker --quiet --project ${{ env.GCP_PROJECT }}
+#
+#      - name: Docker push image
+#        run: docker push eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }}
 
   deploy:
     runs-on: ubuntu-latest
