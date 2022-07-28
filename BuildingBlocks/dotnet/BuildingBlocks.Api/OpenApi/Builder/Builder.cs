@@ -1,4 +1,4 @@
-namespace BuildingBlocks.Api.Models.CommonResponse
+namespace BuildingBlocks.Api.OpenApi.Builder
 {
     public abstract class Builder<TBuildingType> : IBuilder<TBuildingType>
     {

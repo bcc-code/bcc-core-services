@@ -1,6 +1,8 @@
-using System.Net;
 
-namespace BuildingBlocks.Api.Models.CommonResponse
+using System.Net;
+using BuildingBlocks.Api.OpenApi.Builder;
+
+namespace BuildingBlocks.Api.OpenApi.CommonResponse
 {
     public class ApiCommonResponseBuilder : Builder<ApiCommonResponse>,
         IApiCommonResponseBuilderWithStatus,

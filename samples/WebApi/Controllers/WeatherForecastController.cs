@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiContracts;
 using BuildingBlocks.Api.OpenApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> Get([FromQuery] WeatherRequest request)
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

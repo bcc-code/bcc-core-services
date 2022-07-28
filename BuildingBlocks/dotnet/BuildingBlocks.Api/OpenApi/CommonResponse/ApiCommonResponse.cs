@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace BuildingBlocks.Api.Models.CommonResponse
+namespace BuildingBlocks.Api.OpenApi.CommonResponse
 {
     public class ApiCommonResponse
     {
@@ -9,18 +9,22 @@ namespace BuildingBlocks.Api.Models.CommonResponse
         }
 
         public object Data { get; internal set; }
+        public Metadata Meta { get; internal set; }
 
         public bool HasErrors => Messages.Any(x => x.Type == ApiCommonResponseMessageType.Error);
 
-        public bool HasWarnings => Messages.Any(x => x.Type == ApiCommonResponseMessageType.Warning);
+        public bool HasWarnings =>
+            Messages.Any(x => x.Type == ApiCommonResponseMessageType.Warning);
 
-        public ICollection<ApiCommonResponseMessage> Messages { get; internal set; }
+        public ICollection<ApiCommonResponseMessage> Messages { get; internal set; } =
+            new List<ApiCommonResponseMessage>();
 
         public HttpStatusCode Status { get; internal set; }
 
         public static IApiCommonResponseBuilderWithStatus Create()
         {
             var builder = new ApiCommonResponseBuilder(new ApiCommonResponse());
+
             return builder;
         }
     }

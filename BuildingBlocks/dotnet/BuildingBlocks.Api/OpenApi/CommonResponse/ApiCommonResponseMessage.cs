@@ -1,4 +1,4 @@
-namespace BuildingBlocks.Api.Models.CommonResponse
+namespace BuildingBlocks.Api.OpenApi.CommonResponse
 {
     public class ApiCommonResponseMessage
     {

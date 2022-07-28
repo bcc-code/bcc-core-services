@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\dotnet\ApiContracts\ApiContracts.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\dotnet\BuildingBlocks.Api\BuildingBlocks.Api.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\dotnet\BuildingBlocks\BuildingBlocks.csproj" />
   </ItemGroup>
