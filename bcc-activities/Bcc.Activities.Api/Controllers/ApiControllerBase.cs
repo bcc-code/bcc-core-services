@@ -8,7 +8,6 @@ namespace Bcc.Activities.Api.Controllers
     [Authorize]
     [ApiController]
     [Produces("application/json")]
-    [Route("api/[controller]")]
     public abstract class ApiControllerBase : Controller
     {
         protected virtual IActionResult CommonResponse(ApiCommonResponse result)

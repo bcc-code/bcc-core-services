@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bcc.Activities.Api.Controllers;
 
+[Route("/")]
 public class ActivitiesController : ApiControllerBase
 {
     private readonly ILogger<ActivitiesController> _logger;
@@ -59,6 +60,11 @@ public class ActivitiesController : ApiControllerBase
         }
     }
     
+    /// <summary>
+    /// Add activity
+    /// </summary>
+    /// <param name="activity"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> AddActivity(CreateActivity activity)
     {
@@ -81,7 +87,11 @@ public class ActivitiesController : ApiControllerBase
             return CommonResponse(failure);
         }
     }
-    
+    /// <summary>
+    /// Update activity
+    /// </summary>
+    /// <param name="activity"></param>
+    /// <returns></returns>
     [HttpPut]
     public async Task<IActionResult> UpdateActivity(UpdateActivity activity)
     {
@@ -104,7 +114,11 @@ public class ActivitiesController : ApiControllerBase
             return CommonResponse(failure);
         }
     }
-    
+    /// <summary>
+    /// Remove activity
+    /// </summary>
+    /// <param name="activityId"></param>
+    /// <returns></returns>
     [HttpDelete("{activityId}")]
     public async Task<IActionResult> DeleteActivity(Guid activityId)
     {
@@ -138,5 +152,4 @@ public class ActivitiesController : ApiControllerBase
             return CommonResponse(failure);
         }
     }
-    
 }
