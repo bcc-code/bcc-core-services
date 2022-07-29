@@ -1,0 +1,85 @@
+name: Activities API Sandbox Deployment
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "bcc-activities/**"
+      - ".github/workflows/activities-api-sandbox.yml"
+  workflow_dispatch:
+
+env:
+  AUTHENTICATION_TYPE: "Auth0"
+  ORIGINS: "https://app-dev.myshare.today,https://app-dev.myshare.today,https://admin-dev.myshare.today"
+  APPLICATION_INSIGHTS: ${{ secrets.APP_INSIGHTS }}
+  GCP_PROJECT: bcc-core-services
+  GCP_KEY: ${{ secrets.GOOGLE_CREDENTIALS }}
+  APPLICATION_NAME: activities-api-sandbox
+  ENVIRONMENT: Staging
+  PORT: 7238
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: sandbox
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Cloud SDK
+        uses: google-github-actions/auth@v0
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+          credentials_json: ${{ env.GCP_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: "bcc-activities/Bcc.Activities.Api/appsettings.json"
+        env:
+          origins: ${{ env.ORIGINS }}
+          ApplicationInsights.ConnectionString: ${{ secrets.DEV_APPLICATION_INSIGHTS_MYSHARE_APP }}
+          Api.AuthenticationType: ${{ env.AUTHENTICATION_TYPE }}
+          Version.BuildVersion: ${{ github.RUN_NUMBER }}
+      
+      - name: Read MyShare.Activities.Api -> appsettings.json
+        run: "cat bcc-activities/Bcc.Activities.Api/appsettings.json"
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Test Bcc.Activities
+        run: dotnet test bcc-activities/Bcc.Activities.Tests
+
+      - name: Build the Docker image
+        run: docker build -f bcc-activities/Bcc.Activities.Api/Dockerfile -t eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} . --build-arg ASPNETCORE_ENVIRONMENT=${{ env.ENVIRONMENT}}
+
+      - name: Configure Docker to use Google Cloud Platform
+        run: gcloud auth configure-docker --quiet --project ${{ env.GCP_PROJECT }}
+
+      - name: Docker push image
+        run: docker push eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: sandbox
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/auth@v0
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+          credentials_json: ${{ env.GCP_KEY }}
+
+      - name: Cloud run deploy
+        run: gcloud run deploy ${{ env.APPLICATION_NAME }} --image eu.gcr.io/${{ env.GCP_PROJECT }}/${{ env.APPLICATION_NAME }} --region=europe-west4 --project=${{ env.GCP_PROJECT }} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=${{ env.PORT}}
+
+      - name: Cloud run serve traffic
+        run: gcloud run services update-traffic ${{ env.APPLICATION_NAME }} --to-latest --platform=managed --region=europe-west4
