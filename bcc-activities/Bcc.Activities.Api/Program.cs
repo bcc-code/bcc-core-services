@@ -13,6 +13,12 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
 app.ConfigureBlocks(builder.Configuration, builder.Environment);
+
+if (app.Environment.IsDevelopment() == false)
+{
+    app.UsePathBase("/activities");
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 
