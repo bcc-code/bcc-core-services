@@ -11,7 +11,7 @@ on:
 
 env:
   AUTHENTICATION_TYPE: "Auth0"
-  ORIGINS: "http://localhost:3000,https://app-dev.myshare.today,https://app-dev.myshare.today,https://admin-dev.myshare.today"
+  ORIGINS: "https://app-dev.myshare.today,https://app-dev.myshare.today,https://admin-dev.myshare.today"
   APPLICATION_INSIGHTS: ${{ secrets.APP_INSIGHTS }}
   GCP_PROJECT: bcc-core-services
   GCP_KEY: ${{ secrets.GOOGLE_CREDENTIALS }}
