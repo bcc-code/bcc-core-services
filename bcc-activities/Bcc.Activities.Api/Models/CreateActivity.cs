@@ -7,7 +7,9 @@ public class CreateActivity
     public Guid ActivityId { get; set; }
     [Required]
     public DateTime StartDateTimeUtc { get; set; }
+    [Required]
     public DateTime EndDateTimeUtc { get; set; }
+    [Required]
     public string Name { get; set; } = null!;
     public string Reference { get; set; }
     public string Description { get; set; }
