@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace BuildingBlocks.Api.OpenApi
 {
@@ -85,7 +86,7 @@ namespace BuildingBlocks.Api.OpenApi
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey
                 });
-                
+
                 c.AddSecurityDefinition("ClientCredentials", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
@@ -96,7 +97,7 @@ namespace BuildingBlocks.Api.OpenApi
                     {
                         ClientCredentials = new()
                         {
-                                TokenUrl = new Uri("/docs/token", UriKind.Relative),
+                            TokenUrl = new Uri("/docs/token", UriKind.Relative),
                             Scopes = options.Scopes
                         },
                     }

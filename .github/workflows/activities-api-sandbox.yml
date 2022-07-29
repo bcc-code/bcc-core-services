@@ -12,14 +12,12 @@ on:
 env:
   AUTHENTICATION_TYPE: "Auth0"
   ORIGINS: "http://localhost:3000,https://app-dev.myshare.today,https://app-dev.myshare.today,https://admin-dev.myshare.today"
-  DB_CONNECTION_STRING: ${{ secrets.ACTIVITIES_CONNECTION_STRING }}
   APPLICATION_INSIGHTS: ${{ secrets.APP_INSIGHTS }}
   GCP_PROJECT: bcc-core-services
   GCP_KEY: ${{ secrets.GOOGLE_CREDENTIALS }}
   APPLICATION_NAME: activities-api-sandbox
   ENVIRONMENT: Staging
   PORT: 7238
-  AUTH_AUTHORITY: bcc-sso-sandbox.eu.auth0.com
 
 jobs:
   build:
@@ -42,11 +40,9 @@ jobs:
           files: "bcc-activities/Bcc.Activities.Api/appsettings.json"
         env:
           origins: ${{ env.ORIGINS }}
-          MongoDb.ConnectionString: ${{ env.DB_CONNECTION_STRING }}
           ApplicationInsights.ConnectionString: ${{ secrets.DEV_APPLICATION_INSIGHTS_MYSHARE_APP }}
           Api.AuthenticationType: ${{ env.AUTHENTICATION_TYPE }}
           Version.BuildVersion: ${{ github.RUN_NUMBER }}
-          Auth.Authority: ${{ env.AUTH_AUTHORITY }}
       
       - name: Read MyShare.Activities.Api -> appsettings.json
         run: "cat bcc-activities/Bcc.Activities.Api/appsettings.json"
