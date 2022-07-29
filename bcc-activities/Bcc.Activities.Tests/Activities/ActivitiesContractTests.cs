@@ -20,12 +20,12 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
             StartDateTimeUtc = default,
             EndDateTimeUtc = default,
             Name = null,
-            ReferenceNumber = "0001",
+            Reference = "0001",
             Description = null,
             Location = null,
             ResponsibleId = 0,
             NeededParticipants = 0,
-            TenantOwner = "TestTenant"
+            OwnerOrganization = 1
         }, new CancellationToken());
     }
     
@@ -41,9 +41,8 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
         Assert.NotNull(activity?.GetType().GetProperty("ActivityId"), "ActivityId not found");
         Assert.NotNull(activity?.GetType().GetProperty("StartDateTimeUtc"), "StartDateTimeUtc not found");
         Assert.NotNull(activity?.GetType().GetProperty("EndDateTimeUtc"), "EndDateTimeUtc not found");
-        Assert.NotNull(activity?.GetType().GetProperty("TenantOwner"), "TenantOwner not found");
-        Assert.NotNull(activity?.GetType().GetProperty("AvailableFor"), "AvailableFor not found");
-        Assert.NotNull(activity?.GetType().GetProperty("ReferenceNumber"), "ReferenceNumber not found");
+        Assert.NotNull(activity?.GetType().GetProperty("OwnerOrganization"), "OwnerOrganization not found");
+        Assert.NotNull(activity?.GetType().GetProperty("Reference"), "Reference not found");
         Assert.NotNull(activity?.GetType().GetProperty("ResponsibleId"), "ResponsibleId not found");
         Assert.NotNull(activity?.GetType().GetProperty("ResponsibleName"), "ResponsibleName not found");
         Assert.NotNull(activity?.GetType().GetProperty("Description"), "Description not found");
@@ -72,13 +71,12 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
         Assert.NotNull(createActivity.GetType().GetProperty("StartDateTimeUtc"), "StartDateTimeUtc property not found");
         Assert.NotNull(createActivity.GetType().GetProperty("EndDateTimeUtc"), "EndDateTimeUtc property not found");
         Assert.NotNull(createActivity.GetType().GetProperty("Name"), "Name property not found");
-        Assert.NotNull(createActivity.GetType().GetProperty("ReferenceNumber"), "ReferenceNumber property not found");
+        Assert.NotNull(createActivity.GetType().GetProperty("Reference"), "Reference property not found");
         Assert.NotNull(createActivity.GetType().GetProperty("Description"), "Description property not found");
         Assert.NotNull(createActivity.GetType().GetProperty("Location"), "Location property not found");
         Assert.NotNull(createActivity.GetType().GetProperty("ResponsibleId"), "ResponsibleId property not found");
         Assert.NotNull(createActivity.GetType().GetProperty("NeededParticipants"), "NeededParticipants property not found");
-        Assert.NotNull(createActivity.GetType().GetProperty("AvailableFor"), "AvailableFor property not found");
-        Assert.NotNull(createActivity.GetType().GetProperty("TenantOwner"), "TenantOwner property not found");
+        Assert.NotNull(createActivity.GetType().GetProperty("OwnerOrganization"), "OwnerOrganization property not found");
     }
 
     [Test]
@@ -100,12 +98,11 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
         Assert.NotNull(updateActivity.GetType().GetProperty("ActivityId"), "ActivityId property not found");
         Assert.NotNull(updateActivity.GetType().GetProperty("StartDateTimeUtc"), "StartDateTimeUtc property not found");
         Assert.NotNull(updateActivity.GetType().GetProperty("EndDateTimeUtc"), "EndDateTimeUtc property not found");
-        Assert.NotNull(updateActivity.GetType().GetProperty("ReferenceNumber"), "ReferenceNumber property not found");
+        Assert.NotNull(updateActivity.GetType().GetProperty("Reference"), "Reference property not found");
         Assert.NotNull(updateActivity.GetType().GetProperty("Name"), "Name property not found");
         Assert.NotNull(updateActivity.GetType().GetProperty("Description"), "Description property not found");
         Assert.NotNull(updateActivity.GetType().GetProperty("Location"), "Location property not found");
         Assert.NotNull(updateActivity.GetType().GetProperty("ResponsibleId"), "ResponsibleId property not found");
-        Assert.NotNull(updateActivity.GetType().GetProperty("AvailableFor"), "AvailableFor property not found");
     }
     
     [Test]
@@ -120,12 +117,12 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
             StartDateTimeUtc = default,
             EndDateTimeUtc = default,
             Name = null,
-            ReferenceNumber = "0001",
+            Reference = "0001",
             Description = null,
             Location = null,
             ResponsibleId = 0,
             NeededParticipants = 0,
-            TenantOwner = "TestTenant"
+            OwnerOrganization = 1
         }, new CancellationToken());
 
         var response = await DeleteAsync($"/api/activities/{activityId}", Personas.SherlockHolmes);
