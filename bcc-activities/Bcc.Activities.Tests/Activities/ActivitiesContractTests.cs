@@ -32,7 +32,7 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
     [Test]
     public async Task Get_Activities_Endpoint_Test()
     {
-        var response = await GetAsync<List<Activity>>("/api/activities", Personas.SherlockHolmes);
+        var response = await GetAsync<List<Activity>>("/", Personas.SherlockHolmes);
         var activity = response?.First();
 
         Assert.NotNull(response);
@@ -57,7 +57,7 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
         var createActivity = new CreateActivity();
         var json = JsonSerializer.Serialize(createActivity);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await PostAsync("/api/activities", content, Personas.SherlockHolmes);
+        var response = await PostAsync("/", content, Personas.SherlockHolmes);
         
         Assert.NotNull(response);
     }
@@ -85,7 +85,7 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
         var updateActivity = new UpdateActivity();
         var json = JsonSerializer.Serialize(updateActivity);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await PutAsync("/api/activities", content, Personas.SherlockHolmes);
+        var response = await PutAsync("/", content, Personas.SherlockHolmes);
         
         Assert.NotNull(response);
     }
@@ -125,7 +125,7 @@ public class ActivitiesContractTests : BaseTestsClass<Program>
             OwnerOrganization = 1
         }, new CancellationToken());
 
-        var response = await DeleteAsync($"/api/activities/{activityId}", Personas.SherlockHolmes);
+        var response = await DeleteAsync($"/{activityId}", Personas.SherlockHolmes);
         
         Assert.NotNull(response);
     }
